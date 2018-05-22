@@ -5,9 +5,13 @@
 
 {% block content %}
   <h2>Sign up</h2>
+  <table>
   <form method="post">
     {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Sign up</button>
+    <tr>
+      <th>{{ form.as_table }}</th>
+    </tr>
+    <tr><th><button type="submit">Sign up</button></th></tr>
   </form>
+  </table>
 {% endblock %}

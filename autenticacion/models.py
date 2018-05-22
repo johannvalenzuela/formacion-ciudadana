@@ -78,7 +78,7 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
         ''' 
         Retorna el nombre completo 
         ''' 
-        full_name = '%s %s %s' % (self.nombre, self.apellido_materno, self.apellido_materno) 
+        full_name = '%s %s %s' % (self.nombre, self.apellido_paterno, self.apellido_materno) 
         return full_name.strip() 
  
     def get_short_name(self): 
