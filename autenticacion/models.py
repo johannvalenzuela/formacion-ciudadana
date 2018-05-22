@@ -8,21 +8,63 @@ from django.contrib.auth.base_user import BaseUserManager
 USER_TYPE_CHOICES = ( 
       (1, 'usuario'), 
       (2, 'encargado'), 
-      (3, 'supervisor'), 
+      (3, 'supervisor'),
+      (4, 'admin'), 
   ) 
  
+class UserManager(BaseUserManager): 
+    ''' 
+    Clase de manager del usuario 
+    Se encargará de manejar el “query set” del User Model 
+    ''' 
+    use_in_migrations = True 
+ 
+    def _create_user(self, email, password, **extra_fields): 
+        """ 
+        Creates and saves a User with the given email and password. 
+        """ 
+        if not email: 
+            raise ValueError('The given email must be set') 
+        email = self.normalize_email(email) 
+        user = self.model(email=email, **extra_fields) 
+        user.set_password(password) 
+        user.save(using=self._db) 
+        return user 
+ 
+    def create_user(self, email, password=None, **extra_fields): 
+        extra_fields.setdefault('is_superuser', False)
+        extra_fields.setdefault('is_staff', False)
+        return self._create_user(email, password, **extra_fields) 
+ 
+    def create_superuser(self, email, password, **extra_fields): 
+        extra_fields.setdefault('is_superuser', True)
+        extra_fields.setdefault('is_staff', True)
+        extra_fields.setdefault('tipo',4)
+
+        if extra_fields.get('is_staff') is not True:
+            raise ValueError('Superuser must have is_staff=True.') 
+ 
+        if extra_fields.get('is_superuser') is not True: 
+            raise ValueError('Superuser must have is_superuser=True.') 
+ 
+        return self._create_user(email, password, **extra_fields)
+
 class Usuario(AbstractBaseUser, PermissionsMixin): 
     '''  
     Clase de usuario del sistema  
     ''' 
     nombre = models.CharField(max_length=50, null=False, blank=False) 
     rut = models.CharField(max_length=15, null=False, unique=True, blank=False) 
-    num_documento = models.CharField(max_length=15, null=False, unique=True) 
-    fecha_nacimiento = models.DateField(auto_now=False, auto_now_add=False) 
+    num_documento = models.CharField(max_length=15, null=True, unique=True, blank=True) 
+    fecha_nacimiento = models.DateField(auto_now=False, auto_now_add=False, null=True, blank=True) 
     apellido_paterno = models.CharField(max_length=50, null=False, blank=False) 
     apellido_materno = models.CharField(max_length=50, null=False, blank=False) 
     email = models.EmailField(_('email address'), unique=True, blank=False) 
     tipo = models.PositiveSmallIntegerField(choices=USER_TYPE_CHOICES) 
+    username = models.CharField(max_length=50, null=True, blank=True)
+    is_staff = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
+    objects = UserManager()
     
     USERNAME_FIELD = 'email' 
  
@@ -45,33 +87,3 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
         ''' 
         return self.nombre 
  
-class UserManager(BaseUserManager): 
-    ''' 
-    Clase de manager del usuario 
-    Se encargará de manejar el “query set” del User Model 
-    ''' 
-    use_in_migrations = True 
- 
-    def _create_user(self, email, password, **extra_fields): 
-        """ 
-        Creates and saves a User with the given email and password. 
-        """ 
-        if not email: 
-            raise ValueError('The given email must be set') 
-        email = self.normalize_email(email) 
-        user = self.model(email=email, **extra_fields) 
-        user.set_password(password) 
-        user.save(using=self._db) 
-        return user 
- 
-    def create_user(self, email, password=None, **extra_fields): 
-        extra_fields.setdefault('is_superuser', False) 
-        return self._create_user(email, password, **extra_fields) 
- 
-    def create_superuser(self, email, password, **extra_fields): 
-        extra_fields.setdefault('is_superuser', True) 
- 
-        if extra_fields.get('is_superuser') is not True: 
-            raise ValueError('Superuser must have is_superuser=True.') 
- 
-        return self._create_user(email, password, **extra_fields)
