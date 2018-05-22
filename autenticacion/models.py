@@ -23,9 +23,10 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
     apellido_materno = models.CharField(max_length=50, null=False, blank=False) 
     email = models.EmailField(_('email address'), unique=True, blank=False) 
     tipo = models.PositiveSmallIntegerField(choices=USER_TYPE_CHOICES) 
+    
     USERNAME_FIELD = 'email' 
  
-    REQUIRED_FIELDS = ['rut','nombre','apellido_paterno','apellido_materno','email'] 
+    REQUIRED_FIELDS = ['rut','nombre','apellido_paterno','apellido_materno'] 
  
     class Meta: 
         verbose_name = _('usuario') 
