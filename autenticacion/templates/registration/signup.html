@@ -41,19 +41,19 @@
               </fieldset>
               <fieldset>
                 <label for="id_nombre">Nombre</label>
-                <input type="text" id="id_nombre" maxlength="50" name="nombre" required/>
+                <input type="text" id="id_nombre" maxlength="50" name="nombre" autocomplete="given-name" required/>
               </fieldset>
               <fieldset>
                 <label for="id_apellido_paterno">Apellido Paterno</label>
-                <input type="text" id="id_apellido_paterno" maxlength="50" name="apellido_paterno" required/>
+                <input type="text" id="id_apellido_paterno" maxlength="50" name="apellido_paterno" autocomplete="family-name" required/>
               </fieldset>
               <fieldset>
                 <label for="id_apellido_materno">Apellido Materno</label>
-                <input type="text" id="id_apellido_materno" maxlength="50" name="apellido_materno" required/>
+                <input type="text" id="id_apellido_materno" maxlength="50" name="apellido_materno" autocomplete="additional-name" required/>
               </fieldset>
               <fieldset>
                 <label for="id_email">Correo</label>
-                <input type="email" id="email" maxlength="254" name="email" required/>
+                <input type="email" id="email" maxlength="254" name="email" autocomplete="email" required/>
                 {% if form.email.errors %}
                 <div class="alert alert-danger pt-0" role="alert">
                   <span>{{ form.email.errors }}</span>
@@ -82,7 +82,7 @@
               </fieldset>
               <fieldset>
                 <label for="id_password1">Contraseña</label>
-                <input type="password" id="id_password1" name="password1" required/>
+                <input type="password" id="id_password1" name="password1" autocomplete="new-password" required/>
                 <div class="alert alert-default pt-0" role="alert">
                   {{ form.password1.help_text | safe}}</span>
                 </div>
@@ -94,7 +94,7 @@
               </fieldset>
               <fieldset>
                 <label for="id_password2">Confirmar Contraseña</label>
-                <input type="password" id="id_password2" name="password2" required/>
+                <input type="password" id="id_password2" name="password2" autocomplete="new-password" required/>
                 <div class="alert alert-default pt-0" role="alert">
                   <span>{{ form.password2.help_text | safe}}</span>
                 </div>
