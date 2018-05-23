@@ -65,6 +65,7 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(max_length=50, null=True, blank=True)
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
+    is_funcionario = models.BooleanField(default=False)
     objects = UserManager()
     
     USERNAME_FIELD = 'email' 
@@ -74,7 +75,8 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
     class Meta: 
         verbose_name = _('usuario') 
         verbose_name_plural = _('usuarios') 
- 
+    
+
     def get_full_name(self): 
         ''' 
         Retorna el nombre completo 
@@ -87,4 +89,6 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
         Returns the short name for the user. 
         ''' 
         return self.nombre 
+    
+    
  
