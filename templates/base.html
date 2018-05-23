@@ -36,14 +36,16 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
     crossorigin="anonymous"></script>
   <!-- Fluent Kit JavaScript -->
-  <script src={% static 'js/fluent-kit.min.js'%} ></script>
+  <script src={% static 'js/fluent-kit.min.js'%}></script>
   <!-- Animations JavaScript-->
   <script src="https://cdn.rawgit.com/michalsnik/aos/2.1.1/dist/aos.js"></script>
 
   <script>
     window.onscroll = () => {
       const nav = document.querySelector('#navBarSection');
-      if (this.scrollY <= 50) nav.className = 'navbar fixed-top navbar-expand-lg navbar-transparent'; else nav.className = 'navbar navbar-expand-lg sticky-top navbar-light bg-light py-2 shadow';
+      if (nav) {
+        if (this.scrollY <= 50) nav.className = 'navbar fixed-top navbar-expand-lg navbar-transparent'; else nav.className = 'navbar navbar-expand-lg sticky-top navbar-light bg-light py-2 shadow';
+      }
     };
 
     /*Start Animations*/
