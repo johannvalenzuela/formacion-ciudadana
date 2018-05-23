@@ -1,17 +1,117 @@
 <!-- templates/signup.html -->
-{% extends 'base.html' %}
+{% extends 'base.html' %} {% block title %}Registrarse {% endblock %} {% block content %}
 
-{% block title %}Sign Up{% endblock %}
-
-{% block content %}
-  <h2>Sign up</h2>
-  <table>
+<!-- 
+<h2>Registrarse</h2>
+<table>
   <form method="post">
     {% csrf_token %}
     <tr>
       <th>{{ form.as_table }}</th>
     </tr>
-    <tr><th><button type="submit">Sign up</button></th></tr>
+    <tr>
+      <th>
+        <button type="submit">Sign up</button>
+      </th>
+    </tr>
   </form>
-  </table>
+</table> -->
+
+<div class="wrapper">
+  <section class="module-cover parallax fullscreen">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 m-auto card-signup">
+          <div class="m-b-20 text-center">
+            <h6>Crear una nueva cuenta</h6>
+          </div>
+          <br>
+          <div class="m-b-20">
+            <form class="form" method="POST" action="">
+              {% csrf_token %} 
+              {{ form.non_field_errors }}
+              <fieldset>
+                <label for="id_rut">RUT</label>
+                <input type="text" id="id_rut" maxlength="15" name="rut" required/>
+                {% if form.rut.errors %}
+                <div class="alert alert-danger pt-0" role="alert">
+                  <span>{{ form.rut.errors }}</span>
+                </div>
+                {% endif %}
+              </fieldset>
+              <fieldset>
+                <label for="id_nombre">Nombre</label>
+                <input type="text" id="id_nombre" maxlength="50" name="nombre" required/>
+              </fieldset>
+              <fieldset>
+                <label for="id_apellido_paterno">Apellido Paterno</label>
+                <input type="text" id="id_apellido_paterno" maxlength="50" name="apellido_paterno" required/>
+              </fieldset>
+              <fieldset>
+                <label for="id_apellido_materno">Apellido Materno</label>
+                <input type="text" id="id_apellido_materno" maxlength="50" name="apellido_materno" required/>
+              </fieldset>
+              <fieldset>
+                <label for="id_email">Correo</label>
+                <input type="email" id="email" maxlength="254" name="email" required/>
+                {% if form.email.errors %}
+                <div class="alert alert-danger pt-0" role="alert">
+                  <span>{{ form.email.errors }}</span>
+                </div>
+                {% endif %}
+              </fieldset>
+              <!-- Hay que cambiar en Django el formato de la fecha -->
+              <fieldset>
+                <label for="id_fecha_nacimiento">Fecha de Nacimiento</label>
+                <input type="text" id="id_fecha_nacimiento" name="fecha_nacimiento" required/>
+                {% if form.fecha_nacimiento.errors %}
+                <div class="alert alert-danger pt-0" role="alert">
+                  <span>{{ form.fecha_nacimiento.errors }}</span>
+                </div>
+                {% endif %}
+              </fieldset>
+              <!--  -->
+              <fieldset>
+                <label for="id_num_documento">N° Documento</label>
+                <input type="number" id="id_num_documento" maxlength="15" name="num_documento" required/>
+                {% if form.num_documento.errors %}
+                <div class="alert alert-danger pt-0" role="alert">
+                  <span>{{ form.num_documento.errors }}</span>
+                </div>
+                {% endif %}
+              </fieldset>
+              <fieldset>
+                <label for="id_password1">Contraseña</label>
+                <input type="password" id="id_password1" name="password1" required/>
+                <div class="alert alert-default pt-0" role="alert">
+                  {{ form.password1.help_text | safe}}</span>
+                </div>
+                {% if form.password1.errors %}
+                <div class="alert alert-danger pt-0" role="alert">
+                  <span>{{ form.password1.errors }}</span>
+                </div>
+                {% endif %}
+              </fieldset>
+              <fieldset>
+                <label for="id_password2">Confirmar Contraseña</label>
+                <input type="password" id="id_password2" name="password2" required/>
+                <div class="alert alert-default pt-0" role="alert">
+                  <span>{{ form.password2.help_text | safe}}</span>
+                </div>
+              </fieldset>
+              <button class="btn btn-primary btn-block" type="submit">Registrar</button>
+            </form>
+          </div>
+          <div class="m-b-20 text-center">
+            <p>
+              <small>Al registrarse, usted acepta los
+                <a href="#">términos del servicio</a>
+              </small>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
 {% endblock %}
