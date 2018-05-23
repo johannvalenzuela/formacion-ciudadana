@@ -1,13 +1,56 @@
 <!-- templates/autenticacion/login.html -->
-{% extends 'base.html' %}
-
-{% block title %}Login{% endblock %}
-
-{% block content %}
-<h2>Login</h2>
+{% extends 'base.html' %} {% block title %}Inicio de Sesión{% endblock %} {% block content %}
 <form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Login</button>
+  {% csrf_token %} {{ form.as_p }}
+  <button type="submit">Iniciar Sesión</button>
 </form>
+
+<div class="login-page">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-10 ml-auto mr-auto">
+        <div class="card card-login">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6 ml-auto login-section"></div>
+              <div class="col-md-6 ml-auto">
+                <h2 class="card-title text-center">logo</h2>
+                <form class="form" method="" action="">
+                  <fieldset>
+                    <label for="username">Nombre de Usuario</label>
+                    <input type="text" id="username" />
+                  </fieldset>
+
+                  <fieldset>
+                    <label for="password-rpl">Password</label>
+                    <input type="password" id="password-rpl" class="input-with-button" />
+                    <button class="mi mi-Light" data-toggle-password-visibility>
+                    </button>
+                  </fieldset>
+                  <span>
+                    <a href="#">¿Olvidaste tu contraseña?</a>
+                  </span>
+                  <fieldset>
+                    <input type="checkbox" id="remember-me" />
+                    <label for="remember-me">Recordarme</label>
+                  </fieldset>
+                  <button type="submit" class="btn btn-default btn-block">
+                    <i class="mi mi- mi-1x"></i> Iniciar Sesión</button>
+                  <div class="text-center">
+                    <span>o</span>
+                  </div>
+                  <button type="submit" class="btn btn-primary btn-block">
+                    <i class="mi mi-facebook-official mi-1x"></i> Iniciar Sesión con Facebook</button>
+                  <button type="submit" class="btn btn-warning btn-block">
+                    <i class="mi mi-google-plus mi-1x"></i> Iniciar Sesión con Google+</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 {% endblock %}
