@@ -34,6 +34,7 @@ class UserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields): 
         extra_fields.setdefault('is_superuser', False)
         extra_fields.setdefault('is_staff', False)
+        extra_fields.setdefault('tipo',1)
         return self._create_user(email, password, **extra_fields) 
  
     def create_superuser(self, email, password, **extra_fields): 
@@ -60,7 +61,7 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
     apellido_paterno = models.CharField(max_length=50, null=False, blank=False) 
     apellido_materno = models.CharField(max_length=50, null=False, blank=False) 
     email = models.EmailField(_('email address'), unique=True, blank=False) 
-    tipo = models.PositiveSmallIntegerField(choices=USER_TYPE_CHOICES) 
+    tipo = models.PositiveSmallIntegerField(choices=USER_TYPE_CHOICES, default=1) 
     username = models.CharField(max_length=50, null=True, blank=True)
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
