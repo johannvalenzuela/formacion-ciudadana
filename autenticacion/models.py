@@ -54,12 +54,12 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
     '''  
     Clase de usuario del sistema  
     ''' 
-    nombre = models.CharField(max_length=50, null=False, blank=False) 
-    rut = models.CharField(max_length=15, null=False, unique=True, blank=False) 
+    nombre = models.CharField(max_length=50, null=True, blank=True) 
+    rut = models.CharField(max_length=15, null=True, unique=True, blank=True) 
     num_documento = models.CharField(max_length=15, null=True, unique=True, blank=True) 
     fecha_nacimiento = models.DateField(auto_now=False, auto_now_add=False, null=True, blank=True) 
-    apellido_paterno = models.CharField(max_length=50, null=False, blank=False) 
-    apellido_materno = models.CharField(max_length=50, null=False, blank=False) 
+    apellido_paterno = models.CharField(max_length=50, null=True, blank=True) 
+    apellido_materno = models.CharField(max_length=50, null=True, blank=True) 
     email = models.EmailField(_('email address'), unique=True, blank=False) 
     tipo = models.PositiveSmallIntegerField(choices=USER_TYPE_CHOICES, default=1) 
     username = models.CharField(max_length=50, null=True, blank=True)

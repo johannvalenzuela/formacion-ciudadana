@@ -35,11 +35,13 @@
                   <div class="text-center">
                     <span>o</span>
                   </div>
-                  <button type="submit" class="btn btn-primary btn-block">
-                    <i class="mi mi-facebook-official mi-1x"></i> Iniciar Sesión con Facebook</button>
-                  <button type="submit" class="btn btn-warning btn-block">
-                    <i class="mi mi-google-plus mi-1x"></i> Iniciar Sesión con Google+</button>
                 </form>
+                <a href="{% url 'social:begin' 'facebook' %}">
+                  <button class="btn btn-primary btn-block">
+                  <i class="mi mi-facebook-official mi-1x"></i> Iniciar Sesión con Facebook</button>
+                </a>
+                  <button class="btn btn-warning btn-block">
+                    <i class="mi mi-google-plus mi-1x"></i> Iniciar Sesión con Google+</button>
               </div>
             </div>
           </div>
