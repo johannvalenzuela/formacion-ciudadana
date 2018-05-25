@@ -1,0 +1,20 @@
+<style>
+    img{
+        width: 300px;
+    }
+</style>
+
+{% load static %} {% if lista_recursos %}
+{% for recurso in lista_recursos %}
+<figure>
+    <a href="#ACA HACE ABRIR EL ARCHIVO PRINCIPAL DEL RECURSO"><p>{{ recurso.titulo }}</p></a>
+    <p>{{ recurso.descripcion }}</p>
+    <img src="media/{{ recurso.imagen_descriptiva }}" alt="">
+    <p>{{ recurso.valoracion }}</p>
+    <p>{{ recurso.fecha_creacion }}</p>
+</figure>
+{% endfor %}
+{% else %}
+No existen recursos en estos momentos.
+
+{% endif %}
