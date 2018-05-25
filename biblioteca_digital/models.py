@@ -1,21 +1,41 @@
 from django.db import models
 from datetime import datetime
 import os
-from uuid import uuid4
+from django.conf import settings
 
-def update_filename(instance, filename):
+TEMA_ALTERNATIVAS = (
+    (1, 'formacion ciudadana'),
+    (2, 'convivencia escolar'),
+    (3, 'otros'),
+)
+
+def update_imagen(instance, filename):
     upload_to = 'recursos/' + instance.titulo
     ext = filename.split('.')[-1]
     filename = '{}_{}.{}'.format(instance.titulo,'img_des', ext)
     return os.path.join(upload_to, filename)
 
+def update_filename(instance, filename):
+    upload_to = 'recursos/' + instance.titulo
+    ext = filename.split('.')[-1]
+    filename = '{}.{}'.format(instance.titulo, ext)
+    return os.path.join(upload_to, filename)
 
 class Recurso(models.Model):
     titulo = models.CharField(max_length = 255, blank = False, null = False, unique=True)
     descripcion = models.CharField(max_length = 255, blank = False, null = False)
-    imagen_descriptiva = models.FileField(upload_to=update_filename)
+    imagen_descriptiva = models.FileField(upload_to=update_filename, null = False)
     valoracion = models.IntegerField(default=0)
-    fecha_creacion = models.DateTimeField(default=datetime.now, blank=True)
+    fecha_creacion = models.DateTimeField(default=datetime.now)
+    tema = models.PositiveSmallIntegerField(choices=TEMA_ALTERNATIVAS,default=1)
+    archivo = models.FileField(upload_to=update_filename, null = False)
+    #autor = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
 
     def __str__(self):
         return '%s' % (self.titulo)
+
+class ComentarioRecurso(models.Model):
+    #autorComentario = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
+    recurso = models.ForeignKey('Recurso',on_delete=models.CASCADE)
+    comentario = models.CharField(max_length= 255, blank=False)
+    fecha_creacion = models.DateTimeField(default=datetime.now, blank=True)
