@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views import generic
-from .models import Consulta
+from .models import Consulta, Consulta_propuesta
 from .forms import ConsultaPropuestaForm, ConsultaForm
 
 
@@ -50,3 +50,20 @@ class ResponderConsultaView(generic.TemplateView):
     '''
     model = Consulta
     template_name = 'consulta/responder_consulta.html'
+  
+    def votar(request, propuesta_id):
+    '''
+    Funcion para realizar la votación
+    '''
+    propuesta = get_object_or_404(Consulta_propuesta, pk=propuesta_id)
+    try:
+        propuesta_seleccionada = propuesta.choice_set.get(pk=request.POST['eleccion'])
+    except (KeyError, Consulta_propuesta.DoesNotExist):
+        return render(request, 'consulta/responder_consulta.html',{
+            'propuesta': propuesta,
+            'error_message': "Usted no seleccionó ninguna propuesta",
+        })
+    else:
+        propuesta_seleccionada.votos +=1
+        propuesta_seleccionada.save()
+    return HttpResponseRedirect(reverse('consulta:detalles_consulta', args=(propuesta.id,)))
