@@ -1,14 +1,15 @@
 from django import forms
 from .models import Consulta, Consulta_propuesta, Consulta_respuesta
 from datetime import datetime
+from django.forms.widgets import SelectDateWidget
 
 class ConsultaForm(forms.ModelForm):
     '''
     Formulario para la creacion de la consulta
     '''
     titulo = forms.CharField()
-    fecha_finalizacion = models.DateField(widget=SelectDateWidget, initial=datetime.now) 
-    fecha_inicio = models.DateField(widget=SelectDateWidget, initial=datetime.now) 
+    fecha_finalizacion = forms.DateField(widget=SelectDateWidget, initial=datetime.now) 
+    fecha_inicio = forms.DateField(widget=SelectDateWidget, initial=datetime.now) 
     descripcion = forms.CharField(widget= forms.Textarea) 
 
     class Meta:
@@ -22,7 +23,7 @@ class ConsultaPropuestaForm(forms.Form):
     '''
     titulo = forms.CharField()
     descripcion = forms.CharField(widget= forms.Textarea) 
-    contenido = models.TextField(widget= forms.Textarea) 
+    contenido = forms.CharField(widget= forms.Textarea) 
     class Meta:
             model = Consulta_propuesta
             fields = ('titulo', 'descripcion', 'contenido')
