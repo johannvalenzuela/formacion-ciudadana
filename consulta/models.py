@@ -26,7 +26,8 @@ class Consulta_propuesta(models.Model):
     descripcion = models.CharField(max_length = 255) 
     fecha_creacion = models.DateField("%d-%m-%Y", default=datetime.now) 
     contenido = models.TextField() 
-    consulta = models.ForeignKey('Consulta', on_delete = models.CASCADE) 
+    consulta = models.ForeignKey('Consulta', on_delete = models.CASCADE)
+    votos = models.PositiveIntegerField(default=0) 
     def __str__(self): 
         return (self.titulo) 
   
