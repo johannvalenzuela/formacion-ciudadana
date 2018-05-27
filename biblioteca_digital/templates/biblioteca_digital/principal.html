@@ -1,20 +1,212 @@
-<style>
-    img{
-        width: 300px;
-    }
-</style>
+{% load static %}
 
-{% load static %} {% if lista_recursos %}
-{% for recurso in lista_recursos %}
-<figure>
-    <a href="#ACA HACE ABRIR EL ARCHIVO PRINCIPAL DEL RECURSO"><p>{{ recurso.titulo }}</p></a>
-    <p>{{ recurso.descripcion }}</p>
-    <img src="media/{{ recurso.imagen_descriptiva }}" alt="">
-    <p>{{ recurso.valoracion }}</p>
-    <p>{{ recurso.fecha_creacion }}</p>
-</figure>
-{% endfor %}
-{% else %}
-No existen recursos en estos momentos.
+<!DOCTYPE html>
+<html lang="en">
 
-{% endif %}
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <title>Recursos Academicos</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+    <!-- Fluent Kit CSS -->
+    <link href={% static 'css/fluent-kit.min.css'%} rel="stylesheet">
+    <link href={% static 'css/styles.css'%} rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="wrapper">
+        <nav id="sidebar" class="mCustomScrollbar _mCS_1 mCS-autoHide mCS_no_scrollbar" style="overflow: visible;">
+            <div id="mCSB_1" class="mCustomScrollBox mCS-minimal mCSB_vertical mCSB_outside" style="max-height: none;" tabindex="0">
+                <div id="mCSB_1_container" class="mCSB_container mCS_y_hidden mCS_no_scrollbar_y" style="position:relative; top:0; left:0;"
+                    dir="ltr">
+                    <div class="sidebar-header">
+                        <h3>Logo</h3>
+                    </div>
+
+                    <ul class="list-unstyled components">
+                        <li>
+                            <a href="#">
+                                <i class="mi mi-Home"></i> Inicio</a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="mi mi-ChatBubbles"></i> Mensajes</a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="mi mi-Education"></i> Alumnos</a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="mi mi-Education"></i> Apoderados</a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="mi mi-People"></i> Grupos</a>
+                        </li>
+                        <li class="active">
+                            <a href="#">
+                                <i class="mi mi-Library"></i> Recursos Académicos</a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="mi mi-Megaphone"></i> Consultas Ciudadanas</a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="mi mi-Feedback"></i> Foro</a>
+                        </li>
+                        <!-- <li>
+                            <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">Home</a>
+                            <ul class="collapse list-unstyled" id="homeSubmenu">
+                                <li>
+                                    <a href="#">Home 1</a>
+                                </li>
+                                <li>
+                                    <a href="#">Home 2</a>
+                                </li>
+                                <li>
+                                    <a href="#">Home 3</a>
+                                </li>
+                            </ul>
+                        </li> -->
+                    </ul>
+                </div>
+            </div>
+            <div id="mCSB_1_scrollbar_vertical" class="mCSB_scrollTools mCSB_1_scrollbar mCS-minimal mCSB_scrollTools_vertical" style="display: none;">
+                <div class="mCSB_draggerContainer">
+                    <div id="mCSB_1_dragger_vertical" class="mCSB_dragger" style="position: absolute; min-height: 50px; height: 0px; top: 0px;">
+                        <div class="mCSB_dragger_bar" style="line-height: 50px;"></div>
+                    </div>
+                    <div class="mCSB_draggerRail"></div>
+                </div>
+            </div>
+        </nav>
+        <!-- END SIDEBAR -->
+
+        <!-- Page Content Holder -->
+        <div id="content">
+
+            <nav class="navbar sticky-top navbar-dark bg-light fixed-nav mb-auto">
+                <div class="navbar-header">
+                    <button type="button" id="sidebarCollapse" class="btn btn-primary navbar-btn">
+                        <i class="mi mi-List mi-1x"></i>
+                        <span>Ocultar Panel</span>
+                    </button>
+                </div>
+
+                <ul class="nav justify-content-end">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Mensajes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Notificaciones</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Usuario</a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="#">Ver Perfil</a>
+                            <a class="dropdown-item" href="#">Cambiar Contraseña</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Cerrar Sesión</a>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+
+            <!-- {% if lista_recursos %} {% for recurso in lista_recursos %}
+            <figure>
+                <a href="{{ recurso }}">
+                    <p>{{ recurso.titulo }}</p>
+                </a>
+                <p>{{ recurso.descripcion }}</p>
+                <img src="media/{{ recurso.imagen_descriptiva }}" alt="">
+                <p>{{ recurso.valoracion }}</p>
+                <p>{{ recurso.fecha_creacion }}</p>
+            </figure>
+            {% endfor %} {% else %} No existen recursos en estos momentos. {% endif %} -->
+
+            <!-- <a href="#{ACA HACE ABRIR EL ARCHIVO PRINCIPAL DEL RECURSO}"><p>{{ recurso.titulo }}</p></a> -->
+
+            <h2>Recursos Académicos</h2>
+            <div class="section-resources">
+                <div class="container" style="padding: 1.5rem">
+                    <br>
+                    <div class="row">
+                        <div class="col-md-12 ml-auto mr-auto">
+
+                            {% if lista_recursos %} {% for recurso in lista_recursos %}
+                            <div class="card col-md-12">
+                                <img class="card-img-top " src="media/{{ recurso.imagen_descriptiva }}" alt="{{ recurso.titulo }}">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ recurso.titulo }}</h5>
+                                    <p class="card-text">{{ recurso.descripcion }}</p>
+                                    <p>{{ recurso.valoracion }}</p>
+                                    <span style="color: gray;">{{ recurso.fecha_creacion }}</span>
+                                </div>
+                                <div class="card-body text-right">
+                                    <a href="#" class="card-link">Ver Detalles</a>
+                                    <a href="#" class="card-link">Descargar</a>
+                                </div>
+                            </div>
+                            {% endfor %} {% else %} No existen recursos en estos momentos. {% endif %}
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- JavaScript dependencies -->
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <!-- Popper -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
+        crossorigin="anonymous"></script>
+    <!-- Bootstrap JavaScript -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
+        crossorigin="anonymous"></script>
+    <!-- Fluent Kit JavaScript -->
+    <script src={% static 'js/fluent-kit.min.js'%}></script>
+    <script>
+        window.onscroll = () => {
+            const nav = document.querySelector('#navBarSection');
+            if (nav) {
+                if (this.scrollY <= 50) nav.className = 'navbar fixed-top navbar-expand-lg navbar-transparent'; else nav.className = 'navbar navbar-expand-lg sticky-top navbar-light bg-light py-2 shadow';
+            }
+        }; 
+    </script>
+
+
+    <!--
+        NUEVO 
+    -->
+    <!-- jQuery Custom Scroller CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#sidebar").mCustomScrollbar({
+                theme: "minimal"
+            });
+
+            $('#sidebarCollapse').on('click', function () {
+                $('#sidebar, #content').toggleClass('active');
+                $('.collapse.in').toggleClass('in');
+                $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+            });
+        });
+    </script>
+</body>
+
+</html>
