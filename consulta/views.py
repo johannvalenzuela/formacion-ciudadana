@@ -36,9 +36,10 @@ class ConsultaVisualizarPropuestaView(generic.CreateView):
     form_class = ConsultaPropuestaForm
     template_name = 'consulta/visualizar_propuesta_consulta.html'
 
-class ResultadoConsultaView(generic.DetailView):
+class DetallesConsultaView(generic.DetailView):
     '''
-    Muesta la vista del resultado de una consulta en especifico
+    Muesta la vista de una consulta en especifico
+    donde se mostraran los detalles de ella
     '''
     model = Consulta
     template_name = 'consulta/resultado_consulta.html'
