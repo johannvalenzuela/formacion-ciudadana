@@ -338,10 +338,3 @@ h2, h3, h4, h5 {
         line-height: 1.2rem;
     }
 }
-
-.star-rating {
-    line-height:32px;
-    font-size:1.25em;
-  }
-  
-.star-rating .fa-star{color: yellow;}
