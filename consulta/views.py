@@ -13,7 +13,7 @@ class VisualizarConsultasView(generic.ListView):
 
     def get_queryset(self):
         """Retorna las consultas."""
-        return Consulta.objects.all()
+        return Consulta.objects.order_by('-fecha_inicio')
 
 class CrearConsultaView(generic.CreateView):
     '''
@@ -52,18 +52,18 @@ class ResponderConsultaView(generic.TemplateView):
     template_name = 'consulta/responder_consulta.html'
   
     def votar(request, propuesta_id):
-    '''
-    Funcion para realizar la votación
-    '''
-    propuesta = get_object_or_404(Consulta_propuesta, pk=propuesta_id)
-    try:
-        propuesta_seleccionada = propuesta.choice_set.get(pk=request.POST['eleccion'])
-    except (KeyError, Consulta_propuesta.DoesNotExist):
-        return render(request, 'consulta/responder_consulta.html',{
-            'propuesta': propuesta,
-            'error_message': "Usted no seleccionó ninguna propuesta",
-        })
-    else:
-        propuesta_seleccionada.votos +=1
-        propuesta_seleccionada.save()
-    return HttpResponseRedirect(reverse('consulta:detalles_consulta', args=(propuesta.id,)))
+        '''
+        Funcion para realizar la votación
+        '''
+        propuesta = get_object_or_404(Consulta_propuesta, pk=propuesta_id)
+        try:
+            propuesta_seleccionada = propuesta.choice_set.get(pk=request.POST['eleccion'])
+        except (KeyError, Consulta_propuesta.DoesNotExist):
+            return render(request, 'consulta/responder_consulta.html',{
+                'propuesta': propuesta,
+                'error_message': "Usted no seleccionó ninguna propuesta",
+            })
+        else:
+            propuesta_seleccionada.votos +=1
+            propuesta_seleccionada.save()
+        return HttpResponseRedirect(reverse('consulta:detalles_consulta', args=(propuesta.id,)))
