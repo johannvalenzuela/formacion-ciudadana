@@ -136,11 +136,10 @@
 
             <h2>Recursos Académicos</h2>
             <div class="section-resources">
-                <div class="container" style="padding: 1.5rem">
+                <div class="container" style="padding: .5rem 1.5rem">
                     <br>
                     <div class="row">
                         <div class="col-md-12 ml-auto mr-auto">
-
                             {% if lista_recursos %} {% for recurso in lista_recursos %}
                             <div class="card col-md-12">
                                 <img class="card-img-top " src="media/{{ recurso.imagen_descriptiva }}" alt="{{ recurso.titulo }}">
@@ -156,7 +155,7 @@
                                 </div>
                             </div>
                             {% endfor %} {% else %} No existen recursos en estos momentos. {% endif %}
-                            
+
                         </div>
                     </div>
                 </div>
@@ -206,6 +205,7 @@
                 $('a[aria-expanded=true]').attr('aria-expanded', 'false');
             });
         });
+
     </script>
 </body>
 
