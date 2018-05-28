@@ -9,7 +9,7 @@ class BibliotecaView(generic.ListView):
 
     def get_queryset(self):
         """Retorna los 5 recursos mejor valorados."""
-        return Recurso.objects.order_by('valoracion')[:5]
+        return Recurso.objects.order_by('valoracionTotal')[:5]
 
 class RecursoDetailView(generic.DetailView):
     model = Recurso
