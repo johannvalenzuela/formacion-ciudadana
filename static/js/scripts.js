@@ -5,6 +5,20 @@
     }
 }; 
 
+var $star_rating = $('.star-rating .mi');
+
+var SetRatingStar = function() {
+  return $star_rating.each(function() {
+    if (parseInt($star_rating.siblings('input.rating-value').val()) >= parseInt($(this).data('rating'))) {
+      return $(this).removeClass('mi-FavoriteStar').addClass('mi-FavoriteStarFill');
+    } else {
+      return $(this).removeClass('mi-FavoriteStarFill').addClass('mi-FavoriteStar');
+    }
+  });
+};
+
+SetRatingStar();
+
 $(document).ready(function () {
     $("#sidebar").mCustomScrollbar({
         theme: "minimal"

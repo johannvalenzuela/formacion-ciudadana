@@ -125,40 +125,32 @@
                 </ul>
             </nav>
 
-            <!-- {% if lista_recursos %} {% for recurso in lista_recursos %}
-            <figure>
-                <a href="{{ recurso }}">
-                    <p>{{ recurso.titulo }}</p>
-                </a>
-                <p>{{ recurso.descripcion }}</p>
-                <img src="media/{{ recurso.imagen_descriptiva }}" alt="">
-                <p>{{ recurso.valoracion }}</p>
-                <p>{{ recurso.fecha_creacion }}</p>
-            </figure>
-            {% endfor %} {% else %} No existen recursos en estos momentos. {% endif %} -->
-
-            <!-- <a href="#{ACA HACE ABRIR EL ARCHIVO PRINCIPAL DEL RECURSO}"><p>{{ recurso.titulo }}</p></a> -->
-
             <h2>Recursos Académicos</h2>
             <div class="section-resources">
                 <div class="container" style="padding: .5rem 1.5rem">
                     <br>
                     <div class="row">
                         <div class="col-md-12 ml-auto mr-auto">
-                            {% if lista_recursos %} {% for recurso in lista_recursos %}
-                            
-                            <!-- <a href=""><p>{{ recurso.titulo }}</p></a> -->
 
+                            {% if lista_recursos %} {% for recurso in lista_recursos %}
                             <div class="card col-md-12">
                                 <img class="card-img-top " src="media/{{ recurso.imagen_descriptiva }}" alt="{{ recurso.titulo }}">
                                 <div class="card-body">
                                     <h5 class="card-title">{{ recurso.titulo }}</h5>
                                     <p class="card-text">{{ recurso.descripcion }}</p>
+                                    <div class="star-rating">
+                                        <span class="mi mi-FavoriteStar" data-rating="1"></span>
+                                        <span class="mi mi-FavoriteStar" data-rating="2"></span>
+                                        <span class="mi mi-FavoriteStar" data-rating="3"></span>
+                                        <span class="mi mi-FavoriteStar" data-rating="4"></span>
+                                        <span class="mi mi-FavoriteStar" data-rating="5"></span>
+                                        <input type="hidden" name="whatever1" class="rating-value" value="{{ recurso.valoracion }}">
+                                    </div>
                                     <p>{{ recurso.valoracion }}</p>
                                     <span style="color: gray;">{{ recurso.fecha_creacion }}</span>
                                 </div>
                                 <div class="card-body text-right">
-                                    <a href="#" class="card-link">Ver Detalles</a>
+                                    <a href="{{ recurso.id }}" class="card-link">Ver Detalles</a>
                                     <a href="#" class="card-link">Descargar</a>
                                 </div>
                             </div>

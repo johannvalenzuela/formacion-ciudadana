@@ -10,3 +10,11 @@ class BibliotecaView(generic.ListView):
     def get_queryset(self):
         """Retorna los 5 recursos mejor valorados."""
         return Recurso.objects.order_by('valoracion')[:5]
+
+class RecursoDetailView(generic.DetailView):
+    model = Recurso
+    template_name = 'biblioteca_digital/recurso.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
