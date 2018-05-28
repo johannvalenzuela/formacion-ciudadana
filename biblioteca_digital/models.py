@@ -25,7 +25,7 @@ class Recurso(models.Model):
     titulo = models.CharField(max_length = 255, blank = False, null = False, unique=True)
     descripcion = models.CharField(max_length = 255, blank = False, null = False)
     imagen_descriptiva = models.FileField(upload_to=update_filename, null = False)
-    valoracion = models.IntegerField(default=0)
+    valoracion = models.FloatField(default=0)
     fecha_creacion = models.DateTimeField(default=datetime.now)
     tema = models.PositiveSmallIntegerField(choices=TEMA_ALTERNATIVAS,default=1)
     archivo = models.FileField(upload_to=update_filename, null = False)
