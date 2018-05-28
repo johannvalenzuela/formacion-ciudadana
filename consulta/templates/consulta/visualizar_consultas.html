@@ -1,7 +1,9 @@
 {% extends 'consulta/base2.html'%}
+
 {% block titulo %}
 <title>Consultas Ciudadanas</title>
 {% endblock %}
+
 {% block navbar %}
 <ul class="list-unstyled components">
     <li>
@@ -52,7 +54,7 @@
     </li> -->
 </ul>
 {% endblock %} {% block content %}
-<h2>Consultas Ciudadanas</h2>
+<h2>Consultas Ciudadanas</h2> <a href={% url 'crear_consulta' %}><button type="button" class="btn btn-primary">Crear</button></a>
 <div class="section-resources">
     <div class="container" style="padding: .5rem 1.5rem">
         <br>
