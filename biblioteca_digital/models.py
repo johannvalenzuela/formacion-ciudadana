@@ -30,7 +30,7 @@ class Recurso(models.Model):
     archivo = models.FileField(upload_to=update_filename, null = False)
     valoracionTotal = models.FloatField(default=0)
     cant_valoracion = models.PositiveIntegerField(default=0)
-    autor = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
+    #autor = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
 
     def setValoracion(valoracionNueva):
         self.cant_valoracion +=1
@@ -42,13 +42,13 @@ class Recurso(models.Model):
         return '%s' % (self.titulo)
 
 class ComentarioRecurso(models.Model):
-    autorComentario = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
+    #autorComentario = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
     recurso = models.ForeignKey('Recurso',on_delete=models.CASCADE)
     comentario = models.CharField(max_length= 255, blank=False)
     fecha_creacion = models.DateTimeField(default=datetime.now, blank=True)
 
 class ValoracionRecurso(models.Model):
-    usuario = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
+    #usuario = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
     recurso = models.ForeignKey('Recurso',on_delete=models.CASCADE)
     valoracion = models.FloatField(default=0)
     
