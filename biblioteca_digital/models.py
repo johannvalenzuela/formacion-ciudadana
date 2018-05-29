@@ -10,13 +10,13 @@ TEMA_ALTERNATIVAS = (
 )
 
 def update_imagen(instance, filename):
-    upload_to = 'recursos/' + instance.titulo
+    upload_to = 'recursos/'
     ext = filename.split('.')[-1]
     filename = '{}_{}.{}'.format(instance.titulo,'img_des', ext)
     return os.path.join(upload_to, filename)
 
 def update_filename(instance, filename):
-    upload_to = 'recursos/' + instance.titulo
+    upload_to = 'recursos/'
     ext = filename.split('.')[-1]
     filename = '{}.{}'.format(instance.titulo, ext)
     return os.path.join(upload_to, filename)
