@@ -1,6 +1,9 @@
 from django.shortcuts import render
 from .models import Recurso, ValoracionRecurso
 from django.views import generic
+from django.http import HttpResponse
+from django.shortcuts import get_object_or_404
+
 
 class BibliotecaView(generic.ListView):
     template_name = 'biblioteca_digital/principal.html'
@@ -25,14 +28,17 @@ class RecursoDetailView(generic.DetailView):
         '''
         return ValoracionRecurso.objects.filter(usuario=usuario, recurso=recurso).exists()
 
-    def valorar(request, recurso_id, autor_id, valoracion):
+    def valorar(request, pk):
         '''
         Funcion para realizar la valoración
         '''
-        usuario = settings.AUTH_USER_MODEL.objects.get(autor_id)
-        recurso = Recurso.objects.get(id=recurso_id)
+        recurso = get_object_or_404(Recurso,pk=pk)
+        user = request.user
+        valoracion = request.POST['valoracion']
+
         if not yaValoro(usuario, recurso):
             ValoracionRecurso.objects.create(usuario=usuario, recurso=recurso, valoracion=valoracion)
             recurso.setValoracion(valoracion)
             recurso.save()
+
 
