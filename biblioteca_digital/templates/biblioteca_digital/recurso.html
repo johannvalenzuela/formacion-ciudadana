@@ -39,7 +39,6 @@
 </head>
 
 <body>
-
     <div class="wrapper">
         <nav id="sidebar" class="mCustomScrollbar _mCS_1 mCS-autoHide mCS_no_scrollbar" style="overflow: visible;">
             <div id="mCSB_1" class="mCustomScrollBox mCS-minimal mCSB_vertical mCSB_outside" style="max-height: none;" tabindex="0">
@@ -132,13 +131,13 @@
                 </ul>
             </nav>
 
-            <div class="container" style="padding: .5rem 1.5rem;">
+            <div class="container-fluid" style="padding: .5rem 1.5rem;">
                 <div class="section-things" style="border-radius: .25rem .25rem 0 0; padding-bottom: 2rem;">
-                    <div class="container">
+                    <div class="container-fluid">
                         <div class="row">
                             <div class="col-md-12 ml-auto mr-auto text-center">
                                 {% if object %}
-                                <div class="section-description mt-4">
+                                <div class="section-description mt-2">
                                     <img class="card-img-top " src="../media/{{ object.imagen_descriptiva }}" alt="{{ object.titulo }}" style="border-radius: 10rem">
                                     <div class="star-rating">
                                         <span class="mi mi-FavoriteStar" data-rating="1"></span>
@@ -146,7 +145,7 @@
                                         <span class="mi mi-FavoriteStar" data-rating="3"></span>
                                         <span class="mi mi-FavoriteStar" data-rating="4"></span>
                                         <span class="mi mi-FavoriteStar" data-rating="5"></span>
-                                        <input type="hidden" name="whatever1" class="rating-value" value="{{ object.valoracion }}">
+                                        <input type="hidden" name="whatever1" class="rating-value" value="{{ object.valoracionTotal }}">
                                     </div>
                                     <span>Creado el {{ object.fecha_creacion }}</span>
                                     <h3 class="title m-0">
@@ -172,19 +171,26 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-12 ml-auto mr-auto">
+                    <div class="col-md-12 ml-auto mr-auto text-center">
 
                         {% if object %}
-                        <div class="card col-md-12">
-                            <img class="card-img-top " src="../media/{{ object.imagen_descriptiva }}" alt="{{ object.titulo }}">
-                            <div class="card-body">
-                                <h5 class="card-title">{{ object.titulo }}</h5>
-                                <!-- <iframe width="600" height="800" frameborder="0" src="http://docs.google.com/gview?url=https://dl.dropbox.com/s/tpxqmv0o39fd858/Proceso%20Administrativo.ppt&embedded=true"></iframe> -->
+                        <h5>Ejemplo con GView</h5>
 
-                              
-    
+                        <div class="card col-md-12">
+                            <!-- <img class="rounded mx-auto d-block m-4" src="../media/{{ object.archivo }}" alt="{{ object.titulo }}"> -->
+                            <iframe class="mx-auto m-4" width="100%" height="800" frameborder="0" src="http://docs.google.com/gview?url=https://dl.dropbox.com/s/tpxqmv0o39fd858/Proceso%20Administrativo.ppt&embedded=true"></iframe>
                         </div>
-                        {% else %} No existe este recurso {% endif %}
+                        <div class="card col-md-12">
+                            <h5>Comentarios</h5>
+                            <hr>
+
+                        </div>
+
+                     
+                        <!-- <iframe width="600" height="800" frameborder="0" src="http://docs.google.com/gview?url=https://dl.dropbox.com/s/tpxqmv0o39fd858/Proceso%20Administrativo.ppt&embedded=true"></iframe> -->
+
+
+                        {% else %} No existen comentarios{% endif %}
 
                     </div>
                 </div>
