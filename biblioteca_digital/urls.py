@@ -6,5 +6,10 @@ from django.conf import settings
 
 urlpatterns = [
     path('', views.BibliotecaView.as_view(), name='principal'),
-    path('<pk>/', views.RecursoDetailView.as_view(), name='recurso-detail')
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    path('<pk>/', views.RecursoDetailView.as_view(), name='recurso-detail'),
+    path('<pk>/', views.RecursoDetailView.valorar, name='valorar'), 
+]
+
+if  settings.DEBUG:
+     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
