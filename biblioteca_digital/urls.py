@@ -7,6 +7,6 @@ from django.conf import settings
 urlpatterns = [
     path('', views.BibliotecaView.as_view(), name='principal'),
     path('<pk>/', views.RecursoDetailView.as_view(), name='recurso-detail'),
-    path('<pk>/valorar/', views.RecursoDetailView.valorar, name='valorar'),
+    path('<pk>/<pk>/', views.RecursoDetailView.valorar, name='valorar'),
     
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
