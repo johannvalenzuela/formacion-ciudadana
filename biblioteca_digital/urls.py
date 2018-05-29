@@ -3,12 +3,14 @@ from django.urls import path, include
 from . import views
 from django.conf.urls.static import static
 from django.conf import settings
+from autenticacion.decorators import funcionario_required
+
 
 urlpatterns = [
-    path('', views.BibliotecaView.as_view()),
-    path('<pk>/', views.RecursoDetailView.as_view(), name='recurso-detail'),
-    path('<pk>/', views.RecursoDetailView.valorar, name='valorar'), 
-    path('<pk>/descargar/', views.descargar, name= 'descargar'),
+    path('', funcionario_required(views.BibliotecaView.as_view())),
+    path('<pk>/', funcionario_required(views.RecursoDetailView.as_view()), name='recurso-detail'),
+    path('<pk>/', funcionario_required(views.RecursoDetailView.valorar), name='valorar'), 
+    path('<pk>/descargar/', funcionario_required(views.descargar), name= 'descargar'),
 ]
 
 if  settings.DEBUG:
