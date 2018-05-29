@@ -4,12 +4,7 @@ from django.views import generic
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 from django.conf import settings
-from reportlab.pdfgen import canvas
 import os
-from django.http import Http404
-from wsgiref.util import FileWrapper
-from pathlib import Path
-from django.core.files import File
 
 class BibliotecaView(generic.ListView):
     template_name = 'biblioteca_digital/principal.html'
