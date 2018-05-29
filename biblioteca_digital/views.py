@@ -5,6 +5,11 @@ from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 from django.conf import settings
 from reportlab.pdfgen import canvas
+import os
+from django.http import Http404
+from wsgiref.util import FileWrapper
+from pathlib import Path
+from django.core.files import File
 
 class BibliotecaView(generic.ListView):
     template_name = 'biblioteca_digital/principal.html'
@@ -42,16 +47,17 @@ class RecursoDetailView(generic.DetailView):
             recurso.setValoracion(valoracion)
             recurso.save()
 
+def descargar(request, pk):
+    '''
+    Funcion para descargar archivo PDF
+    '''
+    recurso = Recurso.objects.get(pk=pk)
+    path= 'recursos/' + recurso.titulo
+    archivo = recurso.archivo
+    filename = os.path.join(settings.MEDIA_ROOT, path)
+    content = archivo.read()
+    response = HttpResponse(content, content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename='+recurso.titulo+".pdf"
+    return response
 
-def descargar(request, path):
-    '''
-        Funcion para descargar archivo PDF
-    '''
-    file_path = os.path.join(settings.MEDIA_ROOT, path)
-    if os.path.exists(file_path):
-        with open(file_path, 'rb') as fh:
-            response = HttpResponse(fh.read(), content_type="application/pdf")
-            response['Content-Disposition'] = 'inline; filename=' + os.path.basename(file_path)
-            return response
-    raise Http404
 
