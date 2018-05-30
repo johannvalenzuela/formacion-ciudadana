@@ -41,6 +41,8 @@ class RecursoDetailView(generic.DetailView):
             ValoracionRecurso.objects.create(usuario=usuario, recurso=recurso, valoracion=valoracion)
             recurso.setValoracion(valoracion)
             recurso.save()
+            return HttpResponse(True)
+        return HttpResponse(False)
 
 def descargar(request, pk):
     '''

@@ -9,7 +9,7 @@ from autenticacion.decorators import funcionario_required
 urlpatterns = [
     path('', funcionario_required(views.BibliotecaView.as_view())),
     path('<pk>/', funcionario_required(views.RecursoDetailView.as_view()), name='recurso-detail'),
-    path('<pk>/', funcionario_required(views.RecursoDetailView.valorar), name='valorar'), 
+    path('<pk>/valorar', funcionario_required(views.RecursoDetailView.valorar), name='valorar'), 
     path('<pk>/descargar/', funcionario_required(views.descargar), name= 'descargar'),
 ]
 
