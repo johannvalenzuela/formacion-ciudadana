@@ -45,14 +45,19 @@
                     {% if object %}
                     <div class="section-description mt-2">
                         <img class="card-img-top " src="../media/{{ object.imagen_descriptiva }}" alt="{{ object.titulo }}" style="border-radius: 10rem">
-                        <div class="star-rating">
-                            <span class="mi mi-FavoriteStar" data-rating="1"></span>
-                            <span class="mi mi-FavoriteStar" data-rating="2"></span>
-                            <span class="mi mi-FavoriteStar" data-rating="3"></span>
-                            <span class="mi mi-FavoriteStar" data-rating="4"></span>
-                            <span class="mi mi-FavoriteStar" data-rating="5"></span>
-                            <input type="hidden" name="whatever1" class="rating-value" value="{{ object.valoracionTotal }}">
-                        </div>
+                        <form class="form" method="POST" action="valorar">
+                            {% csrf_token %}
+                            <!-- {% if yaValoro == true %} -->
+                            <div class="star-rating">
+                                <span class="mi mi-FavoriteStar" data-rating="1"></span>
+                                <span class="mi mi-FavoriteStar" data-rating="2"></span>
+                                <span class="mi mi-FavoriteStar" data-rating="3"></span>
+                                <span class="mi mi-FavoriteStar" data-rating="4"></span>
+                                <span class="mi mi-FavoriteStar" data-rating="5"></span>
+                                <input type="submit" name="valoracion" class="rating-value" value="{{ object.valoracion }}">
+                            </div>
+                            <!-- {% endif %} -->
+                        </form>
                         <span>Creado el {{ object.fecha_creacion }}</span>
                         <h3 class="title m-0">
                             <strong>{{ object.titulo }}</strong>
