@@ -57,7 +57,6 @@ $('#sidebarCollapse').on('click', function () {
 });
 
 $(document).ready(function(){
-    var valorBoton =  $('#id_valoracion').val()
     $("#test-form").submit(function(e){
         e.preventDefault();    
         
