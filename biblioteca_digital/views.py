@@ -37,8 +37,8 @@ class RecursoDetailView(generic.DetailView):
         user = request.user
         valoracion = request.POST['valoracion']
 
-        if not yaValoro(usuario, recurso):
-            ValoracionRecurso.objects.create(usuario=usuario, recurso=recurso, valoracion=valoracion)
+        if not yaValoro(user, recurso):
+            ValoracionRecurso.objects.create(usuario=user, recurso=recurso, valoracion=valoracion)
             recurso.setValoracion(valoracion)
             recurso.save()
             return HttpResponse(True)
