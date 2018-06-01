@@ -23,12 +23,6 @@ class RecursoDetailView(generic.DetailView):
         context = super().get_context_data(**kwargs)
         return context
 
-    def yaValoro(usuario, recurso):
-        '''
-        Funcion que verifica si el usuario ya valoro anteriormente el recurso
-        '''
-        return ValoracionRecurso.objects.filter(usuario=usuario.id, recurso=recurso.id).exists()
-
     def valorar(request, pk):
         '''
         Funcion para realizar la valoración
@@ -36,8 +30,8 @@ class RecursoDetailView(generic.DetailView):
         recurso = get_object_or_404(Recurso,pk=pk)
         user = request.user
         valoracion = request.POST['valoracion']
-
-        if not yaValoro(user, recurso):
+        yaValoro = ValoracionRecurso.objects.filter(usuario=user.pk, recurso=recurso.pk).exists()
+        if yaValoro:
             ValoracionRecurso.objects.create(usuario=user, recurso=recurso, valoracion=valoracion)
             recurso.setValoracion(valoracion)
             recurso.save()
