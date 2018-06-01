@@ -31,15 +31,6 @@
               {% csrf_token %} 
               {{ form.non_field_errors }}
               <fieldset>
-                <label for="id_rut">RUT</label>
-                <input type="text" id="id_rut" maxlength="15" name="rut" required/>
-                {% if form.rut.errors %}
-                <div class="alert alert-danger pt-0" role="alert">
-                  <span>{{ form.rut.errors }}</span>
-                </div>
-                {% endif %}
-              </fieldset>
-              <fieldset>
                 <label for="id_nombre">Nombre</label>
                 <input type="text" id="id_nombre" maxlength="50" name="nombre" autocomplete="given-name" required/>
               </fieldset>
@@ -57,26 +48,6 @@
                 {% if form.email.errors %}
                 <div class="alert alert-danger pt-0" role="alert">
                   <span>{{ form.email.errors }}</span>
-                </div>
-                {% endif %}
-              </fieldset>
-              <!-- Hay que cambiar en Django el formato de la fecha -->
-              <fieldset>
-                <label for="id_fecha_nacimiento">Fecha de Nacimiento</label>
-                <input type="text" id="id_fecha_nacimiento" name="fecha_nacimiento" required/>
-                {% if form.fecha_nacimiento.errors %}
-                <div class="alert alert-danger pt-0" role="alert">
-                  <span>{{ form.fecha_nacimiento.errors }}</span>
-                </div>
-                {% endif %}
-              </fieldset>
-              <!--  -->
-              <fieldset>
-                <label for="id_num_documento">N° Documento</label>
-                <input type="number" id="id_num_documento" maxlength="15" name="num_documento" required/>
-                {% if form.num_documento.errors %}
-                <div class="alert alert-danger pt-0" role="alert">
-                  <span>{{ form.num_documento.errors }}</span>
                 </div>
                 {% endif %}
               </fieldset>

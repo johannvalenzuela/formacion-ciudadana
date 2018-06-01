@@ -9,8 +9,7 @@ class CustomUserCreationForm(UserCreationForm):
 
     class Meta(UserCreationForm.Meta):
         model = Usuario
-        fields = ('nombre', 'apellido_paterno','apellido_materno', 'email', 
-                    'fecha_nacimiento')
+        fields = ('nombre', 'apellido_paterno','apellido_materno', 'email',)
     
     fecha_nacimiento= forms.CharField(
         label=_("fecha de nacimiento"),
