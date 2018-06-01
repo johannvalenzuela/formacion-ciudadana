@@ -69,7 +69,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.media',
-
+                
                 'social_django.context_processors.backends',  
                 'social_django.context_processors.login_redirect', 
             ],
@@ -159,8 +159,17 @@ LOGOUT_REDIRECT_URL = 'home'
 
 AUTHENTICATION_BACKENDS = (
     'social_core.backends.facebook.FacebookOAuth2',
+    'social_core.backends.google.GoogleOpenId',
+    'social_core.backends.google.GoogleOAuth2',
+    'social_core.backends.google.GoogleOAuth',
     'django.contrib.auth.backends.ModelBackend',
 )
 
+SOCIAL_AUTH_URL_NAMESPACE = 'social'
+
 SOCIAL_AUTH_FACEBOOK_KEY = '842338069295982'  # App ID
 SOCIAL_AUTH_FACEBOOK_SECRET = 'c8710813191b2ed1e6d7de07f0333209'  # App Secret
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '108877853801-8sottm8jbh6ugmdr24m6ir71914cei34.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'Pgt2RRBIl9d2y7chIgkuUxtE'
+
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'db354e02.ngrok.io']
