@@ -33,6 +33,7 @@ class Recurso(models.Model):
     autor = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
 
     def setValoracion(self, valoracionNueva):
+        valoracionNueva = (int)(valoracionNueva)
         self.cant_valoracion +=1
         self.valoracionTotal = (self.valoracionTotal*self.cant_valoracion + valoracionNueva)/self.cant_valoracion
 
