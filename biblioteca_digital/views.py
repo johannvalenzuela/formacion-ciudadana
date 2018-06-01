@@ -27,7 +27,7 @@ class RecursoDetailView(generic.DetailView):
         '''
         Funcion que verifica si el usuario ya valoro anteriormente el recurso
         '''
-        return ValoracionRecurso.objects.get(usuario=usuario, recurso=recurso).exists()
+        return ValoracionRecurso.objects.filter(usuario=usuario.id, recurso=recurso.id).exists()
 
     def valorar(request, pk):
         '''
