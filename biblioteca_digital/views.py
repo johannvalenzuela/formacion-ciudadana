@@ -32,11 +32,11 @@ class RecursoDetailView(generic.DetailView):
         valoracion = request.POST['valoracion']
         yaValoro = ValoracionRecurso.objects.filter(usuario=user.pk, recurso=recurso.pk).exists()
         if yaValoro:
-            ValoracionRecurso.objects.create(usuario=user, recurso=recurso, valoracion=valoracion)
-            recurso.setValoracion(valoracion)
-            recurso.save()
-            return HttpResponse(True)
-        return HttpResponse(False)
+            return HttpResponse(False)
+        ValoracionRecurso.objects.create(usuario=user, recurso=recurso, valoracion=valoracion)
+        recurso.setValoracion(valoracion)
+        recurso.save()
+        return HttpResponse(True)
 
 def descargar(request, pk):
     '''
