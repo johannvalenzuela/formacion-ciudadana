@@ -32,9 +32,9 @@ class Recurso(models.Model):
     cant_valoracion = models.PositiveIntegerField(default=0)
     autor = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
 
-    def setValoracion(valoracionNueva):
+    def setValoracion(self, valoracionNueva):
         self.cant_valoracion +=1
-        self.valoracion = (self.valoracion*cant_valoracion + valoracionNueva)/self.cant_valoracion
+        self.valoracionTotal = (self.valoracionTotal*cant_valoracion + valoracionNueva)/self.cant_valoracion
 
 
 
@@ -51,4 +51,5 @@ class ValoracionRecurso(models.Model):
     usuario = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
     recurso = models.ForeignKey('Recurso',on_delete=models.CASCADE)
     valoracion = models.FloatField(default=0)
+
     
