@@ -56,20 +56,19 @@
         <br>
         <div class="row">
             <div class="col-md-12 ml-auto mr-auto">
-
                 {% if lista_recursos %} {% for recurso in lista_recursos %}
                 <div class="card col-md-12">
                     <img class="card-img-top " src="media/{{ recurso.imagen_descriptiva }}" alt="{{ recurso.titulo }}">
                     <div class="card-body">
                         <h5 class="card-title">{{ recurso.titulo }}</h5>
                         <p class="card-text">{{ recurso.descripcion }}</p>
-                        <div class="star-rating">
+                        <div class="total-star-rating">
                             <span class="mi mi-FavoriteStar" data-rating="1"></span>
                             <span class="mi mi-FavoriteStar" data-rating="2"></span>
                             <span class="mi mi-FavoriteStar" data-rating="3"></span>
                             <span class="mi mi-FavoriteStar" data-rating="4"></span>
                             <span class="mi mi-FavoriteStar" data-rating="5"></span>
-                            <input type="hidden" name="whatever1" class="rating-value" value="{{ recurso.valoracion }}">
+                            <input type="hidden" name="whatever1" class="total-rating-value" value="{{ recurso.valoracionTotal }}">
                         </div>
                         <p>{{ recurso.valoracion }}</p>
                         <span style="color: gray;">{{ recurso.fecha_creacion }}</span>

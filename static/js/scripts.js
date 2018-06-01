@@ -5,7 +5,18 @@ window.onscroll = () => {
     }
 };
 
+var $total_star_rating = $('.total-star-rating .mi');
 var $star_rating = $('.star-rating .mi');
+
+var showRatingStar = function () {
+    return $total_star_rating.each(function () {
+        if (parseInt($total_star_rating.siblings('input.total-rating-value').val()) >= parseInt($(this).data('rating'))) {
+            return $(this).removeClass('mi-FavoriteStar').addClass('mi-FavoriteStarFill');
+        } else {
+            return $(this).removeClass('mi-FavoriteStarFill').addClass('mi-FavoriteStar');
+        }
+    });
+};
 
 var SetRatingStar = function () {
     return $star_rating.each(function () {
@@ -22,6 +33,7 @@ $star_rating.on('click', function () {
     return SetRatingStar();
 });
 
+showRatingStar();
 SetRatingStar();
 
 $(document).ready(function () {
@@ -42,4 +54,20 @@ $('#sidebarCollapse').on('click', function () {
     } else if ($('#show-panel').css('display') != 'none') {
         $('#hide-panel').show().siblings('span').hide();
     }
+});
+
+$(document).on('submit', 'test-form', function(e){
+    e.preventDefault();
+
+    $.ajax({
+        type: 'POST',
+        url: '/valorar',
+        data: {
+            valoracion:$('#valoracion').val(),
+            csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+        },
+        success:function(m){
+            alert('votacion').html(m);
+        }
+    });
 });
