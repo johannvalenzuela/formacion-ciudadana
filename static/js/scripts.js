@@ -56,18 +56,18 @@ $('#sidebarCollapse').on('click', function () {
     }
 });
 
-$(document).on('submit', 'test-form', function(e){
-    e.preventDefault();
 
+function valorEstrella(estrella){
+    var valorEstrella = estrella.getAttribute("data-rating");
+   alert(valorEstrella);
     $.ajax({
-        type: 'POST',
-        url: '/valorar',
-        data: {
-            valoracion:$('#valoracion').val(),
-            csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
-        },
+        url: 'valorar',
+        type: "POST",
+        data: {valoracion: valorEstrella},
         success:function(m){
-            alert('votacion').html(m);
-        }
+            alert('funcionó');
+        },
     });
-});
+    
+}
+
