@@ -5,24 +5,31 @@ from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 from django.conf import settings
 import os
+from autenticacion.decorators import funcionario_required
+from django.utils.decorators import method_decorator
 
+@method_decorator(funcionario_required, name='get' )
 class BibliotecaView(generic.ListView):
     template_name = 'biblioteca_digital/principal.html'
     context_object_name = 'lista_recursos'
     form_class = 'BiblitecaForm'
 
+    
     def get_queryset(self):
         """Retorna los 5 recursos mejor valorados."""
         return Recurso.objects.order_by('valoracionTotal')[:5]
 
+@method_decorator(funcionario_required, name='get')
 class RecursoDetailView(generic.DetailView):
     model = Recurso
     template_name = 'biblioteca_digital/recurso.html'
 
+    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         return context
 
+    
     def valorar(request, pk):
         '''
         Funcion para realizar la valoración
@@ -38,6 +45,7 @@ class RecursoDetailView(generic.DetailView):
         recurso.save()
         return HttpResponse(True)
 
+@funcionario_required
 def descargar(request, pk):
     '''
     Funcion para descargar archivo PDF
