@@ -35,7 +35,7 @@ class Recurso(models.Model):
     def setValoracion(self, valoracionNueva):
         valoracionNueva = (int)(valoracionNueva)
         self.cant_valoracion +=1
-        self.valoracionTotal = (self.valoracionTotal*self.cant_valoracion + valoracionNueva)/self.cant_valoracion
+        self.valoracionTotal = (self.valoracionTotal*(self.cant_valoracion-1) + valoracionNueva)/self.cant_valoracion
 
 
 
