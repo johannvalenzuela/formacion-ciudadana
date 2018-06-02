@@ -47,11 +47,11 @@
                         <img class="card-img-top " src="../media/{{ object.imagen_descriptiva }}" alt="{{ object.titulo }}" style="border-radius: 10rem">
 
                         <div class="star-rating">
-                            <span class="mi mi-FavoriteStar" data-rating="1" onclick="valorEstrella(this)"></span>
-                            <span class="mi mi-FavoriteStar" data-rating="2" onclick="valorEstrella(this)"></span>
-                            <span class="mi mi-FavoriteStar" data-rating="3" onclick="valorEstrella(this)"></span>
-                            <span class="mi mi-FavoriteStar" data-rating="4" onclick="valorEstrella(this)"></span>
-                            <span class="mi mi-FavoriteStar" data-rating="5" onclick="valorEstrella(this)"></span>
+                            <span class="mi mi-FavoriteStar" data-rating="1" onclick="valorEstrella(this,'{{csrf_token}}')"></span>
+                            <span class="mi mi-FavoriteStar" data-rating="2" onclick="valorEstrella(this,'{{csrf_token}}')"></span>
+                            <span class="mi mi-FavoriteStar" data-rating="3" onclick="valorEstrella(this,'{{csrf_token}}')"></span>
+                            <span class="mi mi-FavoriteStar" data-rating="4" onclick="valorEstrella(this,'{{csrf_token}}')"></span>
+                            <span class="mi mi-FavoriteStar" data-rating="5" onclick="valorEstrella(this,'{{csrf_token}}')"></span>
                             <input type="hiden" class="rating-value">
                         </div>
 

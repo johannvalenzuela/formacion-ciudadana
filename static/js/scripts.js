@@ -53,17 +53,18 @@ $('#sidebarCollapse').on('click', function () {
 });
 
 
-function valorEstrella(estrella){
+function valorEstrella(estrella, token){
     var valorEstrella = estrella.getAttribute("data-rating");
-   alert(valorEstrella);
     $.ajax({
-        url: 'valorar',
+        url: 'valorar/',
         type: "POST",
-        data: {valoracion: valorEstrella},
+        data: {valoracion: valorEstrella,
+            'csrfmiddlewaretoken': token
+        },
         success:function(m){
             alert('funcionó');
         },
     });
-    
+
 }
 
