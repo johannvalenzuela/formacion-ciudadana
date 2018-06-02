@@ -56,24 +56,18 @@ $('#sidebarCollapse').on('click', function () {
     }
 });
 
-$(document).ready(function(){
-    $("#test-form").submit(function(e){
-        e.preventDefault();    
-        
-        $.ajax({
-            type: 'POST',
-            url: '/valorar',
-            data: {
-                valoracion:$('#valoracion').val(),
-                csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
-            },
-            success:function(m){
-                alert('votacion').html(m);
-            }
-        });
 
-    })
+function valorEstrella(estrella){
+    var valorEstrella = estrella.getAttribute("data-rating");
+   alert(valorEstrella);
+    $.ajax({
+        url: 'valorar',
+        type: "POST",
+        data: {valoracion: valorEstrella},
+        success:function(m){
+            alert('funcionó');
+        },
+    });
     
-})
-
+}
 
