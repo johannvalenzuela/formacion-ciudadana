@@ -1,17 +1,22 @@
 from django import forms
 from .models import Recurso, ComentarioRecurso
 
+TEMA_ALTERNATIVAS = (
+    (1, 'formacion ciudadana'),
+    (2, 'convivencia escolar'),
+    (3, 'otros'),
+)
 
 class RecursoForm(forms.ModelForm):
     '''
-    Formulario para la creacion del recurso academico a traves de un 
-    usuario de formacion
+    Formulario para la creacion y modificacion del recurso academico
+    a traves de un usuario de formacion
     '''
-    titulo = forms.CharField(widget=forms.CharField)
+    titulo = forms.CharField()
     descripcion = forms.CharField(widget=forms.Textarea)
-    tema = forms.ChoiceField(widget=forms.ChoiceField)
-    imagen_descriptiva = forms.ImageField(widget=forms.ImageField)
-    archivo = forms.FileField(widget=forms.FileField)
+    tema = forms.ChoiceField(choices=TEMA_ALTERNATIVAS) 
+    imagen_descriptiva = forms.ImageField()
+    archivo = forms.FileField(widget=forms.FileInput)
 
     class Meta:
         model = Recurso
