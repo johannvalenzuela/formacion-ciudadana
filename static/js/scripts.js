@@ -68,10 +68,10 @@ function valorEstrella(estrella, token){
 
 }
 
-// Script para mostrar modal de editar recurso
+// Script para mostrar modal de editar o eliminar recurso
 $(document).ready(function () {
 
-    $(".contact").click(function (ev) { // for each edit contact url
+    $(".recurso").click(function (ev) { // for each edit contact url
         ev.preventDefault(); // prevent navigation
         var url = $(this).data("form"); // get the contact form url
         console.log(url);
