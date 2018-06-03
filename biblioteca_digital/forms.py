@@ -7,11 +7,15 @@ class RecursoForm(forms.ModelForm):
     Formulario para la creacion del recurso academico a traves de un 
     usuario de formacion
     '''
+    titulo = forms.CharField(widget=forms.CharField)
     descripcion = forms.CharField(widget=forms.Textarea)
+    tema = forms.ChoiceField(widget=forms.ChoiceField)
+    imagen_descriptiva = forms.ImageField(widget=forms.ImageField)
+    archivo = forms.FileField(widget=forms.FileField)
 
     class Meta:
         model = Recurso
-        fields = ('titulo', 'descripcion','imagen_descriptiva',)
+        fields = ('titulo', 'descripcion','imagen_descriptiva','tema','archivo',)
 
 
 class ComentarioForm(forms.ModelForm):
