@@ -2,12 +2,13 @@ from django.shortcuts import render
 from .models import Recurso, ValoracionRecurso
 from django.views import generic
 from django.http import HttpResponse
+from django.urls import reverse_lazy
 from django.shortcuts import get_object_or_404
 from django.conf import settings
 import os
 from autenticacion.decorators import funcionario_required
 from django.utils.decorators import method_decorator
-from .forms import  ComentarioForm
+from .forms import ComentarioForm, RecursoForm
 
 @method_decorator(funcionario_required, name='get' )
 class BibliotecaView(generic.ListView):
@@ -28,7 +29,6 @@ class RecursoDetailView(generic.DetailView):
         context = super().get_context_data(**kwargs)
         return context
 
-    
     def valorar(request, pk):
         '''
         Funcion para realizar la valoración
@@ -58,4 +58,14 @@ def descargar(request, pk):
     response['Content-Disposition'] = 'attachment; filename='+recurso.titulo+".pdf"
     return response
 
+class RecursoCreateView(generic.CreateView):
+    model = Recurso
+    template_name = 'biblioteca_digital/principal.html'
+    form_class = RecursoForm
 
+class RecursoUpdateView(generic.UpdateView):
+    model = Recurso
+    template_name = 'biblioteca_digital/editar-recurso.html'
+    fields = ['titulo','descripcion', 'imagen_descriptiva', 'tema', 'archivo']
+    # form_class = RecursoForm
+    success_url = reverse_lazy('recursos-list')
