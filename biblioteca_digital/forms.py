@@ -1,6 +1,5 @@
 from django import forms
-from .models import Recurso
-
+from .models import Recurso, ComentarioRecurso
 
 
 class RecursoForm(forms.ModelForm):
@@ -11,6 +10,16 @@ usuario de formacion
     descripcion = forms.CharField(widget=forms.Textarea)
 
     class Meta:
-            model = Recurso
-            fields = ('titulo', 'descripcion','imagen_descriptiva',)
+        model = Recurso
+        fields = ('titulo', 'descripcion','imagen_descriptiva',)
 
+
+class ComentarioForm(form.ModelForm):
+'''
+Formulario para el ingreso de comentario de un recurso en especifico
+'''
+    comentario = forms.CharField(widget=forms.Textarea)
+
+    class Meta:
+        model = ComentarioRecurso
+        fields = ('comentario')
