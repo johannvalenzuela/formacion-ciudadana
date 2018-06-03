@@ -70,3 +70,10 @@ class RecursoUpdateView(generic.UpdateView):
     fields = ['titulo','descripcion', 'imagen_descriptiva', 'tema', 'archivo']
     # form_class = RecursoForm
     success_url = reverse_lazy('biblioteca_digital')
+
+class RecursoDeleteView(generic.DeleteView):
+    model = Recurso
+    template_name = 'biblioteca_digital/eliminar-recurso.html'
+    # fields = ['titulo','descripcion', 'imagen_descriptiva', 'tema', 'archivo']
+    form_class = RecursoForm
+    success_url = reverse_lazy('biblioteca_digital')
