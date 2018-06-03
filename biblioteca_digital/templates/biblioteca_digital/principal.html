@@ -75,6 +75,11 @@
                     </div>
                     <div class="card-body text-right">
                         <a href="{{ recurso.id }}" class="card-link">Ver Detalles</a>
+                        <!-- Button trigger modal -->
+                        <a class="contact" href="" data-form="{% url 'recurso-update' recurso.pk %}" type="button" data-toggle="modal" data-target="#exampleModal">Editar</a>
+                        <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                            Launch demo modal
+                        </button> -->
                         <a href=" {{ recurso.id }}/descargar/" class="card-link">Descargar</a>
                     </div>
                 </div>
@@ -84,5 +89,7 @@
         </div>
     </div>
 </div>
+
+<div class="modal" id="recursoModal"></div>
 
 {% endblock content %}
