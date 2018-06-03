@@ -7,7 +7,9 @@ from django.conf import settings
 import os
 from autenticacion.decorators import funcionario_required
 from django.utils.decorators import method_decorator
-from .forms import  ComentarioForm
+from .forms import  ComentarioForm, RecursoForm
+from django.urls import reverse_lazy
+
 
 @method_decorator(funcionario_required, name='get' )
 class BibliotecaView(generic.ListView):
@@ -58,4 +60,9 @@ def descargar(request, pk):
     response['Content-Disposition'] = 'attachment; filename='+recurso.titulo+".pdf"
     return response
 
+@method_decorator(funcionario_required, name='get' )
+class CrearRecursoView(generic.CreateView):
+    form_class = RecursoForm
+    success_url = reverse_lazy('biblioteca_digital')
+    template_name = 'biblioteca_digital/recurso_nuevo.html'
 
