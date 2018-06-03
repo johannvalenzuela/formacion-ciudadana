@@ -8,7 +8,7 @@ from django.conf import settings
 import os
 from autenticacion.decorators import funcionario_required
 from django.utils.decorators import method_decorator
-from .forms import ComentarioForm, RecursoForm
+from .forms import  ComentarioForm, RecursoForm
 
 @method_decorator(funcionario_required, name='get' )
 class BibliotecaView(generic.ListView):

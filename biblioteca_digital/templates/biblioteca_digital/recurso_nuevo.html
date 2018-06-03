@@ -1,0 +1,64 @@
+{% extends 'compumundohipermegared.html' %} {% block titulo %}
+<title>Crear Recurso Académico</title>
+{% endblock %} {% block navbar %}
+<ul class="list-unstyled components">
+    <li>
+        <a href="#">
+            <i class="mi mi-Home"></i> Inicio</a>
+    </li>
+    <li>
+        <a href="#">
+            <i class="mi mi-ChatBubbles"></i> Mensajes</a>
+    </li>
+    <li>
+        <a href="#">
+            <i class="mi mi-Education"></i> Alumnos</a>
+    </li>
+    <li>
+        <a href="#">
+            <i class="mi mi-Education"></i> Apoderados</a>
+    </li>
+    <li>
+        <a href="#">
+            <i class="mi mi-People"></i> Grupos</a>
+    </li>
+    <li class="active">
+        <a href="#">
+            <i class="mi mi-Library"></i> Recursos Académicos</a>
+    </li>
+    <li>
+        <a href="#">
+            <i class="mi mi-Megaphone"></i> Consultas Ciudadanas</a>
+    </li>
+    <li>
+        <a href="#">
+            <i class="mi mi-Feedback"></i> Foro</a>
+    </li>
+    <!-- <li>
+        <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">Home</a>
+        <ul class="collapse list-unstyled" id="homeSubmenu">
+            <li>
+                <a href="#">Home 1</a>
+            </li>
+            <li>
+                <a href="#">Home 2</a>
+            </li>
+            <li>
+                <a href="#">Home 3</a>
+            </li>
+        </ul>
+    </li> -->
+</ul>
+{% endblock %}{% block content %}
+<table>
+    <form method="POST">
+    <tr>
+        <td>{{ form.as_table }}</td>
+    </tr>
+    <tr>
+        <td><button class="btn btn-primary btn-block" type="submit">Guardar</button></td>
+    </tr>
+    </form>
+</table>
+
+{% endblock content %}
