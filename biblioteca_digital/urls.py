@@ -10,6 +10,7 @@ urlpatterns = [
     path('', views.BibliotecaView.as_view(), name='biblioteca_digital'),
     path('<pk>/', views.RecursoDetailView.as_view(), name='recurso-detail'),
     path('<pk>/editar', views.RecursoUpdateView.as_view(), name='recurso-update'),
+    path('<pk>/eliminar', views.RecursoDeleteView.as_view(), name='recurso-delete'),
     path('<pk>/valorar/', views.RecursoDetailView.valorar, name='valorar'), 
     path('<pk>/descargar/', views.descargar, name= 'descargar'),
     path('recurso_nuevo/', views.CrearRecursoView.as_view(), name='recurso_nuevo'),
