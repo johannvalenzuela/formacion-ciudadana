@@ -58,14 +58,15 @@ def descargar(request, pk):
     response['Content-Disposition'] = 'attachment; filename='+recurso.titulo+".pdf"
     return response
 
-class RecursoCreateView(generic.CreateView):
-    model = Recurso
-    template_name = 'biblioteca_digital/principal.html'
-    form_class = RecursoForm
+@method_decorator(funcionario_required, name='get' ) 
+class CrearRecursoView(generic.CreateView): 
+    form_class = RecursoForm 
+    success_url = reverse_lazy('biblioteca_digital') 
+    template_name = 'biblioteca_digital/recurso_nuevo.html' 
 
 class RecursoUpdateView(generic.UpdateView):
     model = Recurso
     template_name = 'biblioteca_digital/editar-recurso.html'
     fields = ['titulo','descripcion', 'imagen_descriptiva', 'tema', 'archivo']
     # form_class = RecursoForm
-    success_url = reverse_lazy('recursos-list')
+    success_url = reverse_lazy('biblioteca_digital')
