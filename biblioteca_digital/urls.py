@@ -7,10 +7,12 @@ from autenticacion.decorators import funcionario_required
 
 
 urlpatterns = [
-    path('', views.BibliotecaView.as_view()),
+    path('', views.BibliotecaView.as_view(), name='recursos-list'),
     path('<pk>/', views.RecursoDetailView.as_view(), name='recurso-detail'),
+    path('<pk>/editar', views.RecursoUpdateView.as_view(), name='recurso-update'),
     path('<pk>/valorar/', views.RecursoDetailView.valorar, name='valorar'), 
     path('<pk>/descargar/', views.descargar, name= 'descargar'),
+
 ]
 
 if  settings.DEBUG:
