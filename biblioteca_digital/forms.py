@@ -16,11 +16,11 @@ class RecursoForm(forms.ModelForm):
     descripcion = forms.CharField(widget=forms.Textarea)
     tema = forms.ChoiceField(choices=TEMA_ALTERNATIVAS) 
     imagen_descriptiva = forms.ImageField()
-    archivo = forms.FileField(widget=forms.FileInput)
+    archivo = forms.FileField()
 
     class Meta:
         model = Recurso
-        fields = ('titulo', 'descripcion','imagen_descriptiva','tema','archivo',)
+        fields = ('titulo', 'descripcion','tema','imagen_descriptiva','archivo',)
 
 
 class ComentarioForm(forms.ModelForm):
