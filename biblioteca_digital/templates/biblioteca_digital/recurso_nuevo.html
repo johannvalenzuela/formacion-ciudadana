@@ -51,12 +51,13 @@
 </ul>
 {% endblock %}{% block content %}
 <table>
-    <form method="POST">
+    <form method="POST" enctype="multipart/form-data" action="">
+    {% csrf_token %}
     <tr>
         <td>{{ form.as_table }}</td>
     </tr>
     <tr>
-        <td><button class="btn btn-primary btn-block" type="submit">Guardar</button></td>
+        <td><input class="btn btn-primary btn-block" type="submit" value="Guardar"></td>
     </tr>
     </form>
 </table>
