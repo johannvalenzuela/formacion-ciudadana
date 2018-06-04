@@ -149,6 +149,9 @@ body{
     .login-section::after {
         height: 605px;
     }
+    .grid-container{
+        grid-auto-columns: 1fr;
+    }
 }
 
 @media only screen and (max-width: 766px) {
@@ -158,14 +161,12 @@ body{
     }
 }
 
-
 #botonCrearRecurso{
     float: right;
     padding: 10px;
     margin-top: 20px;
     width: 220px;
 }
-
 
 /*Library*/
 a, a:hover, a:focus {
@@ -286,6 +287,9 @@ ul ul a {
     .card {
         flex-direction: column !important;
     }
+    .grid-container {
+        grid-template-columns: 1fr;
+    }
 }
 
 .fixed-nav {
@@ -345,4 +349,38 @@ h2, h3, h4, h5, h6 {
         padding: 0;
         line-height: 1.2rem;
     }
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    padding: 1rem;
+    gap: 1rem;
+}
+
+.grid-item {
+    display: grid;
+    background-color:#fff;
+    width: auto;
+    /* border: 1px solid gray; */
+    box-shadow: 0 1px 3px rgba(0,0,0,.25);
+    border-radius: .25rem;
+}
+
+.img-resource {
+    object-fit: cover;
+    border-radius: 4px 4px 0 0;
+    width: 100%; 
+    height: 100%;
+    opacity: .8;
+}
+
+.overlay-image {
+    background-image: -webkit-gradient(linear,left top,left bottom,from(rgba(0,0,0,.1)),to(rgba(0,0,0,.7)));
+    background-image: linear-gradient(180deg,rgba(0,0,0,.1),rgba(0,0,0,.7));
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    content: "";
 }
