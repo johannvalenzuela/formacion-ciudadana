@@ -34,60 +34,93 @@
         <a href="#">
             <i class="mi mi-Feedback"></i> Foro</a>
     </li>
-    <!-- <li>
-        <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">Home</a>
-        <ul class="collapse list-unstyled" id="homeSubmenu">
-            <li>
-                <a href="#">Home 1</a>
-            </li>
-            <li>
-                <a href="#">Home 2</a>
-            </li>
-            <li>
-                <a href="#">Home 3</a>
-            </li>
-        </ul>
-    </li> -->
 </ul>
+
 {% endblock %} {% block content %}
 <!-- Pondre el boton por aqui por mientras-->
-<a href="recurso_nuevo"><button id="botonCrearRecurso" class="btn btn-primary btn-block">Crear Recurso académico</button></a>
-<h2>Recursos Académicos</h2>
+<a href="recurso_nuevo">
+    <button id="botonCrearRecurso" class="btn btn-primary btn-block mb-4">Crear recurso académico</button>
+</a>
+<div class="card col-md-12 ">
+    <div class="card-body">
+        <h3 class="card-title">Recursos Académicos</h3>
+        <p class="card-text">Bienvenido a la sección de los
+            <strong>recursos académicos</strong>. Aquí podrá
+            <strong>crear</strong>,
+            <strong>editar</strong>,
+            <strong>eliminar</strong>, entre otros. </p>
+    </div>
+</div>
 <div class="section-resources">
-    <div class="container" style="padding: .5rem 1.5rem">
-        <br>
+    <div class="container">
         <div class="row">
-            <div class="col-md-12 ml-auto mr-auto">
-                {% if lista_recursos %} {% for recurso in lista_recursos %}
-                <div class="card col-md-12">
-                    <img class="card-img-top " src="media/{{ recurso.imagen_descriptiva }}" alt="{{ recurso.titulo }}">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ recurso.titulo }}</h5>
-                        <p class="card-text">{{ recurso.descripcion }}</p>
-                        <div class="total-star-rating">
-                            <span class="mi mi-FavoriteStar" data-rating="1"></span>
-                            <span class="mi mi-FavoriteStar" data-rating="2"></span>
-                            <span class="mi mi-FavoriteStar" data-rating="3"></span>
-                            <span class="mi mi-FavoriteStar" data-rating="4"></span>
-                            <span class="mi mi-FavoriteStar" data-rating="5"></span>
-                            <input type="hidden" name="whatever1" class="total-rating-value" value="{{ recurso.valoracionTotal }}">
+            <div class="col-md-12 ml-auto mr-auto p-0">
+                <div class="grid-container">
+                    {% if lista_recursos %} {% for recurso in lista_recursos %}
+                    <div class="grid-item">
+                        <div style="height: 150px;">
+                            <div class="overlay-image">
+                                <img class="img-resource" src="media/{{ recurso.imagen_descriptiva }}">
+                            </div>
+                            <!-- <img class="img-resource" src="media/{{ recurso.imagen_descriptiva }}"> -->
+                            <div class="d-flex align-items-end flex-column position-relative" style="bottom: 9.4rem; right: 5px">
+                                <div class="p-2">
+                                    {% if recurso.tema == 1 %}
+                                    <span class="badge badge-pill badge-primary">Formación Ciudadana</span>
+                                    {% elif recurso.tema == 2 %}
+                                    <span class="badge badge-pill badge-primary">Convivencia Escolar</span>
+                                    {% else %}
+                                    <span class="badge badge-pill badge-primary">Otros</span>
+                                    {% endif %}
+                                </div>
+                                <div class="total-star-rating mr-2">
+                                    <span class="mi mi-FavoriteStar text-white" data-rating="1"></span>
+                                    <span class="mi mi-FavoriteStar text-white" data-rating="2"></span>
+                                    <span class="mi mi-FavoriteStar text-white" data-rating="3"></span>
+                                    <span class="mi mi-FavoriteStar text-white" data-rating="4"></span>
+                                    <span class="mi mi-FavoriteStar text-white" data-rating="5"></span>
+                                    <input type="hidden" name="valoracion" class="total-rating-value" value="{{ recurso.valoracionTotal }}">
+                                </div>
+                            </div>
                         </div>
-                        <p>{{ recurso.valoracion }}</p>
-                        <span style="color: gray;">{{ recurso.fecha_creacion }}</span>
-                    </div>
-                    <div class="card-body text-right">
-                        <a href="{{ recurso.id }}" class="card-link">Ver Detalles</a>
-                        <!-- Button trigger modal -->
-                        <a class="recurso" href="" data-form="{% url 'recurso-update' recurso.pk %}" type="button" data-toggle="modal" data-target="#exampleModal">Editar</a>
-                        <a class="recurso" href="" data-form="{% url 'recurso-delete' recurso.pk %}" type="button" data-toggle="modal" data-target="#exampleModal">Eliminar</a>
-                        <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                            Launch demo modal
-                        </button> -->
-                        <a href=" {{ recurso.id }}/descargar/" class="card-link">Descargar</a>
-                    </div>
-                </div>
-                {% endfor %} {% else %} No existen recursos en estos momentos. {% endif %}
+                        <div class="m-2">
+                            <div class="font-italic mr-2 pb-3">
+                                <span>
+                                    Creado por
+                                    <strong>{{ recurso.autor }}</strong> el
+                                    <strong>{{ recurso.fecha_creacion }}</strong>
+                                </span>
+                            </div>
+                            <div class="text-uppercase">
+                                <h4>
+                                    <strong>{{ recurso.titulo }}</strong>
+                                </h4>
+                            </div>
+                            <div class="text-justify">
+                                <p>{{ recurso.descripcion }}</p>
+                            </div>
+                        </div>
+                        <div class="text-right mb-2 mr-2">
+                            <div class="dropdown show">
+                                <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false">
+                                    Opciones
+                                </a>
 
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                    <a class="dropdown-item" href="{{ recurso.id }}">Ver detalles</a>
+                                    <a class="recurso dropdown-item" data-form="{% url 'recurso-update' recurso.pk %}" data-toggle="modal" data-target="#recursoModal">Editar</a>
+                                    <a class="recurso dropdown-item" data-form="{% url 'recurso-delete' recurso.pk %}" data-toggle="modal" data-target="#recursoModal">Eliminar</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="{{ recurso.id }}/descargar/">Descargar</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {% endfor %} {% else %} No existen recursos en estos momentos. {% endif %}
+
+                </div>
             </div>
         </div>
     </div>
