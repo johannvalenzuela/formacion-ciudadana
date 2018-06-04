@@ -74,8 +74,8 @@ class CrearRecursoView(generic.CreateView):
 @method_decorator(funcionario_required, name='get')
 class RecursoUpdateView(generic.UpdateView):
     model = Recurso
-    template_name = 'biblioteca_digital/editar-recurso.html'
     form_class = RecursoForm
+    template_name = 'biblioteca_digital/editar-recurso.html'
     success_url = reverse_lazy('biblioteca_digital')
 
     
