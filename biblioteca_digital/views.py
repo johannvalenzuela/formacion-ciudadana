@@ -10,6 +10,7 @@ from autenticacion.decorators import funcionario_required
 from django.utils.decorators import method_decorator
 from .forms import  ComentarioForm, RecursoForm
 
+
 @method_decorator(funcionario_required, name='get' )
 class BibliotecaView(generic.ListView):
     template_name = 'biblioteca_digital/principal.html'
@@ -17,9 +18,10 @@ class BibliotecaView(generic.ListView):
 
     def get_queryset(self):
         """Retorna los 5 recursos mejor valorados."""
-        return Recurso.objects.order_by('valoracionTotal')[:5]
+        return Recurso.objects.order_by('valoracionTotal')[:10]
 
 @method_decorator(funcionario_required, name='get')
+@method_decorator(funcionario_required, name='valorar')
 class RecursoDetailView(generic.DetailView):
     model = Recurso
     template_name = 'biblioteca_digital/recurso.html'
@@ -58,22 +60,28 @@ def descargar(request, pk):
     response['Content-Disposition'] = 'attachment; filename='+recurso.titulo+".pdf"
     return response
 
-@method_decorator(funcionario_required, name='get' ) 
+@method_decorator(funcionario_required, name='get' )
 class CrearRecursoView(generic.CreateView): 
     form_class = RecursoForm 
-    success_url = reverse_lazy('biblioteca_digital') 
-    template_name = 'biblioteca_digital/recurso_nuevo.html' 
+    template_name = 'biblioteca_digital/recurso_nuevo.html'
+    success_url = reverse_lazy('biblioteca_digital')
 
+    def form_valid(self, form):  
+        form.instance.autor = self.request.user
+        form.save()
+        return super().form_valid(form)
+
+@method_decorator(funcionario_required, name='get')
 class RecursoUpdateView(generic.UpdateView):
     model = Recurso
     template_name = 'biblioteca_digital/editar-recurso.html'
-    fields = ['titulo','descripcion', 'imagen_descriptiva', 'tema', 'archivo']
-    # form_class = RecursoForm
+    form_class = RecursoForm
     success_url = reverse_lazy('biblioteca_digital')
 
+    
+
+@method_decorator(funcionario_required, name='get')
 class RecursoDeleteView(generic.DeleteView):
     model = Recurso
     template_name = 'biblioteca_digital/eliminar-recurso.html'
-    # fields = ['titulo','descripcion', 'imagen_descriptiva', 'tema', 'archivo']
-    form_class = RecursoForm
     success_url = reverse_lazy('biblioteca_digital')
