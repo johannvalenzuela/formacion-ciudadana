@@ -15,10 +15,11 @@ from django.shortcuts import redirect
 class BibliotecaView(generic.ListView):
     template_name = 'biblioteca_digital/principal.html'
     context_object_name = 'lista_recursos'
+    paginate_by = 10
 
     def get_queryset(self):
-        """Retorna los 5 recursos mejor valorados."""
-        return Recurso.objects.order_by('valoracionTotal')[:10]
+        """Retorna los recursos ordenados desde el más valorado al menos."""
+        return Recurso.objects.order_by('valoracionTotal')
 
 @method_decorator(funcionario_required, name='get')
 class RecursoDetailView(generic.DetailView):
