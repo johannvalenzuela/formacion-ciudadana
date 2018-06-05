@@ -21,14 +21,3 @@ class RecursoForm(forms.ModelForm):
     class Meta:
         model = Recurso
         fields = ('titulo', 'descripcion','tema','imagen_descriptiva','archivo',)
-
-
-class ComentarioForm(forms.ModelForm):
-    '''
-    Formulario para el ingreso de comentario de un recurso en especifico
-    '''
-    comentario = forms.CharField(widget=forms.Textarea)
-
-    class Meta:
-        model = ComentarioRecurso
-        fields = ('comentario',)
