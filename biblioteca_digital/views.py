@@ -76,7 +76,9 @@ class RecursoUpdateView(generic.UpdateView):
     model = Recurso
     fields = ['titulo', 'descripcion','tema','imagen_descriptiva','archivo',]
     template_name_suffix = '_update_form'
-    success_url = reverse_lazy('biblioteca_digital')
+
+    def get_success_url(self):
+	    return reverse_lazy('recurso-detail', kwargs={'pk': self.object.pk})
     
 
 @method_decorator(funcionario_required, name='get')
