@@ -23,7 +23,7 @@
             <i class="mi mi-People"></i> Grupos</a>
     </li>
     <li class="active">
-        <a href="#">
+        <a href="{% url 'biblioteca_digital' %}">
             <i class="mi mi-Library"></i> Recursos Académicos</a>
     </li>
     <li>
@@ -70,6 +70,12 @@
                         </h6>
                         <h4 class="description">{{ object.descripcion }}</h4>
                     </div>
+                    <a class="recurso btn btn-primary" data-form="{% url 'recurso-update' recurso.pk %}" data-toggle="modal" data-target="#recursoModal">
+                        <i class="mi mi-Edit mi-4x"></i> Editar
+                    </a>
+                    <a class="recurso btn btn-danger" data-form="{% url 'recurso-delete' recurso.pk %}" data-toggle="modal" data-target="#recursoModal">
+                        <i class="mi mi-Download mi-4x"></i> Eliminar
+                    </a>
                     <a href="descargar/" class="btn btn-default">
                         <i class="mi mi-Download mi-4x"></i> Descargar
                     </a>
@@ -103,4 +109,6 @@
         </div>
     </div>
 </div>
+
+<div class="modal" id="recursoModal"></div>
 {% endblock %}

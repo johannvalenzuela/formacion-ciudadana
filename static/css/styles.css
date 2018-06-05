@@ -161,13 +161,6 @@ body{
     }
 }
 
-#botonCrearRecurso{
-    float: right;
-    padding: 10px;
-    margin-top: 20px;
-    width: 220px;
-}
-
 /*Library*/
 a, a:hover, a:focus {
     color: inherit;
