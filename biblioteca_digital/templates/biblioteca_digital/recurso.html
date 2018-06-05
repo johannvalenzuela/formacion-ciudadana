@@ -71,17 +71,14 @@
                         <h4 class="description">{{ object.descripcion }}</h4>
                     </div>
                     {% if object.autor == user %}
-                        <a class="recurso btn btn-primary" data-form="{% url 'recurso-update' recurso.pk %}" data-toggle="modal" data-target="#recursoModal">
-                            <i class="mi mi-Edit mi-4x"></i> Editar
-                        </a>
-                        <a class="recurso btn btn-danger" data-form="{% url 'recurso-delete' recurso.pk %}" data-toggle="modal" data-target="#recursoModal">
-                            <i class="mi mi-Download mi-4x"></i> Eliminar
-                        </a>
-                        
-                    {% else %}
-                    {% endif %}
-                    
-                    {% endif %}
+                    <a class="recurso btn btn-primary" data-form="{% url 'recurso-update' recurso.pk %}" data-toggle="modal" data-target="#recursoModal">
+                        <i class="mi mi-Edit mi-4x"></i> Editar
+                    </a>
+                    <a class="recurso btn btn-danger" data-form="{% url 'recurso-delete' recurso.pk %}" data-toggle="modal" data-target="#recursoModal">
+                        <i class="mi mi-Download mi-4x"></i> Eliminar
+                    </a>
+
+                    {% else %} {% endif %} {% endif %}
                     <a href="descargar/" class="btn btn-default">
                         <i class="mi mi-Download mi-4x"></i> Descargar
                     </a>
@@ -89,55 +86,58 @@
             </div>
         </div>
     </div>
+
     <div class="row">
         <div class="col-md-12 ml-auto mr-auto text-center">
 
+            <h5>Ejemplo con GView</h5>
 
-    <h5>Ejemplo con GView</h5>
-
-    <div class="card col-md-12">
-        <!-- <img class="rounded mx-auto d-block m-4" src="../media/{{ object.archivo }}" alt="{{ object.titulo }}"> -->
-        <iframe class="mx-auto m-4" width="100%" height="800" frameborder="0" src="http://docs.google.com/gview?url=https://dl.dropbox.com/s/tpxqmv0o39fd858/Proceso%20Administrativo.ppt&embedded=true"></iframe>
-    </div>
-    <div class="card col-md-12">
-    <table>
-        <form action="comentar" method="POST">
-            {% csrf_token %}
-            <tr>
-                <td><p>Agrega un comentario</p></td>
-            </tr>
-            <tr>
-                <td><textarea name="comentario" id="comentario" cols="50" rows="10"></textarea>
-            </tr>
-            <tr>
-                <td><input class="btn btn-primary btn-block" type="submit" value="Comentar"></td>
-            </tr>
-            
-
-        </form>
-    </table>
-    </div>
-    <div>
-        <h5>Comentarios</h5>
-        {% for comentario in comentarios %}
-        <div>
-            <p>{{comentario.autorComentario}}</p>
-            <p>{{comentario.comentario}}</p>
-            <p>{{comentario.fecha_creacion}}</p>
-            <!-- Por hacer -->
-            {% if comentario.autorComentario == user %}
-                <p>Puede Borrar este comentario</p>
-                <p>Puede Modificar este comentario</p>
-            
-            {% else %}
-            {% endif %}
+            <div class="card col-md-12">
+                <!-- <img class="rounded mx-auto d-block m-4" src="../media/{{ object.archivo }}" alt="{{ object.titulo }}"> -->
+                <iframe class="mx-auto m-4" width="100%" height="800" frameborder="0" src="http://docs.google.com/gview?url=https://dl.dropbox.com/s/tpxqmv0o39fd858/Proceso%20Administrativo.ppt&embedded=true"></iframe>
+            </div>
+            <!-- <iframe width="600" height="800" frameborder="0" src="http://docs.google.com/gview?url=https://dl.dropbox.com/s/tpxqmv0o39fd858/Proceso%20Administrativo.ppt&embedded=true"></iframe> -->
         </div>
-        {% endfor %}
     </div>
 
+    <div class="row">
+        <div class="col-md-12 bg-white rounded p-4">
+            <div class="text-left pb-2">
+                <h4 class="font-weight-bold pb-2">Agrega un comentario</h4>
+            </div>
+            <form action="comentar" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <textarea class="form-control" name="comentario" id="comentario" rows="5"></textarea>
+                </div>
+                <div>
+                    <input class="btn btn-primary btn-block" type="submit" value="Comentar">
+                </div>
+                <hr>
+                <h4 class="font-weight-bold pb-2">Comentarios</h4>
+                <div class="border rounded p-2">
+                    {% for comentario in comentarios %}
+                    <div>
+                        <strong>{{comentario.autorComentario}}</strong>
+                        <small class="text-muted"> {{comentario.fecha_creacion}}</small>
+                        <p>{{comentario.comentario}}</p>
 
-    <!-- <iframe width="600" height="800" frameborder="0" src="http://docs.google.com/gview?url=https://dl.dropbox.com/s/tpxqmv0o39fd858/Proceso%20Administrativo.ppt&embedded=true"></iframe> -->
-    </div>
+                        <!-- Por hacer -->
+                        {% if comentario.autorComentario == user %}
+                        <div class="text-right">
+                            <div class="d-inline">
+                                <input class="btn btn-danger btn-sm" type="submit" value="Puede Modificar este comentario">
+                            </div>
+                            <div class="d-inline">
+                                <input class="btn btn-default btn-sm" type="submit" value="Puede Borrar este comentario">
+                            </div>
+                        </div>
+                        {% else %} {% endif %}
+                    </div>
+                    <hr> {% endfor %}
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 
