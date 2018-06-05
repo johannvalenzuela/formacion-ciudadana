@@ -149,8 +149,8 @@ body{
     .login-section::after {
         height: 605px;
     }
-    .grid-container{
-        grid-auto-columns: 1fr;
+    .grid-container {
+        display: block !important;
     }
 }
 
@@ -288,7 +288,7 @@ ul ul a {
         flex-direction: column !important;
     }
     .grid-container {
-        grid-template-columns: 1fr;
+        display: block !important;
     }
 }
 
