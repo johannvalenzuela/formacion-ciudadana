@@ -62,7 +62,7 @@ function valorEstrella(estrella, token){
             'csrfmiddlewaretoken': token
         },
         success:function(m){
-            alert('funcionó');
+            alert('Gracias por tu valoración');
         },
     });
 
