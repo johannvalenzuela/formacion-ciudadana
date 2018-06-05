@@ -362,9 +362,15 @@ h2, h3, h4, h5, h6 {
     display: grid;
     background-color:#fff;
     width: auto;
-    /* border: 1px solid gray; */
     box-shadow: 0 1px 3px rgba(0,0,0,.25);
     border-radius: .25rem;
+    transition: transform .2s;
+}
+
+.grid-item:hover {
+    -ms-transform: scale(1.03);
+    -webkit-transform: scale(1.03);
+    transform: scale(1.03);
 }
 
 .img-resource {
