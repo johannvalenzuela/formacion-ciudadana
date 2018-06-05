@@ -108,4 +108,18 @@ class RecursoDeleteView(generic.DeleteView):
     success_url = reverse_lazy('biblioteca_digital')
         
 
-        
+@method_decorator(funcionario_required, name='get')
+class ComentarioRecursoDeleteView(generic.DeleteView):
+    model = ComentarioRecurso
+    template_name_suffix = '_confirm_delete'
+    success_url = reverse_lazy('biblioteca_digital')
+
+
+@method_decorator(funcionario_required, name='get')
+class ComentarioRecursoUpdateView(generic.UpdateView):
+    model = ComentarioRecurso
+    fields = ['comentario']
+    template_name_suffix = '_update_form'
+
+    def get_success_url(self):
+	    return reverse_lazy('recurso-detail', kwargs={'pk': self.object.recurso.pk})
