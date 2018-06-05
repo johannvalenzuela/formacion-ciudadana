@@ -77,13 +77,14 @@
                         <a class="recurso btn btn-danger" data-form="{% url 'recurso-delete' recurso.pk %}" data-toggle="modal" data-target="#recursoModal">
                             <i class="mi mi-Download mi-4x"></i> Eliminar
                         </a>
-                        <a href="descargar/" class="btn btn-default">
-                            <i class="mi mi-Download mi-4x"></i> Descargar
-                        </a>
+                        
                     {% else %}
                     {% endif %}
                     
                     {% endif %}
+                    <a href="descargar/" class="btn btn-default">
+                        <i class="mi mi-Download mi-4x"></i> Descargar
+                    </a>
                 </div>
             </div>
         </div>
