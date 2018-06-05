@@ -180,6 +180,10 @@ a, a:hover, a:focus {
     box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
 }
 
+#autor_recurso{
+    text-transform: capitalize;
+}
+
 .navbar-btn {
     box-shadow: none;
     outline: none !important;
