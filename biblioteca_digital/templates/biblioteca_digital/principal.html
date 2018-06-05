@@ -58,6 +58,7 @@
                 <div class="grid-container">
                     {% if lista_recursos %} {% for recurso in lista_recursos %}
                     <div class="grid-item">
+                    <a href="{{ recurso.id }}">
                         <div style="height: 150px;">
                             <div class="overlay-image">
                                 <img class="img-resource" src="media/{{ recurso.imagen_descriptiva }}">
@@ -108,7 +109,6 @@
                                 </a>
 
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                    <a class="dropdown-item" href="{{ recurso.id }}">Ver detalles</a>
                                     <a class="recurso dropdown-item" data-form="{% url 'recurso-update' recurso.pk %}" data-toggle="modal" data-target="#recursoModal">Editar</a>
                                     <a class="recurso dropdown-item" data-form="{% url 'recurso-delete' recurso.pk %}" data-toggle="modal" data-target="#recursoModal">Eliminar</a>
                                     <div class="dropdown-divider"></div>
@@ -116,6 +116,7 @@
                                 </div>
                             </div>
                         </div>
+                    </a>
                     </div>
 
                     {% endfor %} {% else %} No existen recursos en estos momentos. {% endif %}
