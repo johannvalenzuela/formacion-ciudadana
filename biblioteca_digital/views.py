@@ -63,7 +63,7 @@ def descargar(request, pk):
 @method_decorator(funcionario_required, name='get' )
 class CrearRecursoView(generic.CreateView): 
     form_class = RecursoForm 
-    template_name = 'biblioteca_digital/recurso_nuevo.html'
+    template_name = 'biblioteca_digital/recurso_create_form.html'
     success_url = reverse_lazy('biblioteca_digital')
 
     def form_valid(self, form):  
@@ -74,14 +74,15 @@ class CrearRecursoView(generic.CreateView):
 @method_decorator(funcionario_required, name='get')
 class RecursoUpdateView(generic.UpdateView):
     model = Recurso
-    form_class = RecursoForm
-    template_name = 'biblioteca_digital/editar-recurso.html'
+    fields = ['titulo', 'descripcion','tema','imagen_descriptiva','archivo',]
+    template_name_suffix = '_update_form'
     success_url = reverse_lazy('biblioteca_digital')
-
     
 
 @method_decorator(funcionario_required, name='get')
 class RecursoDeleteView(generic.DeleteView):
     model = Recurso
-    template_name = 'biblioteca_digital/eliminar-recurso.html'
+    template_name_suffix = '_confirm_delete'
     success_url = reverse_lazy('biblioteca_digital')
+        
+        
