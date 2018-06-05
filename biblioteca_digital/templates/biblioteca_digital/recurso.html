@@ -113,33 +113,34 @@
                 <div>
                     <input class="btn btn-primary btn-block" type="submit" value="Comentar">
                 </div>
-                <hr>
-                <h4 class="font-weight-bold pb-2">Comentarios</h4>
-                <div class="border rounded p-2">
-                    {% for comentario in comentarios %}
-                    <div>
-                        <strong>{{comentario.autorComentario}}</strong>
-                        <small class="text-muted"> {{comentario.fecha_creacion}}</small>
-                        <p>{{comentario.comentario}}</p>
-
-                        <!-- Por hacer -->
-                        {% if comentario.autorComentario == user %}
-                        <div class="text-right">
-                            <div class="d-inline">
-                                <input class="btn btn-danger btn-sm" type="submit" value="Puede Modificar este comentario">
-                            </div>
-                            <div class="d-inline">
-                                <input class="btn btn-default btn-sm" type="submit" value="Puede Borrar este comentario">
-                            </div>
-                        </div>
-                        {% else %} {% endif %}
-                    </div>
-                    <hr> {% endfor %}
-                </div>
             </form>
+            <hr>
+            <h4 class="font-weight-bold pb-2">Comentarios</h4>
+
+            <div class="border rounded p-2">
+                {% if comentarios %} {% for comentario in comentarios %}
+                <div>
+                    <strong>{{comentario.autorComentario}}</strong>
+                    <small class="text-muted"> {{comentario.fecha_creacion}}</small>
+                    <p>{{comentario.comentario}}</p>
+
+                    <!-- Por hacer -->
+                    {% if comentario.autorComentario == user %}
+                    <div class="text-right">
+                        <div class="d-inline">
+                            <input class="btn btn-danger btn-sm" type="submit" value="Puede Modificar este comentario">
+                        </div>
+                        <div class="d-inline">
+                            <input class="btn btn-default btn-sm" type="submit" value="Puede Borrar este comentario">
+                        </div>
+                    </div>
+                    {% else %} {% endif %}
+                </div>
+                <hr> {% endfor %} {% else %}
+                <div class="text-center p-5"><i class="mi mi-EmojiTabTextSmiles mi-4x"></i> <br> Sé el primero en comentar este recurso académico</div> {% endif %}
+            </div>
         </div>
     </div>
-</div>
 
-<div class="modal" id="recursoModal"></div>
-{% endblock %}
+    <div class="modal" id="recursoModal"></div>
+    {% endblock %}
