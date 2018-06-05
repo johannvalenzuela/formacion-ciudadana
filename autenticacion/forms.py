@@ -11,11 +11,6 @@ class CustomUserCreationForm(UserCreationForm):
         model = Usuario
         fields = ('nombre', 'apellido_paterno','apellido_materno', 'email',)
     
-    fecha_nacimiento= forms.CharField(
-        label=_("fecha de nacimiento"),
-        widget=forms.DateInput,
-    )
-
     error_messages = {
         'password_mismatch': _("Los dos campos de contraseña no coinciden."),
     }
