@@ -128,10 +128,14 @@
                     {% if comentario.autorComentario == user %}
                     <div class="text-right">
                         <div class="d-inline">
-                            <input class="btn btn-danger btn-sm" type="submit" value="Puede Modificar este comentario">
+                            <a class="comentarioRecurso btn btn-danger btn-sm" data-form="{% url 'comentario-update' comentario.pk %}" data-toggle="modal" data-target="#comentarioRecursoModal">
+                                <i class="mi mi-Edit mi-4x"></i> Editar
+                            </a>
                         </div>
                         <div class="d-inline">
-                            <input class="btn btn-default btn-sm" type="submit" value="Puede Borrar este comentario">
+                            <a class="comentarioRecurso btn btn-default btn-sm" data-form="{% url 'comentario-delete' comentario.pk %}" data-toggle="modal" data-target="#comentarioRecursoModal">
+                                <i class="mi mi-Delete mi-4x"></i> Borrar
+                            </a>
                         </div>
                     </div>
                     {% else %} {% endif %}
