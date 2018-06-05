@@ -152,6 +152,9 @@ body{
     .grid-container {
         display: block !important;
     }
+    .grid-item {
+        margin-bottom: 1rem !important;
+    }
 }
 
 @media only screen and (max-width: 766px) {
@@ -282,6 +285,10 @@ ul ul a {
     }
     .grid-container {
         display: block !important;
+        margin-bottom: 2rem !important;
+    }
+    .grid-item {
+        margin-bottom: 2rem !important;
     }
 }
 
