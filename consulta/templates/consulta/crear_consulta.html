@@ -1,10 +1,6 @@
-{% extends 'consulta/base2.html'%}
-
-{% block titulo %}
+{% extends 'consulta/base2.html'%} {% block titulo %}
 <title>Consultas Ciudadanas</title>
-{% endblock %}
-
-{% block navbar %}
+{% endblock %} {% block navbar %}
 <ul class="list-unstyled components">
     <li>
         <a href="#">
@@ -38,57 +34,7 @@
         <a href="#">
             <i class="mi mi-Feedback"></i> Foro</a>
     </li>
-    <!-- <li>
-        <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">Home</a>
-        <ul class="collapse list-unstyled" id="homeSubmenu">
-            <li>
-                <a href="#">Home 1</a>
-            </li>
-            <li>
-                <a href="#">Home 2</a>
-            </li>
-            <li>
-                <a href="#">Home 3</a>
-            </li>
-        </ul>
-    </li> -->
 </ul>
 {% endblock %} {% block content %}
-<h2>Crear Consulta</h2> 
-<!-- <a href={% url 'crear_consulta' %}><button type="button" class="btn btn-primary">Crear</button></a> -->
-<div class="section-resources">
-    <div class="container" style="padding: .5rem 1.5rem">
-        <br>
-        <div class="row">
-            <div class="col-md-12 ml-auto mr-auto">
-
-                {% if lista_recursos %} {% for recurso in lista_recursos %}
-                <div class="card col-md-12">
-                    <img class="card-img-top " src="media/{{ recurso.imagen_descriptiva }}" alt="{{ recurso.titulo }}">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ recurso.titulo }}</h5>
-                        <p class="card-text">{{ recurso.descripcion }}</p>
-                        <div class="star-rating">
-                            <span class="mi mi-FavoriteStar" data-rating="1"></span>
-                            <span class="mi mi-FavoriteStar" data-rating="2"></span>
-                            <span class="mi mi-FavoriteStar" data-rating="3"></span>
-                            <span class="mi mi-FavoriteStar" data-rating="4"></span>
-                            <span class="mi mi-FavoriteStar" data-rating="5"></span>
-                            <input type="hidden" name="whatever1" class="rating-value" value="{{ recurso.valoracion }}">
-                        </div>
-                        <p>{{ recurso.valoracion }}</p>
-                        <span style="color: gray;">{{ recurso.fecha_creacion }}</span>
-                    </div>
-                    <div class="card-body text-right">
-                        <a href="{{ recurso.id }}" class="card-link">Ver Detalles</a>
-                        <a href="#" class="card-link">Descargar</a>
-                    </div>
-                </div>
-                {% endfor %} {% else %} No existen recursos en estos momentos. {% endif %}
-
-            </div>
-        </div>
-    </div>
-</div>
-
+<h2>Crear Consulta</h2>
 {% endblock content %}
