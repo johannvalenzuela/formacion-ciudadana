@@ -7,7 +7,7 @@ def funcionario_required(function=None, redirect_field_name=REDIRECT_FIELD_NAME,
     Redirecciona al login si es que no es así
     '''
     actual_decorator = user_passes_test(
-        lambda u: u.is_active and u.is_funcionario,
+        lambda u: u.is_active and u.tipo==2,
         login_url=login_url,
         redirect_field_name=redirect_field_name
     )
