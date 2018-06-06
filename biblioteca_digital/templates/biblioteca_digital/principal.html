@@ -73,14 +73,7 @@
                                         <span class="badge badge-pill badge-primary">Otros</span>
                                         {% endif %}
                                     </div>
-                                    <div class="total-star-rating mr-2">
-                                        <span class="mi mi-FavoriteStar text-white" data-rating="1"></span>
-                                        <span class="mi mi-FavoriteStar text-white" data-rating="2"></span>
-                                        <span class="mi mi-FavoriteStar text-white" data-rating="3"></span>
-                                        <span class="mi mi-FavoriteStar text-white" data-rating="4"></span>
-                                        <span class="mi mi-FavoriteStar text-white" data-rating="5"></span>
-                                        <input type="hidden" name="valoracion" class="total-rating-value" value="{{ recurso.valoracionTotal }}">
-                                    </div>
+                                    <p>Valoración: {{recurso.valoracionTotal}}/5.0</p>
                                 </div>
                             </div>
                             <div class="m-2">
