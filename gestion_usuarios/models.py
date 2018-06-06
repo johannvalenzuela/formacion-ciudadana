@@ -27,13 +27,13 @@ class Asignatura(models.Model):
 class Encargado(models.Model):
     establecimiento = models.ForeignKey('Establecimiento', on_delete = models.CASCADE)
     asignatura = models.ForeignKey('Asignatura', on_delete = models.CASCADE)
-    usuario = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
+    usuario = models.OneToOneField(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
     
 class Supervisor(models.Model):
     asignatura = models.ForeignKey('Asignatura', on_delete = models.CASCADE)
     departamento_Provincial_Educacion = models.ForeignKey('Departamento_Provincial_Educacion', on_delete = models.CASCADE)
     servicio_Local_Educacion = models.ForeignKey('Servicio_Local_Educacion', on_delete = models.CASCADE)
-    usuario = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
+    usuario = models.OneToOneField(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
 
 class Grupo(models.Model):
     nombre = models.CharField(max_lenght = 255)
