@@ -37,4 +37,17 @@
 </ul>
 {% endblock %} {% block content %}
 <h2>Crear Consulta</h2>
+<table>
+    <form method="POST" enctype="multipart/form-data" action="">
+        {% csrf_token %}
+        <tr>
+            <td>{{ form.as_table }}</td>
+        </tr>
+        <tr>
+            <td>
+                <input class="btn btn-primary btn-block" type="submit" value="Guardar">
+            </td>
+        </tr>
+    </form>
+</table>
 {% endblock content %}
