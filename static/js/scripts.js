@@ -1,3 +1,4 @@
+var valorado = false;
 window.onscroll = () => {
     const nav = document.querySelector('#navBarSection');
     if (nav) {
@@ -9,28 +10,34 @@ var $total_star_rating = $('.total-star-rating .mi');
 var $star_rating = $('.star-rating .mi');
 
 var showRatingStar = function () {
-    return $total_star_rating.each(function () {
-        if (parseInt($total_star_rating.siblings('input.total-rating-value').val()) >= parseInt($(this).data('rating'))) {
-            return $(this).removeClass('mi-FavoriteStar').addClass('mi-FavoriteStarFill');
-        } else {
-            return $(this).removeClass('mi-FavoriteStarFill').addClass('mi-FavoriteStar');
-        }
-    });
+    if(!valorado){
+        return $total_star_rating.each(function () {
+            if (parseInt($total_star_rating.siblings('input.total-rating-value').val()) >= parseInt($(this).data('rating'))) {
+                return $(this).removeClass('mi-FavoriteStar').addClass('mi-FavoriteStarFill');
+            } else {
+                return $(this).removeClass('mi-FavoriteStarFill').addClass('mi-FavoriteStar');
+            }
+        });
+    }
 };
 
 var SetRatingStar = function () {
-    return $star_rating.each(function () {
-        if (parseInt($star_rating.siblings('input.rating-value').val()) >= parseInt($(this).data('rating'))) {
-            return $(this).removeClass('mi-FavoriteStar').addClass('mi-FavoriteStarFill');
-        } else {
-            return $(this).removeClass('mi-FavoriteStarFill').addClass('mi-FavoriteStar');
-        }
-    });
+    if(!valorado){
+        return $star_rating.each(function () {
+            if (parseInt($star_rating.siblings('input.rating-value').val()) >= parseInt($(this).data('rating'))) {
+                return $(this).removeClass('mi-FavoriteStar').addClass('mi-FavoriteStarFill');
+            } else {
+                return $(this).removeClass('mi-FavoriteStarFill').addClass('mi-FavoriteStar');
+            }
+        });
+    }
 };
 
 $star_rating.on('click', function () {
-    $star_rating.siblings('input.rating-value').val($(this).data('rating'));
-    return SetRatingStar();
+    if(!valorado){
+        $star_rating.siblings('input.rating-value').val($(this).data('rating'));
+        return SetRatingStar();
+    }
 });
 
 showRatingStar();
@@ -54,18 +61,20 @@ $('#sidebarCollapse').on('click', function () {
 
 
 function valorEstrella(estrella, token){
-    var valorEstrella = estrella.getAttribute("data-rating");
-    $.ajax({
-        url: 'valorar/',
-        type: "POST",
-        data: {valoracion: valorEstrella,
-            'csrfmiddlewaretoken': token
-        },
-        success:function(m){
+    if(!valorado){
+        var valorEstrella = estrella.getAttribute("data-rating");
+        $.ajax({
+            url: 'valorar/',
+            type: "POST",
+            data: {valoracion: valorEstrella,
+                'csrfmiddlewaretoken': token
+            },
+            success:function(m){
             alert('Gracias por tu valoración');
-        },
-    });
-
+            valorado=true;
+            },
+        });
+    }
 }
 
 // Script para mostrar modal de editar/eliminar recursos o comentarios
