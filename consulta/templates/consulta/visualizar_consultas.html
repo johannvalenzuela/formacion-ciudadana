@@ -1,10 +1,6 @@
-{% extends 'consulta/base2.html'%}
-
-{% block titulo %}
+{% extends 'consulta/base2.html'%} {% block titulo %}
 <title>Consultas Ciudadanas</title>
-{% endblock %}
-
-{% block navbar %}
+{% endblock %} {% block navbar %}
 <ul class="list-unstyled components">
     <li>
         <a href="#">
@@ -53,41 +49,4 @@
             <strong>eliminar</strong> y mucho mas. </p>
     </div>
 </div>
-<div class="section-resources">
-    <div class="container" style="padding: .5rem 1.5rem">
-        <br>
-        <div class="row">
-            <div class="col-md-12 ml-auto mr-auto">
-
-                {% if lista_consultas %} {% for consulta in lista_consultas %}
-                <div class="card col-md-12">
-                    <img class="card-img-top " src="media/{{ recurso.imagen_descriptiva }}" alt="{{ recurso.titulo }}">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ consulta.titulo }}</h5>
-                        <p class="card-text">{{ consulta.descripcion }}</p>
-                        <div class="star-rating">
-                            <span class="mi mi-FavoriteStar" data-rating="1"></span>
-                            <span class="mi mi-FavoriteStar" data-rating="2"></span>
-                            <span class="mi mi-FavoriteStar" data-rating="3"></span>
-                            <span class="mi mi-FavoriteStar" data-rating="4"></span>
-                            <span class="mi mi-FavoriteStar" data-rating="5"></span>
-                            <input type="hidden" name="whatever1" class="rating-value" value="{{ recurso.valoracion }}">
-                        </div>
-                        <p>{{ recurso.valoracion }}</p>
-                        <span style="color: gray;">{{ consulta.fecha_creacion }}</span>
-                        <span style="color: gray;">{{ consulta.fecha_inicio }}</span>
-                        <span style="color: gray;">{{ consulta.fecha_inicio }}</span>
-                    </div>
-                    <!-- <div class="card-body text-right">
-                        <a href="{{ recurso.id }}" class="card-link">Ver Detalles</a>
-                        <a href="#" class="card-link">Descargar</a>
-                    </div> -->
-                </div>
-                {% endfor %} {% else %} No existen recursos en estos momentos. {% endif %}
-
-            </div>
-        </div>
-    </div>
-</div>
-
 {% endblock content %}
