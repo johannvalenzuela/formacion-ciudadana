@@ -43,19 +43,28 @@
 <a href={% url 'crear_consulta' %}>
     <button class="btn btn-primary float-right mb-3 text-uppercase">Crear Consulta</button>
 </a>
-<h2>Consultas Ciudadanas</h2>
+<div class="card col-md-12 ">
+    <div class="card-body">
+        <h3 class="card-title">Consultas Ciudadanas</h3>
+        <p class="card-text">Bienvenido a la sección de las
+            <strong>consultas ciudadanas</strong>. Aquí podrá
+            <strong>crear</strong>,
+            <strong>editar</strong>,
+            <strong>eliminar</strong> y mucho mas. </p>
+    </div>
+</div>
 <div class="section-resources">
     <div class="container" style="padding: .5rem 1.5rem">
         <br>
         <div class="row">
             <div class="col-md-12 ml-auto mr-auto">
 
-                {% if lista_recursos %} {% for recurso in lista_recursos %}
+                {% if lista_consultas %} {% for consulta in lista_consultas %}
                 <div class="card col-md-12">
                     <img class="card-img-top " src="media/{{ recurso.imagen_descriptiva }}" alt="{{ recurso.titulo }}">
                     <div class="card-body">
-                        <h5 class="card-title">{{ recurso.titulo }}</h5>
-                        <p class="card-text">{{ recurso.descripcion }}</p>
+                        <h5 class="card-title">{{ consulta.titulo }}</h5>
+                        <p class="card-text">{{ consulta.descripcion }}</p>
                         <div class="star-rating">
                             <span class="mi mi-FavoriteStar" data-rating="1"></span>
                             <span class="mi mi-FavoriteStar" data-rating="2"></span>
@@ -65,12 +74,14 @@
                             <input type="hidden" name="whatever1" class="rating-value" value="{{ recurso.valoracion }}">
                         </div>
                         <p>{{ recurso.valoracion }}</p>
-                        <span style="color: gray;">{{ recurso.fecha_creacion }}</span>
+                        <span style="color: gray;">{{ consulta.fecha_creacion }}</span>
+                        <span style="color: gray;">{{ consulta.fecha_inicio }}</span>
+                        <span style="color: gray;">{{ consulta.fecha_inicio }}</span>
                     </div>
-                    <div class="card-body text-right">
+                    <!-- <div class="card-body text-right">
                         <a href="{{ recurso.id }}" class="card-link">Ver Detalles</a>
                         <a href="#" class="card-link">Descargar</a>
-                    </div>
+                    </div> -->
                 </div>
                 {% endfor %} {% else %} No existen recursos en estos momentos. {% endif %}
 
