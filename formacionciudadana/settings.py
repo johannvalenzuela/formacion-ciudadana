@@ -153,7 +153,7 @@ AUTH_USER_MODEL = 'autenticacion.Usuario'
 
 LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
-LOGIN_REDIRECT_URL = 'biblioteca_digital'
+LOGIN_REDIRECT_URL = 'login_success'
 LOGOUT_REDIRECT_URL = 'home'
 
 
