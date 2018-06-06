@@ -45,7 +45,7 @@
                     {% if object %}
                     <div class="section-description mt-2">
                         <img class="card-img-top " src="../media/{{ object.imagen_descriptiva }}" alt="{{ object.titulo }}" style="border-radius: 10rem">
-
+                        <p>Valoración: {{object.valoracionTotal}}/5.0</p>
                         <div class="star-rating">
                             <span class="mi mi-FavoriteStar" data-rating="1" onclick="valorEstrella(this,'{{csrf_token}}')"></span>
                             <span class="mi mi-FavoriteStar" data-rating="2" onclick="valorEstrella(this,'{{csrf_token}}')"></span>
