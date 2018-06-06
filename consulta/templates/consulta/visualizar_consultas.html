@@ -40,7 +40,10 @@
     </li>
 </ul>
 {% endblock %} {% block content %}
-<h2>Consultas Ciudadanas</h2> <a href={% url 'crear_consulta' %}><button type="button" class="btn btn-primary">Crear</button></a>
+<a href={% url 'crear_consulta' %}>
+    <button class="btn btn-primary float-right mb-3 text-uppercase">Crear Consulta</button>
+</a>
+<h2>Consultas Ciudadanas</h2>
 <div class="section-resources">
     <div class="container" style="padding: .5rem 1.5rem">
         <br>
