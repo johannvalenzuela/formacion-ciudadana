@@ -49,4 +49,55 @@
             <strong>eliminar</strong> y mucho mas. </p>
     </div>
 </div>
+<div class="section-resources">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 ml-auto mr-auto p-0">
+                <div class="grid-container">
+                    {% if lista_consultas %} {% for consulta in lista_consultas %}
+                    <div class="grid-item">
+                        <a href="#">
+                            <div class="m-2">
+                                <!-- <div class="text-muted mr-2 pb-1">
+                                    <small>
+                                        Creado por
+                                        <strong id="autor_recurso">{{ consulta.autor }}</strong> el
+                                        <strong>{{ consulta.fecha_creacion }}</strong>
+                                    </small>
+                                </div> -->
+                                <div class="text-uppercase">
+                                    <h4>
+                                        <strong>{{ consulta.titulo }}</strong>
+                                    </h4>
+                                </div>
+                                <div class="text-justify">
+                                    <p>{{ consulta.descripcion }}</p>
+                                </div>
+                                <div class="text-muted mr-2 pb-1">
+                                    <small>
+                                        Creado por
+                                        <strong id="autor_recurso"> Completar en modelo</strong> el
+                                        <strong>{{ consulta.fecha_creacion }}</strong>
+                                    </small>
+                                </div>
+                                <div class="text-muted mr-2 pb-1">
+                                    <small>
+                                        Iniciado el
+                                        <strong id="autor_recurso">{{ consulta.fecha_inicio}}</strong>, terminado el
+                                        <strong>{{ consulta.fecha_finalizacion }}</strong>
+                                    </small>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    {% endfor %} {% else %} No existen consultas ciudadanas en estos momentos. {% endif %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="recursoModal"></div>
 {% endblock content %}
