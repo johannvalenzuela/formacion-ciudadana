@@ -68,7 +68,7 @@ function valorEstrella(estrella, token){
 
 }
 
-// Script para mostrar modal de editar o eliminar recurso
+// Script para mostrar modal de editar/eliminar recursos o comentarios
 $(document).ready(function () {
 
     $(".recurso").click(function (ev) { // for each edit contact url
@@ -88,31 +88,6 @@ $(document).ready(function () {
             context: this,
             success: function (data, status) {
                 $('#recursoModal').html(data);
-            }
-        });
-    });
-});
-
-// Script para mostrar modal de editar o eliminar comentarioRecurso
-$(document).ready(function () {
-    
-    $(".comentarioRecurso").click(function (ev) { // for each edit contact url
-        ev.preventDefault(); // prevent navigation
-        var url = $(this).data("form"); // get the contact form url
-        console.log(url);
-        $("#comentarioRecursoModal").load(url, function () { // load the url into the modal
-            $(this).modal('show'); // display the modal on url load
-        });
-    });
-
-    $('.comentarioRecurso-form').on('submit', function () {
-        $.ajax({
-            type: $(this).attr('method'),
-            url: $(this).attr('action'),
-            data: $(this).serialize(),
-            context: this,
-            success: function (data, status) {
-                $('#comentarioRecursoModal').html(data);
             }
         });
     });
