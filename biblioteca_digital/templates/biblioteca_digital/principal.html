@@ -84,12 +84,12 @@
                                 </div>
                             </div>
                             <div class="m-2">
-                                <div class="font-italic mr-2 pb-3">
-                                    <span>
+                                <div class="text-muted mr-2 pb-1">
+                                    <small>
                                         Creado por
                                         <strong id="autor_recurso">{{ recurso.autor }}</strong> el
                                         <strong>{{ recurso.fecha_creacion }}</strong>
-                                    </span>
+                                    </small>
                                 </div>
                                 <div class="text-uppercase">
                                     <h4>
@@ -100,21 +100,6 @@
                                     <p>{{ recurso.descripcion }}</p>
                                 </div>
                             </div>
-                            <!-- <div class="text-right mb-2 mr-2">
-                                <div class="dropdown show">
-                                    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
-                                        aria-expanded="false">
-                                        Opciones
-                                    </a>
-
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                        <a class="recurso dropdown-item" data-form="{% url 'recurso-update' recurso.pk %}" data-toggle="modal" data-target="#recursoModal">Editar</a>
-                                        <a class="recurso dropdown-item" data-form="{% url 'recurso-delete' recurso.pk %}" data-toggle="modal" data-target="#recursoModal">Eliminar</a>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="{{ recurso.id }}/descargar/">Descargar</a>
-                                    </div>
-                                </div>
-                            </div> -->
                         </a>
                     </div>
 
