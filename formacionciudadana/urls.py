@@ -8,4 +8,5 @@ urlpatterns = [
     path('', TemplateView.as_view(template_name='home.html'), name='home'),
     path('autenticacion/', include('autenticacion.urls')),
     path('biblioteca_digital/', include('biblioteca_digital.urls')),
+    path('gestion_usuarios/', include('gestion_usuarios.urls')),
 ]
