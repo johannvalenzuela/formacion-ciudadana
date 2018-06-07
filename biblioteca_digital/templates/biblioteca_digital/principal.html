@@ -1,42 +1,7 @@
 {% extends 'compumundohipermegared.html' %} {% block titulo %}
 <title>Recursos Academicos</title>
-{% endblock %} {% block navbar %}
-<ul class="list-unstyled components">
-    <li>
-        <a href="#">
-            <i class="mi mi-Home"></i> Inicio</a>
-    </li>
-    <li>
-        <a href="#">
-            <i class="mi mi-ChatBubbles"></i> Mensajes</a>
-    </li>
-    <li>
-        <a href="#">
-            <i class="mi mi-Education"></i> Alumnos</a>
-    </li>
-    <li>
-        <a href="#">
-            <i class="mi mi-Education"></i> Apoderados</a>
-    </li>
-    <li>
-        <a href="#">
-            <i class="mi mi-People"></i> Grupos</a>
-    </li>
-    <li class="active">
-        <a href="{% url 'biblioteca_digital' %}">
-            <i class="mi mi-Library"></i> Recursos Académicos</a>
-    </li>
-    <li>
-        <a href="#">
-            <i class="mi mi-Megaphone"></i> Consultas Ciudadanas</a>
-    </li>
-    <li>
-        <a href="#">
-            <i class="mi mi-Feedback"></i> Foro</a>
-    </li>
-</ul>
-
-{% endblock %} {% block content %}
+{% endblock %} 
+ {% block content %}
 <a href="recurso_nuevo">
     <button class="btn btn-primary float-right mb-3 text-uppercase">Crear Recurso Académico</button>
 </a>

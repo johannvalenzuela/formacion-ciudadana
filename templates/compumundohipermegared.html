@@ -27,7 +27,43 @@
                     <div class="sidebar-header">
                         <h3>Logo</h3>
                     </div>
-                    {% block navbar %}{% endblock %}
+                    {% block navbar %}
+                    <ul class="list-unstyled components">
+                        <li>
+                            <a href="#">
+                                <i class="mi mi-Home"></i> Inicio</a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="mi mi-ChatBubbles"></i> Mensajes</a>
+                        </li>
+                        <li>
+                            <a href="{% url 'alumnos' %}">
+                                <i class="mi mi-Education"></i> Alumnos</a>
+                        </li>
+                        <li>
+                            <a href="{% url 'apoderados' %}">
+                                <i class="mi mi-Education"></i> Apoderados</a>
+                        </li>
+                        <li>
+                            <a href="{% url 'grupos' %}">
+                                <i class="mi mi-People"></i> Grupos</a>
+                        </li>
+                        <li class="active">
+                            <a href="{% url 'biblioteca_digital' %}">
+                                <i class="mi mi-Library"></i> Recursos Académicos</a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="mi mi-Megaphone"></i> Consultas Ciudadanas</a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="mi mi-Feedback"></i> Foro</a>
+                        </li>
+                    </ul>
+
+                    {% endblock %}
                 </div>
             </div>
             <div id="mCSB_1_scrollbar_vertical" class="mCSB_scrollTools mCSB_1_scrollbar mCS-minimal mCSB_scrollTools_vertical" style="display: none;">
