@@ -4,6 +4,9 @@ from django.contrib.auth.base_user import AbstractBaseUser
 from django.utils.translation import ugettext_lazy as _ 
 from django.contrib.auth.base_user import BaseUserManager 
 
+#modelos
+from gestion_usuarios.models import Grupo
+
 #Tipos de usuario que existen en el sistema 
 USER_TYPE_CHOICES = ( 
       (1, 'usuario'), 
@@ -66,6 +69,7 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     objects = UserManager()
+    grupo = models.ManyToManyField(Grupo)
     
     USERNAME_FIELD = 'email' 
  
