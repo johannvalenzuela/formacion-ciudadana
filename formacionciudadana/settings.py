@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'biblioteca_digital.apps.BibliotecaDigitalConfig',
     'autenticacion.apps.AutenticacionConfig',
-
+    'gestion_usuarios.apps.GestionUsuariosConfig',
+    
     'social_django',
 ]
 
