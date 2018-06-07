@@ -41,7 +41,7 @@ class Supervisor(models.Model):
 
 class Grupo(models.Model):
     nombre = models.CharField(max_length = 50)
-    autor_rut = models.CharField(max_length = 15)
+    autor = models.ForeignKey('Encargado', on_delete = models.CASCADE)
     establecimiento = models.ForeignKey('Establecimiento', on_delete = models.CASCADE)
 
     def __str__(self):
