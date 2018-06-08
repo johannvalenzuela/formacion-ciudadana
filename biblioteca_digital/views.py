@@ -1,17 +1,28 @@
-from django.shortcuts import render
-from .models import Recurso, ValoracionRecurso, ComentarioRecurso
 from django.views import generic
 from django.http import HttpResponse
 from django.urls import reverse_lazy
 from django.shortcuts import get_object_or_404
 from django.conf import settings
 import os
-from autenticacion.decorators import funcionario_required
-from django.utils.decorators import method_decorator
 from .forms import RecursoForm
 from django.shortcuts import redirect
 
-@method_decorator(funcionario_required, name='get' )
+
+#decorators
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import user_passes_test
+
+#modelos
+from .models import Recurso, ValoracionRecurso, ComentarioRecurso
+from gestion_usuarios.models import Encargado
+
+def funcionario_required(user):
+    return Encargado.objects.get(usuario=user)
+
+
+@method_decorator(login_required, name='get' )
+@method_decorator(user_passes_test(funcionario_required), name='get' )
 class BibliotecaView(generic.ListView):
     template_name = 'biblioteca_digital/principal.html'
     context_object_name = 'lista_recursos'
@@ -21,7 +32,8 @@ class BibliotecaView(generic.ListView):
         """Retorna los recursos ordenados desde el más valorado al menos."""
         return Recurso.objects.order_by('valoracionTotal')
 
-@method_decorator(funcionario_required, name='get')
+@method_decorator(login_required, name='get' )
+@method_decorator(user_passes_test(funcionario_required), name='get')
 class RecursoDetailView(generic.DetailView):
     model = Recurso
     template_name = 'biblioteca_digital/recurso.html'
@@ -31,7 +43,8 @@ class RecursoDetailView(generic.DetailView):
         context['comentarios'] = ComentarioRecurso.objects.filter(recurso=self.object.pk).order_by('-fecha_creacion')
         return context
 
-    @funcionario_required
+    @login_required
+    @user_passes_test(funcionario_required)
     def comentar(request, pk):
         '''
         Funcion para realizar un comentario
@@ -47,7 +60,8 @@ class RecursoDetailView(generic.DetailView):
             )
         return redirect('recurso-detail', pk=pk)
 
-    @funcionario_required
+    @login_required
+    @user_passes_test(funcionario_required)
     def valorar(request, pk):
         '''
         Funcion para realizar la valoración
@@ -66,7 +80,8 @@ class RecursoDetailView(generic.DetailView):
         return reverse_lazy('recurso-detail', kwargs={'pk': pk})
 
 
-@funcionario_required
+@login_required
+@user_passes_test(funcionario_required)
 def descargar(request, pk):
     '''
     Funcion para descargar archivo PDF
@@ -80,7 +95,8 @@ def descargar(request, pk):
     response['Content-Disposition'] = 'attachment; filename='+recurso.titulo+".pdf"
     return response
 
-@method_decorator(funcionario_required, name='get' )
+@method_decorator(login_required, name='get' )
+@method_decorator(user_passes_test(funcionario_required), name='get' )
 class CrearRecursoView(generic.CreateView): 
     form_class = RecursoForm 
     template_name = 'biblioteca_digital/recurso_create_form.html'
@@ -91,7 +107,8 @@ class CrearRecursoView(generic.CreateView):
         form.save()
         return super().form_valid(form)
 
-@method_decorator(funcionario_required, name='get')
+@method_decorator(login_required, name='get' )
+@method_decorator(user_passes_test(funcionario_required), name='get')
 class RecursoUpdateView(generic.UpdateView):
     model = Recurso
     fields = ['titulo', 'descripcion','tema','imagen_descriptiva','archivo',]
@@ -99,16 +116,18 @@ class RecursoUpdateView(generic.UpdateView):
 
     def get_success_url(self):
 	    return reverse_lazy('recurso-detail', kwargs={'pk': self.object.pk})
-    
 
-@method_decorator(funcionario_required, name='get')
+
+@method_decorator(login_required, name='get' )
+@method_decorator(user_passes_test(funcionario_required), name='get')
 class RecursoDeleteView(generic.DeleteView):
     model = Recurso
     template_name_suffix = '_confirm_delete'
     success_url = reverse_lazy('biblioteca_digital')
         
 
-@method_decorator(funcionario_required, name='get')
+@method_decorator(login_required, name='get' )
+@method_decorator(user_passes_test(funcionario_required), name='get')
 class ComentarioRecursoDeleteView(generic.DeleteView):
     model = ComentarioRecurso
     template_name_suffix = '_confirm_delete'
@@ -117,7 +136,8 @@ class ComentarioRecursoDeleteView(generic.DeleteView):
 	    return reverse_lazy('recurso-detail', kwargs={'pk': self.object.recurso.pk})
 
 
-@method_decorator(funcionario_required, name='get')
+@method_decorator(login_required, name='get' )
+@method_decorator(user_passes_test(funcionario_required), name='get')
 class ComentarioRecursoUpdateView(generic.UpdateView):
     model = ComentarioRecurso
     fields = ['comentario']
