@@ -3,11 +3,10 @@ from .models import Usuario
 
 
 class UsuarioAdmin(admin.ModelAdmin):
-    list_display = ('nombre', 'apellido_paterno', 'apellido_materno', 'rut', 'tipo')
+    list_display = ('nombre', 'apellido_paterno', 'apellido_materno', 'rut', 'email')
     #list_filter = ('created', 'updated', 'status')
-    search_fields = ('nombre', 'apellido_paterno', 'apellido_materno', 'rut', 'tipo')
+    search_fields = ('nombre', 'apellido_paterno', 'apellido_materno', 'rut', 'email')
     fieldsets = [
-        ('Cambiar tipo de usuario', {'fields': ['tipo']}),
         ('Banear usuario', {'fields': ['is_active']}),
     ]
 
