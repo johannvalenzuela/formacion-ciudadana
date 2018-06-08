@@ -44,6 +44,14 @@ class DetallesConsultaView(generic.DetailView):
     model = Consulta
     template_name = 'consulta/resultado_consulta.html'
 
+    def obtenerConsulta(self, pk):
+        print(pk)
+        allData = Consulta.objects.all()
+        print(allData)
+        consultaId = allData.objects.get(pk=pk)
+        print(consultaId)
+        return consultaId
+
 class ResponderConsultaView(generic.TemplateView):
     '''
     Muestra la vista para responder una consulta
