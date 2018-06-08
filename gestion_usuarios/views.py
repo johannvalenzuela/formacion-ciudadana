@@ -7,8 +7,12 @@ from django.urls import reverse_lazy
 from .models import Grupo
 from autenticacion.models import Usuario
 
+
 @method_decorator(funcionario_required, name='get' )
 class ListaAlumnosView(generic.ListView):
+    '''
+    Vista de la lista de alumnos de un encargado.
+    '''
     template_name = 'gestion_usuarios/lista_usuarios.html'
     context_object_name = 'lista_alumnos'
     paginate_by = 20
@@ -21,6 +25,9 @@ class ListaAlumnosView(generic.ListView):
 
 @method_decorator(funcionario_required, name='get' )
 class ListaApoderadosView(generic.ListView):
+    '''
+    Vista de la lista de apoderados de un encargado.
+    '''
     template_name = 'gestion_usuarios/lista_usuarios.html'
     context_object_name = 'lista_apoderados'
     paginate_by = 20
@@ -31,6 +38,9 @@ class ListaApoderadosView(generic.ListView):
         return Usuario.objects.filter(grupo__in=grupo)
 
 class ListaGruposView(generic.ListView):
+    '''
+    Vista de la lista de grupos de un encargado.
+    '''
     template_name = 'gestion_usuarios/lista_grupos.html'
     context_object_name = 'lista_grupos'
     paginate_by = 20
