@@ -63,7 +63,7 @@
                             </h6> -->
                             <h4 class="description">{{ object.descripcion }}</h4>
                         </div>
-                        {% if object.autor == user %}
+                        <!--{% if object.autor == user %}
                         <a class="recurso btn btn-primary" data-form="{% url 'recurso-update' recurso.pk %}" data-toggle="modal" data-target="#recursoModal">
                             <i class="mi mi-Edit mi-4x"></i> Editar
                         </a>
@@ -71,7 +71,14 @@
                             <i class="mi mi-Download mi-4x"></i> Eliminar
                         </a>
     
-                        {% else %} {% endif %} {% endif %}
+                        {% else %} {% endif %}  -->
+                        {% endif %}
+                        <a class="recurso btn btn-primary" data-form="#" data-toggle="modal" data-target="#recursoModal">
+                            <i class="mi mi-Edit mi-4x"></i> Editar
+                        </a>
+                        <a class="recurso btn btn-danger" data-form="#" data-toggle="modal" data-target="#recursoModal">
+                            <i class="mi mi-Download mi-4x"></i> Eliminar
+                        </a>
                         <a href="descargar/" class="btn btn-default">
                             <i class="mi mi-Download mi-4x"></i> Descargar
                         </a>
