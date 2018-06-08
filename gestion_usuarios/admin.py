@@ -10,4 +10,11 @@ admin.site.register(Servicio_Local_Educacion)
 admin.site.register(Departamento_Provincial_Educacion)
 admin.site.register(Establecimiento)
 admin.site.register(Asignatura)
-admin.site.register(Encargado)
+
+
+class EncargadoAdmin(admin.ModelAdmin):
+    list_display = ('usuario','asignatura', 'establecimiento')
+    search_fields = ('usuario','asignatura', 'establecimiento')
+    
+
+admin.site.register(Encargado,EncargadoAdmin)
