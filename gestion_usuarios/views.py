@@ -1,14 +1,20 @@
 from django.views import generic
-from autenticacion.decorators import funcionario_required
-from django.utils.decorators import method_decorator
 from django.urls import reverse_lazy
+
+#decorators
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import user_passes_test
 
 #Modelos
 from .models import Grupo
 from autenticacion.models import Usuario
 
+def funcionario_required(user):
+    return Encargado.objects.get(usuario=user)
 
-@method_decorator(funcionario_required, name='get' )
+@method_decorator(login_required, name='get' )
+@method_decorator(user_passes_test(funcionario_required), name='get')
 class ListaAlumnosView(generic.ListView):
     '''
     Vista de la lista de alumnos de un encargado.
@@ -23,7 +29,8 @@ class ListaAlumnosView(generic.ListView):
         return Usuario.objects.filter(grupo__in=grupo)
 
 
-@method_decorator(funcionario_required, name='get' )
+@method_decorator(login_required, name='get' )
+@method_decorator(user_passes_test(funcionario_required), name='get')
 class ListaApoderadosView(generic.ListView):
     '''
     Vista de la lista de apoderados de un encargado.
@@ -37,6 +44,8 @@ class ListaApoderadosView(generic.ListView):
         grupo = Grupo.objects.filter(nombre="apoderados",autor_rut=self.request.user.rut)
         return Usuario.objects.filter(grupo__in=grupo)
 
+@method_decorator(login_required, name='get' )
+@method_decorator(user_passes_test(funcionario_required), name='get')
 class ListaGruposView(generic.ListView):
     '''
     Vista de la lista de grupos de un encargado.
