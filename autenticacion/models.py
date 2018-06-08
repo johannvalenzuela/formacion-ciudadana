@@ -7,14 +7,6 @@ from django.contrib.auth.base_user import BaseUserManager
 #modelos
 from gestion_usuarios.models import Grupo
 
-#Tipos de usuario que existen en el sistema 
-USER_TYPE_CHOICES = ( 
-      (1, 'usuario'), 
-      (2, 'encargado'), 
-      (3, 'supervisor'),
-      (4, 'admin'), 
-  ) 
- 
 class UserManager(BaseUserManager): 
     ''' 
     Clase de manager del usuario 
@@ -37,13 +29,11 @@ class UserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields): 
         extra_fields.setdefault('is_superuser', False)
         extra_fields.setdefault('is_staff', False)
-        extra_fields.setdefault('tipo',1)
         return self._create_user(email, password, **extra_fields) 
  
     def create_superuser(self, email, password, **extra_fields): 
         extra_fields.setdefault('is_superuser', True)
         extra_fields.setdefault('is_staff', True)
-        extra_fields.setdefault('tipo',4)
 
         if extra_fields.get('is_staff') is not True:
             raise ValueError('Superuser must have is_staff=True.') 
@@ -64,23 +54,22 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
     apellido_paterno = models.CharField(max_length=50, null=True, blank=True) 
     apellido_materno = models.CharField(max_length=50, null=True, blank=True) 
     email = models.EmailField(_('email address'), unique=True, blank=False) 
-    tipo = models.PositiveSmallIntegerField(choices=USER_TYPE_CHOICES, default=1) 
     username = models.CharField(max_length=50, null=True, blank=True)
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
+    grupo = models.ManyToManyField(Grupo)
     objects = UserManager()
-    grupo = models.ManyToManyField(Grupo, blank=True)
-    
+
     USERNAME_FIELD = 'email' 
  
-    REQUIRED_FIELDS = ['rut','nombre','apellido_paterno','apellido_materno'] 
+    REQUIRED_FIELDS = ['nombre','apellido_paterno','apellido_materno'] 
  
     class Meta: 
         verbose_name = _('usuario') 
         verbose_name_plural = _('usuarios') 
     
     def __str__(self):
-        return '%s %s %s' % (self.nombre, self.apellido_paterno, self.apellido_materno) 
+        return '%s %s %s' % (self.nombre, self.apellido_paterno, self.apellido_materno)
 
     def get_full_name(self): 
         ''' 
