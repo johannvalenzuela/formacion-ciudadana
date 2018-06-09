@@ -1,5 +1,6 @@
 from django.views import generic
 from django.urls import reverse_lazy
+from django.shortcuts import render 
 
 #decorators
 from django.contrib.auth.decorators import login_required
@@ -13,50 +14,27 @@ from autenticacion.models import Usuario
 def funcionario_required(usuario):
     return Encargado.objects.get(usuario=usuario)
 
-@method_decorator(login_required, name='get' )
-@method_decorator(user_passes_test(funcionario_required), name='get')
-class ListaAlumnosView(generic.ListView):
-    '''
-    Vista de la lista de alumnos de un encargado.
-    '''
-    template_name = 'gestion_usuarios/lista_usuarios.html'
-    context_object_name = 'lista_usuarios'
-    paginate_by = 20
-
-    def get_queryset(self):
-        """Retorna los alumnos."""
-        autor = Encargado.objects.get(usuario=self.request.user)
-        grupo = Grupo.objects.filter(nombre="alumnos",autor=autor)
-        return Usuario.objects.filter(grupo__in=grupo)
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        autor = Encargado.objects.get(usuario=self.request.user)
-        context['grupo'] = Grupo.objects.get(nombre='alumnos', autor=autor)
-        return context
-
 
 @method_decorator(login_required, name='get' )
 @method_decorator(user_passes_test(funcionario_required), name='get')
-class ListaApoderadosView(generic.ListView):
+class ListaUsuariosView(generic.ListView):
     '''
-    Vista de la lista de apoderados de un encargado.
+    Vista de la lista de usuarios de un grupo de un encargado.
     '''
     template_name = 'gestion_usuarios/lista_usuarios.html'
-    context_object_name = 'lista_usuarios'
-    paginate_by = 20
 
-    def get_queryset(self):
-        """Retorna los apoderados."""
+    def get(self, request, nombreGrupo):
         autor = Encargado.objects.get(usuario=self.request.user)
-        grupo = Grupo.objects.filter(nombre="apoderados",autor=autor)
-        return Usuario.objects.filter(grupo__in=grupo)
+        grupo = Grupo.objects.get(nombre=nombreGrupo, autor=autor)
+        
+        grupoFuncion = Grupo.objects.filter(nombre=nombreGrupo, autor=autor)
+        usuarios = Usuario.objects.filter(grupo__in=grupoFuncion)
+        args = {
+            "grupo": grupo,
+            "lista_usuarios": usuarios,
+        }
+        return render(request,'gestion_usuarios/lista_usuarios.html',args )
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        autor = Encargado.objects.get(usuario=self.request.user)
-        context['grupo'] = Grupo.objects.get(nombre='apoderados', autor=autor)
-        return context
 
 @method_decorator(login_required, name='get' )
 @method_decorator(user_passes_test(funcionario_required), name='get')
@@ -73,6 +51,7 @@ class ListaGruposView(generic.ListView):
         autor = Encargado.objects.get(usuario=self.request.user)
         return Grupo.objects.filter(autor=autor)
 
+@login_required
 @user_passes_test(funcionario_required)
 def agregarUsuario(request):
     '''
