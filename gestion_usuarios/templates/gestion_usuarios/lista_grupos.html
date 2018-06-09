@@ -1,1 +1,14 @@
-{% extends 'compumundohipermegared.html' %}
+{% extends 'compumundohipermegared.html' %}{% block titulo %}
+<title>Grupos de usuarios</title>
+{% endblock %}
+{% block content %}
+
+{% for grupo in lista_grupos %}
+    {% if grupo.nombre in 'alumnos' or grupo.nombre in 'apoderados' %}
+    {% else %}
+    <p>{{ grupo.nombre }}</p>
+    {% endif %}
+        
+{% endfor %}
+
+{% endblock %}
