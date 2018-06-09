@@ -73,16 +73,35 @@ class ListaGruposView(generic.ListView):
         autor = Encargado.objects.get(usuario=self.request.user)
         return Grupo.objects.filter(autor=autor)
 
+@user_passes_test(funcionario_required)
+def agregarUsuario(request):
+    '''
+    agrega una relacion nueva de muchos es a muchos de un usuario con un grupo
+    '''
+    if request.method =="POST":
+        grupoAIngresar = request.method.POST.get('grupo')
+        usuarioAIngresar = request.method.POST.get('usuario')
+        
+        grupo = Grupo.objects.get(nombre=grupoAIngresar, autor=request.user)
+        usuario = Usuario.objects.get(nombre=usuarioAIngresar, autor=request.user)
+        
+        usuario.grupo.add(grupoAIngresar)
+        usuario.save()
+    return redirect(grupoAIngresar)
 
-# @method_decorator(funcionario_required, name='get' )
-# class CrearUsuarioView(generic.CreateView): 
-#     #form_class = RecursoForm 
-#     template_name = 'gestion_usuarios/usuario_create_form.html'
-#     success_url = reverse_lazy('biblioteca_digital')
+@user_passes_test(funcionario_required)
+def removerUsuario(request):
+    '''
+    elimina una relacion de muchos es a muchos de un usuario con un grupo
+    '''
+    if request.method =="POST":
+        grupoAIngresar = request.method.POST.get('grupo')
+        usuarioAIngresar = request.method.POST.get('usuario')
+        
+        grupo = Grupo.objects.get(nombre=grupoAIngresar, autor=request.user)
+        usuario = Usuario.objects.get(nombre=usuarioAIngresar, autor=request.user)
+        
+        usuario.grupo.remove(grupoAIngresar)
+        usuario.save()
+    return redirect(grupoAIngresar)
 
-
-# @method_decorator(funcionario_required, name='get')
-# class UsuarioDeleteView(generic.DeleteView):
-#     model = Usuario
-#     template_name_suffix = '_confirm_delete'
-#     success_url = reverse_lazy('biblioteca_digital')
