@@ -20,7 +20,7 @@ class ListaAlumnosView(generic.ListView):
     Vista de la lista de alumnos de un encargado.
     '''
     template_name = 'gestion_usuarios/lista_usuarios.html'
-    context_object_name = 'lista_usuarios'
+    context_object_name = 'lista_alumnos'
     paginate_by = 20
 
     def get_queryset(self):
@@ -37,7 +37,7 @@ class ListaApoderadosView(generic.ListView):
     Vista de la lista de apoderados de un encargado.
     '''
     template_name = 'gestion_usuarios/lista_usuarios.html'
-    context_object_name = 'lista_usuarios'
+    context_object_name = 'lista_apoderados'
     paginate_by = 20
 
     def get_queryset(self):
