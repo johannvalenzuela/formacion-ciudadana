@@ -7,11 +7,11 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import user_passes_test
 
 #Modelos
-from .models import Grupo
+from .models import Grupo, Encargado
 from autenticacion.models import Usuario
 
-def funcionario_required(user):
-    return Encargado.objects.get(usuario=user)
+def funcionario_required(usuario):
+    return Encargado.objects.get(usuario=usuario)
 
 @method_decorator(login_required, name='get' )
 @method_decorator(user_passes_test(funcionario_required), name='get')
@@ -25,7 +25,8 @@ class ListaAlumnosView(generic.ListView):
 
     def get_queryset(self):
         """Retorna los alumnos."""
-        grupo = Grupo.objects.filter(nombre="alumnos",autor_rut=self.request.user.rut)
+        autor = Encargado.objects.get(usuario=self.request.user)
+        grupo = Grupo.objects.filter(nombre="alumnos",autor=autor)
         return Usuario.objects.filter(grupo__in=grupo)
 
 
@@ -41,7 +42,8 @@ class ListaApoderadosView(generic.ListView):
 
     def get_queryset(self):
         """Retorna los alumnos."""
-        grupo = Grupo.objects.filter(nombre="apoderados",autor_rut=self.request.user.rut)
+        autor = Encargado.objects.get(usuario=self.request.user)
+        grupo = Grupo.objects.filter(nombre="apoderados",autor=autor)
         return Usuario.objects.filter(grupo__in=grupo)
 
 @method_decorator(login_required, name='get' )
@@ -56,7 +58,8 @@ class ListaGruposView(generic.ListView):
 
     def get_queryset(self):
         """Retorna los grupos."""
-        return Grupo.objects.filter(autor_rut=self.request.user.rut)
+        autor = Encargado.objects.get(usuario=self.request.user)
+        return Grupo.objects.filter(autor=autor)
 
 
 # @method_decorator(funcionario_required, name='get' )
