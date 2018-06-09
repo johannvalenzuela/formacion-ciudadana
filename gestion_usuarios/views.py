@@ -20,7 +20,7 @@ class ListaAlumnosView(generic.ListView):
     Vista de la lista de alumnos de un encargado.
     '''
     template_name = 'gestion_usuarios/lista_usuarios.html'
-    context_object_name = 'lista_alumnos'
+    context_object_name = 'lista_usuarios'
     paginate_by = 20
 
     def get_queryset(self):
@@ -28,6 +28,12 @@ class ListaAlumnosView(generic.ListView):
         autor = Encargado.objects.get(usuario=self.request.user)
         grupo = Grupo.objects.filter(nombre="alumnos",autor=autor)
         return Usuario.objects.filter(grupo__in=grupo)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        autor = Encargado.objects.get(usuario=self.request.user)
+        context['grupo'] = Grupo.objects.get(nombre='alumnos', autor=autor)
+        return context
 
 
 @method_decorator(login_required, name='get' )
@@ -37,7 +43,7 @@ class ListaApoderadosView(generic.ListView):
     Vista de la lista de apoderados de un encargado.
     '''
     template_name = 'gestion_usuarios/lista_usuarios.html'
-    context_object_name = 'lista_apoderados'
+    context_object_name = 'lista_usuarios'
     paginate_by = 20
 
     def get_queryset(self):
@@ -45,6 +51,12 @@ class ListaApoderadosView(generic.ListView):
         autor = Encargado.objects.get(usuario=self.request.user)
         grupo = Grupo.objects.filter(nombre="apoderados",autor=autor)
         return Usuario.objects.filter(grupo__in=grupo)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        autor = Encargado.objects.get(usuario=self.request.user)
+        context['grupo'] = Grupo.objects.get(nombre='apoderados', autor=autor)
+        return context
 
 @method_decorator(login_required, name='get' )
 @method_decorator(user_passes_test(funcionario_required), name='get')
