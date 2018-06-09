@@ -47,7 +47,7 @@ class ListaApoderadosView(generic.ListView):
     paginate_by = 20
 
     def get_queryset(self):
-        """Retorna los alumnos."""
+        """Retorna los apoderados."""
         autor = Encargado.objects.get(usuario=self.request.user)
         grupo = Grupo.objects.filter(nombre="apoderados",autor=autor)
         return Usuario.objects.filter(grupo__in=grupo)
