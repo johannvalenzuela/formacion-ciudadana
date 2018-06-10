@@ -17,7 +17,7 @@ urlpatterns = [
     path('<int:pk>/editar', views.RecursoUpdateView.as_view(), name='recurso-update'),
     path('<int:pk>/eliminar', views.RecursoDeleteView.as_view(), name='recurso-delete'),
     path('<int:pk>/descargar/', views.descargar, name= 'descargar'),
-    path('recurso_nuevo/', views.CrearRecursoView.as_view(), name='recurso_nuevo'),
+    path('recurso_nuevo/', views.CrearRecursoView.as_view(), name='recurso-nuevo'),
 ]
 
 if  settings.DEBUG:
