@@ -57,7 +57,7 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(max_length=50, null=True, blank=True)
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
-    grupo = models.ManyToManyField(Grupo)
+
     objects = UserManager()
 
     USERNAME_FIELD = 'email' 
