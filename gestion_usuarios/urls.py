@@ -4,6 +4,7 @@ from . import views
 urlpatterns = [
     path('lista_usuarios/<str:nombreGrupo>/', views.ListaUsuariosView.as_view(), name='lista_usuarios'),
     path('grupos/', views.ListaGruposView.as_view(), name='lista_grupos'),
-    path('<str:nombreGrupo>/agregar_usuario_grupo/<int:pk>/', views.agregarUsuario, name='agregar_usuario'),
-    path('<str:nombreGrupo>/remover_usuario_grupo/<int:pk>/', views.removerUsuario, name='remover_usuario'),
+    path('agregar_usuario_form/<int:pk_grupo>', views.agregarUsuarioFormView, name='agregar_usuario_form'),
+    path('agregar_usuario_grupo/<int:pk_grupo>', views.agregarUsuario, name='agregar_usuario'),
+    path('remover_usuario_grupo/<int:pk_grupo>/<int:pk_usuario>', views.removerUsuario, name='remover_usuario'),
 ]
