@@ -80,4 +80,10 @@ class Grupo(models.Model):
         verbose_name = _('grupo') 
         verbose_name_plural = _('grupos') 
 
+class RutAutorizados(models.Model):
+    rut = models.CharField(max_length=15)
+    nombre = models.CharField(max_length=50)
+    grupo = models.ManyToManyField("Grupo")
+
+
 
