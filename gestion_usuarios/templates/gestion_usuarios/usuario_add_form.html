@@ -1,0 +1,22 @@
+{% extends 'compumundohipermegared.html' %}{% block titulo %}
+<title>Agregar usuarios a {{grupo.nombre}}</title>
+{% endblock %}
+{% block content %}
+
+<table>
+<form action="{% url 'agregar_usuario' grupo.pk %}" method="POST">
+        {% csrf_token %}
+    <tr>
+        <td><label for="nombre">Nombre:</label></td>
+        <td><input type="text" name="nombre" id="nombre"></td>
+    </tr>
+    <tr>
+        <td><label for="rut">Rut:</label></td>
+        <td><input type="text" name="rut" id="rut"></td>
+    </tr>
+    <tr>
+        <td><input type="submit" value="Agregar"></td>
+    </tr>
+</form>
+</table>
+{% endblock %}
