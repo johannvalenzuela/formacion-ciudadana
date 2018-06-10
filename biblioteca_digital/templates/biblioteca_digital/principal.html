@@ -2,9 +2,11 @@
 <title>Recursos Academicos</title>
 {% endblock %} 
  {% block content %}
-<a href="recurso_nuevo">
-    <button class="btn btn-primary float-right mb-3 text-uppercase">Crear Recurso Académico</button>
+
+ <a class="recurso btn btn-primary float-right btn-sm p-2 mt-3 mb-3" data-form="{% url 'recurso-nuevo'%}" data-toggle="modal" data-target="#recursoModal">
+    <i class="mi mi-Add mi-4x"></i> CREAR RECURSO ACADÉMICO
 </a>
+
 <div class="card col-md-12 ">
     <div class="card-body">
         <h3 class="card-title">Recursos Académicos</h3>
@@ -38,7 +40,9 @@
                                         <span class="badge badge-pill badge-primary">Otros</span>
                                         {% endif %}
                                     </div>
-                                    <p>Valoración: {{recurso.valoracionTotal}}/5.0</p>
+                                    <div class="bg-white rounded-0 mr-2 pr-1 pl-1">
+                                        <small class="text-muted">VALORACIÓN: {{recurso.valoracionTotal}}/5.0</small>
+                                    </div>
                                 </div>
                             </div>
                             <div class="m-2">
@@ -70,5 +74,4 @@
 </div>
 
 <div class="modal" id="recursoModal"></div>
-
 {% endblock content %}
