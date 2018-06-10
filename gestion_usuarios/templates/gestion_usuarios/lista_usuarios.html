@@ -6,7 +6,7 @@
 {% for usuario in lista_usuarios %}
     <p>{{ usuario.nombre }}</p>
     <p>{{ usuario.rut }}</p>
-    <a href="{% url 'remover_usuario' grupo.pk usuario.pk %}">
+    <a href="{% url 'remover_usuario_form' grupo.pk usuario.pk %}">
         <button>Eliminar usuario</button>
     </a>
 {% endfor %}
