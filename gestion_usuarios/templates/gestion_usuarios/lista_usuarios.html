@@ -10,7 +10,16 @@
 </div>
 
 {% if lista_usuarios %}
-
+{% comment %} <td>
+    <a class="recurso btn btn-danger btn-sm m-0" data-form="{% url 'eliminar_grupo' grupo.pk %}" data-toggle="modal" data-target="#recursoModal">
+        <i class="mi mi-Delete mi-4x"></i> Borrar
+    </a>
+</td>
+<td>
+    <a class="recurso btn btn-danger btn-sm m-0" data-form="{% url 'editar_grupo' grupo.pk %}" data-toggle="modal" data-target="#recursoModal">
+        <i class="mi mi-Update mi-4x"></i> Editar
+    </a>
+</td> {% endcomment %}
 <table class="table table-borderless table-hover table-light rounded mt-4 shadow-sm">
     <thead>
         <tr>
