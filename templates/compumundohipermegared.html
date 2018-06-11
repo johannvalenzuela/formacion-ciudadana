@@ -37,19 +37,19 @@
                             <a href="#">
                                 <i class="mi mi-ChatBubbles"></i> Mensajes</a>
                         </li>
-                        <li>
+                        <li class="{% if request.path == '/gestion_usuarios/lista_usuarios/alumnos/' %}active{% endif %}">
                             <a href="{% url 'lista_usuarios' 'alumnos' %}">
                                 <i class="mi mi-Education"></i> Alumnos</a>
                         </li>
-                        <li>
+                        <li class="{% if request.path == '/gestion_usuarios/lista_usuarios/apoderados/' %}active{% endif %}">
                             <a href="{% url 'lista_usuarios' 'apoderados' %}">
                                 <i class="mi mi-Education"></i> Apoderados</a>
                         </li>
-                        <li>
+                        <li class="{% if request.resolver_match.url_name == 'lista_grupos' %}active{% endif %}">
                             <a href="{% url 'lista_grupos' %}">
                                 <i class="mi mi-People"></i> Grupos</a>
                         </li>
-                        <li class="active">
+                        <li class="{% if request.resolver_match.url_name == 'biblioteca_digital' %}active{% endif %}">
                             <a href="{% url 'biblioteca_digital' %}">
                                 <i class="mi mi-Library"></i> Recursos Académicos</a>
                         </li>

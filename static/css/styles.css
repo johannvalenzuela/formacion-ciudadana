@@ -241,7 +241,9 @@ a, a:hover, a:focus {
 #sidebar ul li.active > a, a[aria-expanded="true"] {
     color: #fff;
     /* background: #55b0ff; */
-    background: #044a82;
+    font-weight: bold;
+    font-size: 1em;
+    background: #004277;
 }
 
 
