@@ -18,19 +18,24 @@
 </head>
 
 <body>
-
     <div class="wrapper">
         <nav id="sidebar" class="mCustomScrollbar _mCS_1 mCS-autoHide mCS_no_scrollbar" style="overflow: visible;">
-            <div id="mCSB_1" class="mCustomScrollBox mCS-minimal mCSB_vertical mCSB_outside" style="max-height: none;" tabindex="0">
-                <div id="mCSB_1_container" class="mCSB_container mCS_y_hidden mCS_no_scrollbar_y" style="position:relative; top:0; left:0;"
+            <div id="mCSB_1" class="mCustomScrollBox mCS-minimal mCSB_vertical mCSB_outside" tabindex="0">
+                <div id="mCSB_1_container" class="mCSB_container mCS_y_hidden mCS_no_scrollbar_y position-relative" style=" top:0; left:0;"
                     dir="ltr">
-                    <div class="sidebar-header">
-                        <h3>Logo</h3>
+                    <div class="sidebar-header w-50 mx-auto">
+                        <div class="bg-white rounded p-2 pt-4" style="height: 7rem;">
+                            <div>
+                                <h3 class="text-primary font-weight-bold">FC</h3>
+                                <h3 class="text-primary font-weight-bold">CE</h3>
+                            </div>
+                            <i class="mi mi-Education mi-2x text-primary position-relative" style="transform: rotate(30deg); left: 40px; bottom: 105px;"></i>
+                        </div>
                     </div>
                     {% block navbar %}
                     <ul class="list-unstyled components">
-                        <li>
-                            <a href="#">
+                        <li class="{% if request.resolver_match.url_name == 'home' %}active{% endif %}">
+                            <a href="/">
                                 <i class="mi mi-Home"></i> Inicio</a>
                         </li>
                         <li>
@@ -43,7 +48,7 @@
                         </li>
                         <li class="{% if request.path == '/gestion_usuarios/lista_usuarios/apoderados/' or request.path == '/gestion_usuarios/agregar_usuario_form/2' %}active{% endif %}">
                             <a href="{% url 'lista_usuarios' 'apoderados' %}">
-                                <i class="mi mi-Education"></i> Apoderados</a>
+                                <i class="mi mi-AllAppsMirrored"></i> Apoderados</a>
                         </li>
                         <li class="{% if request.resolver_match.url_name == 'lista_grupos' %}active{% endif %}">
                             <a href="{% url 'lista_grupos' %}">
@@ -55,7 +60,7 @@
                         </li>
                         <li>
                             <a href="#">
-                                <i class="mi mi-Megaphone"></i> Consultas Ciudadanas</a>
+                                <i class="mi mi-Package"></i> Consultas Ciudadanas</a>
                         </li>
                         <li>
                             <a href="#">
