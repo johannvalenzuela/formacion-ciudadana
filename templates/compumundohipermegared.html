@@ -6,9 +6,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    
-    {% block titulo %}{% endblock %}
+    <meta http-equiv="x-ua-compatible" content="ie=edge"> {% block titulo %}{% endblock %}
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
         crossorigin="anonymous">
@@ -23,13 +21,15 @@
             <div id="mCSB_1" class="mCustomScrollBox mCS-minimal mCSB_vertical mCSB_outside" tabindex="0">
                 <div id="mCSB_1_container" class="mCSB_container mCS_y_hidden mCS_no_scrollbar_y position-relative" style=" top:0; left:0;"
                     dir="ltr">
-                    <div class="sidebar-header w-50 mx-auto">
-                        <div class="bg-white rounded p-2 pt-4" style="height: 7rem;">
-                            <div>
-                                <h3 class="text-primary font-weight-bold">FC</h3>
-                                <h3 class="text-primary font-weight-bold">CE</h3>
+                    <div class="sidebar-header">
+                        <div class="w-50 mx-auto">
+                            <div class="bg-white rounded p-2 pt-4" style="height: 7rem;">
+                                <div>
+                                    <h3 class="text-primary font-weight-bold">FC</h3>
+                                    <h3 class="text-primary font-weight-bold">CE</h3>
+                                </div>
+                                <i class="mi mi-Education mi-2x text-primary position-relative" style="transform: rotate(30deg); left: 40px; bottom: 105px;"></i>
                             </div>
-                            <i class="mi mi-Education mi-2x text-primary position-relative" style="transform: rotate(30deg); left: 40px; bottom: 105px;"></i>
                         </div>
                     </div>
                     {% block navbar %}
@@ -121,8 +121,8 @@
     </div>
 
     <!-- JavaScript dependencies -->
-     <!-- AJAX JQUERY-->
-     <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+    <!-- AJAX JQUERY-->
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
     <!-- Popper -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
         crossorigin="anonymous"></script>

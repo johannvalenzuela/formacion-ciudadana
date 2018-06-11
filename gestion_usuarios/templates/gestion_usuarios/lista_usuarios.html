@@ -5,7 +5,7 @@
 
 <div class="card col-md-12 mt-4 mb-2 pb-4">
     <div class="card-body">
-        <h3 class="card-title">Lista de {{grupo.nombre}}</h3>
+        <h3 class="card-title">Lista de <span class="text-capitalize">{{grupo.nombre}}</span></h3>
         <p class="card-text">Bienvenido a la sección de los
             <strong>{{ grupo.nombre }}</strong>. Aquí podrá
             <strong>agregar</strong> o
@@ -35,9 +35,9 @@
 <table class="table table-borderless table-hover table-light rounded mt-4 shadow-sm">
     <thead>
         <tr>
-            <th scope="col" class="font-weight-bold">ID</th>
-            <th scope="col"class="font-weight-bold">RUT</th>
+            <th scope="col" class="font-weight-bold">#</th>
             <th scope="col"class="font-weight-bold">NOMBRE</th>
+            <th scope="col"class="font-weight-bold">RUT</th>
             <th scope="col"class="font-weight-bold">ELIMINAR</th>
         </tr>
     </thead>
