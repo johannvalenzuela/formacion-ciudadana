@@ -37,11 +37,11 @@
                             <a href="#">
                                 <i class="mi mi-ChatBubbles"></i> Mensajes</a>
                         </li>
-                        <li class="{% if request.path == '/gestion_usuarios/lista_usuarios/alumnos/' %}active{% endif %}">
+                        <li class="{% if request.path == '/gestion_usuarios/lista_usuarios/alumnos/' or request.path == '/gestion_usuarios/agregar_usuario_form/1' %}active{% endif %}">
                             <a href="{% url 'lista_usuarios' 'alumnos' %}">
                                 <i class="mi mi-Education"></i> Alumnos</a>
                         </li>
-                        <li class="{% if request.path == '/gestion_usuarios/lista_usuarios/apoderados/' %}active{% endif %}">
+                        <li class="{% if request.path == '/gestion_usuarios/lista_usuarios/apoderados/' or request.path == '/gestion_usuarios/agregar_usuario_form/2' %}active{% endif %}">
                             <a href="{% url 'lista_usuarios' 'apoderados' %}">
                                 <i class="mi mi-Education"></i> Apoderados</a>
                         </li>
@@ -49,7 +49,7 @@
                             <a href="{% url 'lista_grupos' %}">
                                 <i class="mi mi-People"></i> Grupos</a>
                         </li>
-                        <li class="{% if request.resolver_match.url_name == 'biblioteca_digital' %}active{% endif %}">
+                        <li class="{% if request.resolver_match.url_name == 'biblioteca_digital' or request.resolver_match.view_name == 'recurso-detail'%}active{% endif %}">
                             <a href="{% url 'biblioteca_digital' %}">
                                 <i class="mi mi-Library"></i> Recursos Académicos</a>
                         </li>
