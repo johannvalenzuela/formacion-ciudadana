@@ -75,3 +75,8 @@ class ResponderConsultaView(generic.TemplateView):
             propuesta_seleccionada.votos +=1
             propuesta_seleccionada.save()
         return HttpResponseRedirect(reverse('consulta:detalles_consulta', args=(propuesta.id,)))
+
+class ConsultaDeleteView(generic.DeleteView):
+    model = Consulta
+    template_name_suffix = '_confirm_delete'
+    # success_url = reverse_lazy('visualizar_consultas')
