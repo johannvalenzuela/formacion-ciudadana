@@ -3,9 +3,21 @@
 {% endblock %}
 {% block content %}
 
+<div class="card col-md-12 mt-4 mb-2 pb-4">
+    <div class="card-body">
+        <h3 class="card-title">Lista de {{grupo.nombre}}</h3>
+        <p class="card-text">Bienvenido a la sección de los
+            <strong>{{ grupo.nombre }}</strong>. Aquí podrá
+            <strong>agregar</strong> o
+            <strong>eliminar</strong> algunos de estos registrados.
+        </p>
+    </div>
+</div>
+
 <div class="pb-5">
     <a href="{% url 'agregar_usuario_form' grupo.pk %}">
-        <button class="btn btn-primary float-right">AGREGAR USUARIO</button>
+        <button class="btn btn-primary float-right"> 
+            <i class="mi mi-Add mi-4x"></i> AGREGAR <span class="text-uppercase">{{ grupo.nombre }}</span></button>
     </a>
 </div>
 

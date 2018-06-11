@@ -3,6 +3,18 @@
 {% endblock %}
 {% block content %}
 
+<div class="card col-md-12 mt-4 mb-2 pb-4">
+    <div class="card-body">
+        <h3 class="card-title">Lista de Grupos</h3>
+        <p class="card-text">Bienvenido a la sección de los
+            <strong>grupos</strong>. Aquí podrá
+            <strong>agregar</strong>,
+            <strong>editar</strong> o
+            <strong>eliminar</strong> algunos de estos registrados.
+        </p>
+    </div>
+</div>
+
 <div class="pb-5">
     <a class="recurso btn btn-primary float-right" data-form="{% url 'agregar_grupo' %}" data-toggle="modal" data-target="#recursoModal">
         <i class="mi mi-Add mi-4x"></i> AGREGAR GRUPO

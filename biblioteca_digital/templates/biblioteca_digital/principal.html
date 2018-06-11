@@ -3,11 +3,7 @@
 {% endblock %} 
  {% block content %}
 
- <a class="recurso btn btn-primary float-right btn-sm p-2 mt-3 mb-3" data-form="{% url 'recurso-nuevo'%}" data-toggle="modal" data-target="#recursoModal">
-    <i class="mi mi-Add mi-4x"></i> CREAR RECURSO ACADÉMICO
-</a>
-
-<div class="card col-md-12 ">
+<div class="card col-md-12 mt-4 mb-2 pb-4">
     <div class="card-body">
         <h3 class="card-title">Recursos Académicos</h3>
         <p class="card-text">Bienvenido a la sección de los
@@ -18,6 +14,13 @@
             <strong>descargar</strong> y mucho mas. </p>
     </div>
 </div>
+
+<div class="pb-5">
+    <a class="recurso btn btn-primary float-right btn-sm p-2 mt-3 mb-3" data-form="{% url 'recurso-nuevo'%}" data-toggle="modal" data-target="#recursoModal">
+        <i class="mi mi-Add mi-4x"></i> CREAR RECURSO ACADÉMICO
+    </a>
+</div>
+
 <div class="section-resources">
     <div class="container">
         <div class="row">
