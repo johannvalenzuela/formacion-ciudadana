@@ -9,31 +9,35 @@
     </a>
 </div>
 
+<!-- <a href="{% url 'agregar_grupo' %}">CREAR</a> -->
+
 <div class="grid-container mt-2" style="grid-template-columns: repeat(4, 1fr);">
 {% for grupo in lista_grupos %}
     {% if grupo.nombre in 'alumnos' or grupo.nombre in 'apoderados' %}
     {% else %}
     <div class="grid-item">
-        <div class="bg-light rounded" style="height: 14rem;">  
-            <!-- <img class="img-resource" src=""> -->
-        </div>
-        <div class="pb-2 pt-2 m-1 text-center">
-            <h5>
-                <a href="{% url 'lista_usuarios' grupo.nombre %}"> {{ grupo.nombre }}</a>
-            </h5> 
-        </div>
-        <div>
-            <div> 
-                <a class="recurso btn btn-default btn-sm btn-block m-0 mw-100" data-form="{% url 'editar_grupo' grupo.pk %}" data-toggle="modal" data-target="#recursoModal">
-                    <i class="mi mi-Edit mi-4x"></i> Editar
-                </a>
+        <a href="{% url 'lista_usuarios' grupo.nombre %}">
+            <div class="bg-light rounded" style="height: 14rem;">  
+                <!-- <img class="img-resource" src=""> -->
+            </div>
+            <div class="pb-2 pt-2 m-1 text-center">
+                <h5>
+                    <a href="{% url 'lista_usuarios' grupo.nombre %}"> {{ grupo.nombre }}</a>
+                </h5> 
             </div>
             <div>
-                <a class="recurso btn btn-danger btn-sm btn-block m-0 mw-100" data-form="{% url 'eliminar_grupo' grupo.pk %}" data-toggle="modal" data-target="#recursoModal">
-                    <i class="mi mi-Delete mi-4x"></i> Borrar
-                </a>
+                <div> 
+                    <a class="recurso btn btn-default btn-sm btn-block m-0 mw-100" data-form="{% url 'editar_grupo' grupo.pk %}" data-toggle="modal" data-target="#recursoModal">
+                        <i class="mi mi-Edit mi-4x"></i> Editar
+                    </a>
+                </div>
+                <div>
+                    <a class="recurso btn btn-danger btn-sm btn-block m-0 mw-100" data-form="{% url 'eliminar_grupo' grupo.pk %}" data-toggle="modal" data-target="#recursoModal">
+                        <i class="mi mi-Delete mi-4x"></i> Borrar
+                    </a>
+                </div>
             </div>
-        </div>
+        </a>
     </div>
     {% endif %}
         
