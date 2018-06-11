@@ -159,7 +159,8 @@ class EditarGrupoView(generic.UpdateView):
     model = Grupo
     fields = ['nombre',]
     template_name_suffix = '_editar_form'
-    
+    success_url = reverse_lazy('lista_grupos')
+
     def get_object(self, queryset=None):
         '''
         Esta función es para obtener el objeto a editar
@@ -171,11 +172,11 @@ class EditarGrupoView(generic.UpdateView):
             return None
         return obj
 
-    def get_success_url(self):
-        '''
-        Es la función que se lanza una vez se realizo todo de forma correcta
-        '''
-	    return reverse_lazy('lista_usuarios', kwargs={'nombreGrupo': self.object.nombre})
+    # def get_success_url(self):
+    #     '''
+    #     Es la función que se lanza una vez se realizo todo de forma correcta
+    #     '''
+	#     return reverse_lazy('lista_grupos', kwargs={'nombreGrupo': self.object.nombre})
 
 @method_decorator(login_required, name='get' )
 @method_decorator(user_passes_test(funcionario_required), name='get')
