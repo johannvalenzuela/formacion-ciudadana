@@ -3,10 +3,27 @@
 {% endblock %}
 {% block content %}
 
+<div class="pb-5">
+    <a href="{% url 'agregar_grupo' %}">
+        <button class="btn btn-primary float-right">AGREGAR GRUPO</button>
+    </a>
+</div>
+
 {% for grupo in lista_grupos %}
     {% if grupo.nombre in 'alumnos' or grupo.nombre in 'apoderados' %}
     {% else %}
-    <p>{{ grupo.nombre }}</p>
+    <a href="{% url 'lista_usuarios' grupo.nombre %}">
+        <p>{{ grupo.nombre }}</p>
+    </a>
+    
+    <a class="recurso btn btn-danger btn-sm m-0" data-form="{% url 'eliminar_grupo' grupo.pk %}" data-toggle="modal" data-target="#recursoModal">
+        <i class="mi mi-Delete mi-4x"></i> Borrar
+    </a>
+
+    <a class="recurso btn btn-danger btn-sm m-0" data-form="{% url 'editar_grupo' grupo.pk %}" data-toggle="modal" data-target="#recursoModal">
+        <i class="mi mi-Update mi-4x"></i> Editar
+    </a>
+
     {% endif %}
         
 {% endfor %}
