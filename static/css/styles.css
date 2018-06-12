@@ -31,10 +31,6 @@ body{
     padding-bottom: 0
 }
 
-.nav-link, .nav-item, .navbar-brand {
-    color: white;
-}
-
 .page-header, .header-filter, .clear-filter {
     /* background: #505cfd; */
     /* background: linear-gradient(to left, #00dbde, #505cfd); */
@@ -302,10 +298,6 @@ ul ul a {
     right: 0;
     margin: -40px;
     padding: 0;
-}
-
-.nav-link, .nav-item, .navbar-brand {
-    color: black;
 }
 
 .card {
