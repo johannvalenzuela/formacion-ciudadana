@@ -73,10 +73,10 @@
     
                         {% else %} {% endif %}  -->
                         {% endif %}
-                        <a class="recurso btn btn-primary" data-form="#" data-toggle="modal">
+                        <a class="btn btn-primary" data-form="#" data-toggle="modal">
                             <i class="mi mi-Edit mi-4x"></i> Editar
                         </a>
-                        <a class="recurso btn btn-danger" data-form="{% url 'consulta_delete' consulta.pk %}" data-toggle="modal">
+                        <a class="btn btn-danger"  href="{% url 'consulta_delete' consulta.pk %}">
                             <i class="mi mi-Download mi-4x"></i> Eliminar
                         </a>
                         <a href="descargar/" class="btn btn-default">
