@@ -134,10 +134,19 @@ class AgregarGrupoView(generic.CreateView):
         '''
         autor = Encargado.objects.get(usuario=self.request.user)
         establecimiento = autor.establecimiento
-
-        form.instance.autor = autor
-        form.instance.establecimiento = establecimiento
+        titulo = form.instance.nombre
+        try:
+            grupoNuevo = Grupo.objects.get(nombre=titulo, autor=autor, establecimiento=establecimiento)
+        except ObjectDoesNotExist:
+            form.instance.autor = autor
+            form.instance.establecimiento = establecimiento
+        else:
+            #messages.error(self.request, 'El nombre que eligió ya existe')
+            #return self.render_to_response(self.get_context_data(form=form))
+            return redirect('lista_grupos')
+            
         return super().form_valid(form)
+
 
     # def form_valid(self, form):
     #     grupo = form.save(commit=False)
@@ -165,7 +174,6 @@ class EditarGrupoView(generic.UpdateView):
         '''
         Esta función es para obtener el objeto a editar
         Se creo para que no funcionara si el grupo es alumnos o apoderados
-        EN PRUEBA(POSIBLEMENTE TENGO BUGS)
         '''
         obj = Grupo.objects.get(pk=self.kwargs['pk'])
         if obj.nombre in "alumnos" or obj.nombre in "apoderados":
