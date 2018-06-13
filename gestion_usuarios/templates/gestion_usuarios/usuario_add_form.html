@@ -1,9 +1,11 @@
 {% extends 'compumundohipermegared.html' %}{% block titulo %}
 <title>Agregar usuarios a {{grupo.nombre}}</title>
-{% endblock %}
-{% block content %}
+{% endblock %} {% block content %}
 
 <div class="bg-white rounded p-3 mt-4 shadow-sm">
+    <div class="text-center mb-3">
+        <h4 class="font-weight-bold pb-2">Crear nuevo usuario</h4>
+    </div>
     <form action="{% url 'agregar_usuario' grupo.pk %}" method="POST">
         {% csrf_token %}
         <div class="form-group row">
@@ -15,11 +17,12 @@
         <div class="form-group row">
             <label for="rut" class="col-sm-2 col-form-label">RUT:</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" maxlength="12" id="rut" name="rut" pattern="\d{3,8}-[\d|kK]{1}" title="Debe ingresar el rut 'sin puntos'" placeholder="Ej: 12345678-9 (sin puntos)" required>
+                <input type="text" class="form-control" maxlength="12" id="rut" name="rut" pattern="\d{3,8}-[\d|kK]{1}" title="Debe ingresar el rut 'sin puntos'"
+                    placeholder="Ej: 12345678-9 (sin puntos)" required>
             </div>
         </div>
-        <div class="pb-4 mb-2">
-            <button type="submit" class="btn btn-primary float-right m-0 p-2">Agregar</button>
+        <div class="pb-4 mb-2 mt-4">
+            <button type="submit" class="btn btn-primary btn-block float-right m-0 p-2">Agregar</button>
         </div>
     </form>
 </div>
