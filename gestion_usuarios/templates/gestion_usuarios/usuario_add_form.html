@@ -6,7 +6,7 @@
     <div class="text-center mb-3">
         <h4 class="font-weight-bold pb-2">Crear nuevo usuario</h4>
     </div>
-    <form action="{% url 'agregar_usuario' grupo.pk %}" method="POST">
+    <form action="{% url 'agregar_usuario_form' grupo.pk %}" method="POST">
         {% csrf_token %}
         <div class="form-group row">
             <label for="nombre" class="col-sm-2 col-form-label">Nombre:</label>
