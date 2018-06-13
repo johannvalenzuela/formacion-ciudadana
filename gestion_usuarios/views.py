@@ -5,6 +5,7 @@ from django.shortcuts import redirect
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponseRedirect
 from django.contrib import messages
+from django.shortcuts import get_object_or_404
 
 
 #decorators
@@ -58,66 +59,71 @@ class ListaGruposView(generic.ListView):
         return Grupo.objects.filter(autor=autor)
 
 
-@login_required
-@user_passes_test(funcionario_required)
-def agregarUsuarioFormView(request, pk_grupo):
+@method_decorator(login_required, name='get' )
+@method_decorator(user_passes_test(funcionario_required), name='get')
+class AgregarUsuarioGrupoView(generic.CreateView):
     '''
-    Muestra el formulario para agregar un usuario a un grupo en especifico
+    Es la clase para agregar un grupo de un encargado en especifico.
     '''
-    grupo = Grupo.objects.get(pk=pk_grupo)
-    args = {
-        "grupo":grupo,
-    }
-    return render(request, "gestion_usuarios/usuario_add_form.html", args)
+    model = RutAutorizados
+    fields = ['rut','nombre']
+    template_name = 'gestion_usuarios/usuario_add_form.html'
 
-
-@login_required
-@user_passes_test(funcionario_required)
-def agregarUsuario(request, pk_grupo):
-    '''
-    agrega una relacion nueva de muchos es a muchos de un usuario con un grupo
-    '''
-    if request.method =="POST":
-        nombreUsuario = request.POST.get("nombre")
-        rutUsuario = request.POST.get("rut")
-        grupo = Grupo.objects.get(pk=pk_grupo)
+    def form_valid(self, form):
+        '''
+        Esta funcion se tira si el formulario es valido
+        '''
+        self.object = form.save(commit=False)
+        self.object.save()
         try:
-            usuarioNuevo= RutAutorizados.objects.get(rut=rutUsuario)
+            grupo = Grupo.objects.get(pk=self.kwargs['pk_grupo'])
         except ObjectDoesNotExist:
-            usuarioNuevo = RutAutorizados.objects.create(rut=rutUsuario,nombre=nombreUsuario)
+            messages.error(self.request, 'Grupo no ingresado')
+            return redirect('lista_grupos')
+        else:
+            form.instance.grupo.add(grupo)
+
+        return self.get_success_url()
         
-        usuarioNuevo.grupo.add(grupo)
-        usuarioNuevo.save()
-    return redirect('lista_usuarios', nombreGrupo=grupo.nombre)
+    def get_success_url(self):
+        grupo = Grupo.objects.get(pk=self.kwargs['pk_grupo'])
+        return redirect('lista_usuarios', nombreGrupo=grupo.nombre)
 
-@login_required
-@user_passes_test(funcionario_required)
-def removerUsuarioView(request, pk_grupo, pk_usuario):
-    '''
-    Muestra el formulario para eliminar un usuario de un grupo en especifico
-    '''
-    grupo = Grupo.objects.get(pk=pk_grupo)
-    usuario = RutAutorizados.objects.get(pk=pk_usuario)
-    args = {
-        "grupo":grupo,
-        "usuario":usuario,
-    }
-    return render(request, "gestion_usuarios/usuarioGrupo_delete_form.html", args)
-
-@login_required
-@user_passes_test(funcionario_required)
-def removerUsuario(request, pk_grupo, pk_usuario):
-    '''
-    elimina una relacion de muchos es a muchos de un usuario con un grupo
-    '''
-    if request.method =="POST":
+    def get(self, request, pk_grupo):
         grupo = Grupo.objects.get(pk=pk_grupo)
-        usuarioEliminar = RutAutorizados.objects.get(pk=pk_usuario)
-            
-        usuarioEliminar.grupo.remove(grupo)
-        usuarioEliminar.save()
-    return redirect('lista_usuarios', nombreGrupo=grupo.nombre)
+        args = {
+            "grupo": grupo,
+        }
+        return render(request, "gestion_usuarios/usuario_add_form.html", args)
 
+@method_decorator(login_required, name='get' )
+@method_decorator(user_passes_test(funcionario_required), name='get')
+class EliminarUsuarioGrupoView(generic.DeleteView):
+    '''
+    Es la clase para eliminar un grupo de un encargado en especifico.
+    '''
+    model = RutAutorizados
+    template_name = 'gestion_usuarios/usuarioGrupo_delete_form.html'
+    pk_url_kwarg = 'pk_usuario'
+ 
+    def get_success_url(self):
+        grupo = Grupo.objects.get(pk=self.kwargs['pk_grupo'])
+        return redirect('lista_usuarios', nombreGrupo=grupo.nombre)
+    
+    def delete(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        self.object.delete()
+        return self.get_success_url()
+
+    def get(self, request, pk_grupo, pk_usuario):
+        grupo = Grupo.objects.get(pk=pk_grupo)
+        usuario = RutAutorizados.objects.get(pk=pk_usuario)
+        args = {
+            "grupo":grupo,
+            "usuario":usuario,
+        }
+        return render(request, "gestion_usuarios/usuarioGrupo_delete_form.html", args)
+        
 
 @method_decorator(login_required, name='get' )
 @method_decorator(user_passes_test(funcionario_required), name='get')
@@ -151,18 +157,6 @@ class AgregarGrupoView(generic.CreateView):
 
 
 
-
-    # def form_valid(self, form):
-    #     grupo = form.save(commit=False)
-    #     autorNuevo = Encargado.objects.get(usuario=self.request.user)
-    #     establecimientoNuevo = autorNuevo.establecimiento
-
-    #     grupo.autor = autorNuevo
-    #     grupo.establecimiento = establecimientoNuevo
-    #     return super(AgregarGrupoView, self).form_valid(form)
-
-
-
 @method_decorator(login_required, name='get' )
 @method_decorator(user_passes_test(funcionario_required), name='get')
 class EditarGrupoView(generic.UpdateView):
@@ -184,11 +178,6 @@ class EditarGrupoView(generic.UpdateView):
             return None
         return obj
 
-    # def get_success_url(self):
-    #     '''
-    #     Es la función que se lanza una vez se realizo todo de forma correcta
-    #     '''
-	#     return reverse_lazy('lista_grupos', kwargs={'nombreGrupo': self.object.nombre})
 
 @method_decorator(login_required, name='get' )
 @method_decorator(user_passes_test(funcionario_required), name='get')
