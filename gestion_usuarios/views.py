@@ -73,23 +73,15 @@ class AgregarUsuarioGrupoView(generic.CreateView):
         '''
         Esta funcion se tira si el formulario es valido
         '''
+        self.object = form.save(commit=False)
+        self.object.save()
         try:
             grupo = Grupo.objects.get(pk=self.kwargs['pk_grupo'])
         except ObjectDoesNotExist:
             messages.error(self.request, 'Grupo no ingresado')
             return redirect('lista_grupos')
         else:
-            try:
-                usuarioExiste = RutAutorizados.objects.get(rut=form.instance.rut)
-            except ObjectDoesNotExist:
-                #si es que el usuario no existe se creo uno nuevo
-                self.object = form.save(commit=False)
-                self.object.save()
-                form.instance.grupo.add(grupo)
-            else:
-                #sino se ocupa el ya existente
-                self.object = usuarioExiste
-                self.object.grupo.add(grupo)
+            form.instance.grupo.add(grupo)
 
         return self.get_success_url()
         
@@ -120,8 +112,7 @@ class EliminarUsuarioGrupoView(generic.DeleteView):
     
     def delete(self, request, *args, **kwargs):
         self.object = self.get_object()
-        grupo = Grupo.objects.get(pk=self.kwargs['pk_grupo'])
-        self.object.grupo.remove(grupo)
+        self.object.delete()
         return self.get_success_url()
 
     def get(self, request, pk_grupo, pk_usuario):
