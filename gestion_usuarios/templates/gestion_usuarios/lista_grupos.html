@@ -14,6 +14,12 @@
         </p>
     </div>
 </div>
+<!-- MENSAJE DE ERROR ACA -->
+{% if messages %}
+    {% for message in messages %}
+    <p>{{ message }}</p>
+    {% endfor %}
+{% endif %}
 
 <div class="pb-5">
     <a class="recurso btn btn-primary float-right" data-form="{% url 'agregar_grupo' %}" data-toggle="modal" data-target="#recursoModal">
