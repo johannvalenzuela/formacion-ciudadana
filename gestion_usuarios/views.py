@@ -4,6 +4,8 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponseRedirect
+from django.contrib import messages
+
 
 #decorators
 from django.contrib.auth.decorators import login_required
@@ -141,11 +143,13 @@ class AgregarGrupoView(generic.CreateView):
             form.instance.autor = autor
             form.instance.establecimiento = establecimiento
         else:
-            #messages.error(self.request, 'El nombre que eligió ya existe')
+            messages.error(self.request, 'El nombre que eligió ya existe')
             #return self.render_to_response(self.get_context_data(form=form))
             return redirect('lista_grupos')
             
         return super().form_valid(form)
+
+
 
 
     # def form_valid(self, form):
