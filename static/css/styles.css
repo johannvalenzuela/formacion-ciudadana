@@ -31,6 +31,10 @@ body{
     padding-bottom: 0
 }
 
+.nav-link, .nav-item, .navbar-brand {
+    color: white;
+}
+
 .page-header, .header-filter, .clear-filter {
     /* background: #505cfd; */
     /* background: linear-gradient(to left, #00dbde, #505cfd); */
@@ -201,8 +205,7 @@ a, a:hover, a:focus {
     left: 0;
     height: 100vh;
     z-index: 999;
-    /* background: #2699FB; */
-    background:#005292;
+    background: #2699FB;
     color: #fff;
     transition: all 0.3s;
 }
@@ -213,8 +216,12 @@ a, a:hover, a:focus {
 
 #sidebar .sidebar-header {
     padding: 20px;
-    /* background: #4ba3ef; */
-    background: #004c88;
+    background: #4ba3ef;
+}
+
+#sidebar ul.components {
+    padding: 20px 0;
+    border-bottom: 1px solid #00a9ff;
 }
 
 #sidebar ul p {
@@ -223,23 +230,18 @@ a, a:hover, a:focus {
 }
 
 #sidebar ul li a {
-    padding: 1rem;
-    font-size: .9em;
+    padding: 10px;
+    font-size: 1em;
     display: block;
 }
 #sidebar ul li a:hover {
-    /* color: #2699FB;
-    background: #fff; */
-    color: #000000;
-    background: #ebebeb;
+    color: #2699FB;
+    background: #fff;
 }
 
 #sidebar ul li.active > a, a[aria-expanded="true"] {
     color: #fff;
-    /* background: #55b0ff; */
-    font-weight: bold;
-    font-size: 1em;
-    background: #004277;
+    background: #55b0ff;
 }
 
 
@@ -298,6 +300,10 @@ ul ul a {
     right: 0;
     margin: -40px;
     padding: 0;
+}
+
+.nav-link, .nav-item, .navbar-brand {
+    color: black;
 }
 
 .card {
