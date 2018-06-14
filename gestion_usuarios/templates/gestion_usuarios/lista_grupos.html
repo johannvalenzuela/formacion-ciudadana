@@ -1,0 +1,66 @@
+{% extends 'compumundohipermegared.html' %}{% block titulo %}
+<title>Grupos de usuarios</title>
+{% endblock %} {% block content %}
+
+<div class="card col-md-12 mt-4 mb-2 pb-4">
+    <div class="card-body">
+        <h3 class="card-title">Lista de Grupos</h3>
+        <p class="card-text">Bienvenido a la sección de los
+            <strong>grupos</strong>. Aquí podrá
+            <strong>agregar</strong>,
+            <strong>editar</strong> o
+            <strong>eliminar</strong> algunos de estos registrados.
+        </p>
+    </div>
+</div>
+
+<div class="pb-5">
+    <a class="recurso btn btn-primary float-right" data-form="{% url 'agregar_grupo' %}" data-toggle="modal" data-target="#recursoModal">
+        <i class="mi mi-Add mi-4x"></i> AGREGAR GRUPO
+    </a>
+</div>
+
+
+<!-- MENSAJE DE ERROR ACA -->
+{% if messages %} {% for message in messages %}
+<script>
+    alert('{{ message }}')
+</script>
+{% endfor %} {% endif %}
+
+<!-- <a href="{% url 'agregar_grupo' %}">CREAR</a> -->
+
+<div class="grid-container mt-2" style="grid-template-columns: repeat(4, 1fr);">
+    {% for grupo in lista_grupos %} {% if grupo.nombre in 'alumnos' or grupo.nombre in 'apoderados' %} {% else %}
+    <div class="grid-item">
+        <a href="{% url 'lista_usuarios' grupo.nombre %}">
+            <div class="bg-light rounded" style="height: 14rem;">
+                <!-- <img class="img-resource" src=""> -->
+            </div>
+            <div class="pb-2 pt-2 m-1 text-center">
+                <h5>
+                    <a href="{% url 'lista_usuarios' grupo.nombre %}"> {{ grupo.nombre }}</a>
+                </h5>
+            </div>
+            <div>
+                <div>
+                    <a class="recurso btn btn-default btn-sm btn-block m-0 mw-100" data-form="{% url 'editar_grupo' grupo.pk %}" data-toggle="modal"
+                        data-target="#recursoModal">
+                        <i class="mi mi-Edit mi-4x"></i> Editar
+                    </a>
+                </div>
+                <div>
+                    <a class="recurso btn btn-danger btn-sm btn-block m-0 mw-100" data-form="{% url 'eliminar_grupo' grupo.pk %}" data-toggle="modal"
+                        data-target="#recursoModal">
+                        <i class="mi mi-Delete mi-4x"></i> Borrar
+                    </a>
+                </div>
+            </div>
+        </a>
+    </div>
+    {% endif %} {% endfor %}
+</div>
+
+<div class="modal" id="recursoModal"></div>
+
+{% endblock %}

@@ -1,0 +1,116 @@
+{% extends 'compumundohipermegared.html' %} {% block titulo %}
+<title>Recursos Academicos</title>
+{% endblock %}
+{% block content %}
+<div class="container-fluid" style="padding: .5rem 1.5rem;">
+    <div class="section-things" style="border-radius: .25rem .25rem 0 0; padding-bottom: 2rem;">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12 ml-auto mr-auto text-center">
+                    {% if object %}
+                    <div class="section-description mt-2">
+                        <img class="card-img-top " src="../media/{{ object.imagen_descriptiva }}" alt="{{ object.titulo }}" style="border-radius: 10rem">
+                        <p>Valoración: {{object.valoracionTotal}}/5.0</p>
+                        <div class="star-rating">
+                            <span class="mi mi-FavoriteStar" data-rating="1" onclick="valorEstrella(this,'{{csrf_token}}')"></span>
+                            <span class="mi mi-FavoriteStar" data-rating="2" onclick="valorEstrella(this,'{{csrf_token}}')"></span>
+                            <span class="mi mi-FavoriteStar" data-rating="3" onclick="valorEstrella(this,'{{csrf_token}}')"></span>
+                            <span class="mi mi-FavoriteStar" data-rating="4" onclick="valorEstrella(this,'{{csrf_token}}')"></span>
+                            <span class="mi mi-FavoriteStar" data-rating="5" onclick="valorEstrella(this,'{{csrf_token}}')"></span>
+                            <input type="hidden" class="rating-value">
+                        </div>
+
+                        <small>Creado el {{ object.fecha_creacion }}</small>
+                        <h3 class="title m-0">
+                            <strong>{{ object.titulo }}</strong>
+                        </h3>
+                        <h6 class="description m-2">
+                            {% if object.tema == 1 %}
+                            <span class="badge badge-pill badge-primary">Formación Ciudadana</span>
+                            {% elif object.tema == 2 %}
+                            <span class="badge badge-pill badge-primary">Convivencia Escolar</span>
+                            {% else %}
+                            <span class="badge badge-pill badge-primary">Otros</span>
+                            {% endif %}
+                        </h6>
+                        <h4 class="description">{{ object.descripcion }}</h4>
+                    </div>
+                    {% if object.autor == user %}
+                    <a class="recurso btn btn-primary" data-form="{% url 'recurso-update' recurso.pk %}" data-toggle="modal" data-target="#recursoModal">
+                        <i class="mi mi-Edit mi-4x"></i> Editar
+                    </a>
+                    <a class="recurso btn btn-danger" data-form="{% url 'recurso-delete' recurso.pk %}" data-toggle="modal" data-target="#recursoModal">
+                        <i class="mi mi-Download mi-4x"></i> Eliminar
+                    </a>
+
+                    {% else %} {% endif %} {% endif %}
+                    <a href="descargar/" class="btn btn-default">
+                        <i class="mi mi-Download mi-4x"></i> Descargar
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 ml-auto mr-auto text-center">
+
+            <h5>Ejemplo con GView</h5>
+
+            <div class="card col-md-12">
+                <!-- <img class="rounded mx-auto d-block m-4" src="../media/{{ object.archivo }}" alt="{{ object.titulo }}"> -->
+                <iframe class="mx-auto m-4" width="100%" height="800" frameborder="0" src="http://docs.google.com/gview?url=https://dl.dropbox.com/s/tpxqmv0o39fd858/Proceso%20Administrativo.ppt&embedded=true"></iframe>
+            </div>
+            <!-- <iframe width="600" height="800" frameborder="0" src="http://docs.google.com/gview?url=https://dl.dropbox.com/s/tpxqmv0o39fd858/Proceso%20Administrativo.ppt&embedded=true"></iframe> -->
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 bg-white rounded p-4">
+            <div class="text-left pb-2">
+                <h4 class="font-weight-bold pb-2">Agrega un comentario</h4>
+            </div>
+            <form action="comentar" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <textarea class="form-control" name="comentario" id="comentario" rows="5"></textarea>
+                </div>
+                <div>
+                    <input class="btn btn-primary btn-block" type="submit" value="Comentar">
+                </div>
+            </form>
+            <hr>
+            <h4 class="font-weight-bold pb-2">Comentarios</h4>
+
+            <div class="border rounded p-2">
+                {% if comentarios %} {% for comentario in comentarios %}
+                <div>
+                    <strong>{{comentario.autorComentario}}</strong>
+                    <small class="text-muted"> {{comentario.fecha_creacion}}</small>
+                    <p>{{comentario.comentario}}</p>
+
+                    <!-- Por hacer -->
+                    {% if comentario.autorComentario == user %}
+                    <div class="text-right">
+                        <div class="d-inline">
+                            <a class="recurso btn btn-danger btn-sm" data-form="{% url 'comentario-update' comentario.pk %}" data-toggle="modal" data-target="#recursoModal">
+                                <i class="mi mi-Edit mi-4x"></i> Editar
+                            </a>
+                        </div>
+                        <div class="d-inline">
+                            <a class="recurso btn btn-default btn-sm" data-form="{% url 'comentario-delete' comentario.pk %}" data-toggle="modal" data-target="#recursoModal">
+                                <i class="mi mi-Delete mi-4x"></i> Borrar
+                            </a>
+                        </div>
+                    </div>
+                    {% else %} {% endif %}
+                </div>
+                <hr> {% endfor %} {% else %}
+                <div class="text-center p-5"><i class="mi mi-EmojiTabTextSmiles mi-4x"></i> <br> Sé el primero en comentar este recurso académico</div> {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="recursoModal"></div>
+
+    {% endblock %}
