@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'consulta.apps.ConsultaConfig',
     'biblioteca_digital.apps.BibliotecaDigitalConfig',
     'autenticacion.apps.AutenticacionConfig',
     'gestion_usuarios.apps.GestionUsuariosConfig',

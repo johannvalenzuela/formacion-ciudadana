@@ -9,4 +9,5 @@ urlpatterns = [
     path('autenticacion/', include('autenticacion.urls')),
     path('biblioteca_digital/', include('biblioteca_digital.urls')),
     path('gestion_usuarios/', include('gestion_usuarios.urls')),
+    path('consulta/', include('consulta.urls')),
 ]

@@ -1,0 +1,93 @@
+{% extends 'consulta/base2.html'%} {% block titulo %}
+<title>Consultas Ciudadanas</title>
+{% endblock %} {% block navbar %}
+<ul class="list-unstyled components">
+    <li>
+        <a href="#">
+            <i class="mi mi-Home"></i> Inicio</a>
+    </li>
+    <li>
+        <a href="#">
+            <i class="mi mi-ChatBubbles"></i> Mensajes</a>
+    </li>
+    <li>
+        <a href="#">
+            <i class="mi mi-Education"></i> Alumnos</a>
+    </li>
+    <li>
+        <a href="#">
+            <i class="mi mi-Education"></i> Apoderados</a>
+    </li>
+    <li>
+        <a href="#">
+            <i class="mi mi-People"></i> Grupos</a>
+    </li>
+    <li>
+        <a href="#">
+            <i class="mi mi-Library"></i> Recursos Académicos</a>
+    </li>
+    <li class="active">
+        <a href="#">
+            <i class="mi mi-Megaphone"></i> Consultas Ciudadanas</a>
+    </li>
+    <li>
+        <a href="#">
+            <i class="mi mi-Feedback"></i> Foro</a>
+    </li>
+</ul>
+{% endblock %} {% block content %}
+<a href={% url 'crear_consulta' %}>
+    <button class="btn btn-primary float-right mb-3 text-uppercase">Crear Consulta</button>
+</a>
+<div class="card col-md-12 ">
+    <div class="card-body">
+        <h3 class="card-title">Consultas Ciudadanas</h3>
+        <p class="card-text">Bienvenido a la sección de las
+            <strong>consultas ciudadanas</strong>. Aquí podrá
+            <strong>crear</strong>,
+            <strong>editar</strong>,
+            <strong>eliminar</strong> y mucho mas. </p>
+    </div>
+</div>
+
+<div class="section-resources">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 ml-auto mr-auto p-0">
+                <div class="grid-container">
+                    {% if lista_consultas %} {% for consulta in lista_consultas %}
+                    <div class="grid-row">
+                        <a href="{{ consulta.id }}">
+                            <div class="m-4">
+                                <div class="text-uppercase">
+                                    <h4>
+                                        <strong>{{consulta.titulo}}</strong>
+                                    </h4>
+                                </div>
+                                <div class="text-justify">
+                                    <p>{{ consulta.descripcion }}</p>
+                                </div>
+                                <div class="text-muted mr-2 pb-1">
+                                    <small>
+                                        Creado por
+                                        <strong id="autor_recurso"> Completar en modelo</strong> el
+                                        <strong>{{ consulta.fecha_creacion }}</strong>
+                                    </small>
+                                </div>
+                                <div class="text-muted mr-2 pb-1">
+                                    <small>
+                                        Iniciado el
+                                        <strong id="autor_recurso">{{ consulta.fecha_inicio}}</strong>, terminado el
+                                        <strong>{{ consulta.fecha_finalizacion }}</strong>
+                                    </small>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    {% endfor %} {% else %} No existen consultas ciudadanas en estos momentos. {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
