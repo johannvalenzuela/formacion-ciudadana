@@ -49,7 +49,7 @@ class CrearConsultaView(generic.CreateView):
     Muesta la vista para crear una consulta nueva
     '''
     form_class = ConsultaForm
-    template_name = 'consulta/create_form.html'
+    template_name = 'consulta/consulta_create_form.html'
     success_url = reverse_lazy('visualizar_consultas')
 
 
