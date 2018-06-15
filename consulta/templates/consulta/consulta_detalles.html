@@ -8,8 +8,6 @@
                 <div class="col-md-12 ml-auto mr-auto text-center">
                     {% if object %}
                     <div class="section-description mt-2">
-                        <!-- <img class="card-img-top " src="../media/{{ object.imagen_descriptiva }}" alt="{{ object.titulo }}" style="border-radius: 10rem"> -->
-
                         <span>Creado el {{ object.fecha_creacion }}</span>
                         <h3 class="title m-0">
                             <strong>{{ object.titulo }}</strong>
@@ -21,71 +19,43 @@
                     </div>
                  
                     {% endif %}
-                    <a class="recurso btn btn-primary" data-form="{% url 'consulta_update' consulta.pk %}" data-toggle="modal" data-target="#recursoModal">
+                    <a class="recurso btn btn-primary" data-form="{% url 'consulta_update' object.pk %}" data-toggle="modal" data-target="#recursoModal">
                         <i class="mi mi-Edit mi-4x"></i> Editar
                     </a>
-                    <a class="recurso btn btn-danger" data-form="{% url 'consulta_delete' consulta.pk %}" data-toggle="modal" data-target="#recursoModal">
+                    <a class="recurso btn btn-danger" data-form="{% url 'consulta_delete' object.pk %}" data-toggle="modal" data-target="#recursoModal">
                         <i class="mi mi-Download mi-4x"></i> Eliminar
-                    </a>
-                    <!-- <a class="btn btn-danger" href="{% url 'consulta_delete' consulta.pk %}">
-                        <i class="mi mi-Download mi-4x"></i> Eliminar
-                    </a> -->
-                    <a href="descargar/" class="btn btn-default">
-                        <i class="mi mi-Download mi-4x"></i> Descargar
                     </a>
                 </div>
             </div>
         </div>
     </div>
+{% comment %} boton para agregar propuesta solo para el autor del recurso {% endcomment %}
+{% if object.autor == user %}
+<a href="{% url 'crear_propuesta' object.pk %}">
+<button>Agregar propuesta</button></a>
+{% else %}
+{% endif %}
 
-    <div class="row">
-        <div class="col-md-12 ml-auto mr-auto text-center">
-        </div>
-    </div>
+{% comment %} LISTA DE PROPUESTAS {% endcomment %}
+{% if propuestas %}
+    {% for propuesta in propuestas %}
+        <p>{{propuesta.titulo}}</p>
+        <p>{{propuesta.descripcion}}</p>
+        <p>{{propuesta.fecha_creacion}}</p>
+        <p>{{propuesta.contenido}}</p>
+        <p>{{propuesta.votos}}</p>
 
-    <div class="row">
-        <div class="col-md-12 bg-white rounded p-4">
-            <!-- <div class="text-left pb-2">
-                    <h4 class="font-weight-bold pb-2">Agrega un comentario</h4>
-                </div>
-                <form action="comentar" method="POST">
-                    {% csrf_token %}
-                    <div class="form-group">
-                        <textarea class="form-control" name="comentario" id="comentario" rows="5"></textarea>
-                    </div>
-                    <div>
-                        <input class="btn btn-primary btn-block" type="submit" value="Comentar">
-                    </div>
-                </form>
-                <hr>
-                <h4 class="font-weight-bold pb-2">Comentarios</h4>
-    
-                <div class="border rounded p-2">
-                    {% if comentarios %} {% for comentario in comentarios %}
-                    <div>
-                        <strong>{{comentario.autorComentario}}</strong>
-                        <small class="text-muted"> {{comentario.fecha_creacion}}</small>
-                        <p>{{comentario.comentario}}</p>
-    
-                        {% if comentario.autorComentario == user %}
-                        <div class="text-right">
-                            <div class="d-inline">
-                                <a class="recurso btn btn-danger btn-sm" data-form="{% url 'comentario-update' comentario.pk %}" data-toggle="modal" data-target="#recursoModal">
-                                    <i class="mi mi-Edit mi-4x"></i> Editar
-                                </a>
-                            </div>
-                            <div class="d-inline">
-                                <a class="recurso btn btn-default btn-sm" data-form="{% url 'comentario-delete' comentario.pk %}" data-toggle="modal" data-target="#recursoModal">
-                                    <i class="mi mi-Delete mi-4x"></i> Borrar
-                                </a>
-                            </div>
-                        </div>
-                        {% else %} {% endif %}
-                    </div>
-                    <hr> {% endfor %} {% else %}
-                    <div class="text-center p-5"><i class="mi mi-EmojiTabTextSmiles mi-4x"></i> <br> Sé el primero en comentar este recurso académico</div> {% endif %}
-                </div> -->
-        </div>
-    </div>
-    <div class="modal" id="recursoModal"></div>
-    {% endblock content %}
+        {% comment %} boton para modificar o eliminar propuesta solo para el autor del recurso {% endcomment %}
+        {% if object.autor == user %}
+        <a href="{% url 'editar_propuesta' propuesta.pk %}">
+        <button>Editar propuesta</button></a>
+        <a href="{% url 'eliminar_propuesta' propuesta.pk %}">
+        <button>Eliminar propuesta</button></a>
+        {% else %}
+        {% endif %}
+    {% endfor %}   
+{% else %}
+    <p>No existen propuestas en este momento.</p>
+{% endif %}
+
+{% endblock content %}
