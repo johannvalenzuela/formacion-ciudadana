@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views import generic
 from django.http import HttpResponse, HttpResponseRedirect
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from .models import Consulta, Consulta_propuesta
 from .forms import ConsultaPropuestaForm, ConsultaForm
 
@@ -23,6 +23,7 @@ class CrearConsultaView(generic.CreateView):
     '''
     form_class = ConsultaForm
     template_name = 'consulta/crear_consulta.html'
+    success_url = reverse_lazy('visualizar_consultas')
 
 class ConsultaCrearPropuestaView(generic.CreateView):
     '''
@@ -78,7 +79,12 @@ class ResponderConsultaView(generic.TemplateView):
             propuesta_seleccionada.save()
         return HttpResponseRedirect(reverse('consulta:detalles_consulta', args=(propuesta.id,)))
 
-def ConsultaDeleteView(request, pk):
-    consulta = Consulta.objects.get(pk=pk)
-    consulta.delete()
-    return redirect('visualizar_consultas')
+class ConsultaDeleteView(generic.DeleteView):
+    model = Consulta
+    template_name_suffix = '_confirm_delete'
+    success_url = reverse_lazy('visualizar_consultas')
+
+# def ConsultaDeleteView(request, pk):
+#     consulta = Consulta.objects.get(pk=pk)
+#     consulta.delete()
+#     return redirect('visualizar_consultas')
