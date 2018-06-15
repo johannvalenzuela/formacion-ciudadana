@@ -4,7 +4,14 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 from .models import Consulta, Consulta_propuesta
 from .forms import ConsultaPropuestaForm, ConsultaForm
+from django.core.exceptions import ObjectDoesNotExist
 
+def funcionario_required(user):
+    try:
+        encargado = Encargado.objects.get(usuario=user)
+    except ObjectDoesNotExist:
+        return None
+    return encargado
 
 class VisualizarConsultasView(generic.ListView):
     '''

@@ -18,8 +18,12 @@ from .models import Grupo, Encargado,RutAutorizados
 from autenticacion.models import Usuario
 
 
-def funcionario_required(usuario):
-    return Encargado.objects.get(usuario=usuario)
+def funcionario_required(user):
+    try:
+        encargado = Encargado.objects.get(usuario=user)
+    except ObjectDoesNotExist:
+        return None
+    return encargado
 
 
 @method_decorator(login_required, name='get' )

@@ -6,7 +6,7 @@ from django.conf import settings
 import os
 from .forms import RecursoForm
 from django.shortcuts import redirect
-
+from django.core.exceptions import ObjectDoesNotExist
 
 #decorators
 from django.contrib.auth.decorators import login_required
@@ -18,7 +18,11 @@ from .models import Recurso, ValoracionRecurso, ComentarioRecurso
 from gestion_usuarios.models import Encargado
 
 def funcionario_required(user):
-    return Encargado.objects.get(usuario=user)
+    try:
+        encargado = Encargado.objects.get(usuario=user)
+    except ObjectDoesNotExist:
+        return None
+    return encargado
 
 
 @method_decorator(login_required, name='get' )
