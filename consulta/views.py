@@ -108,3 +108,16 @@ class ConsultaDeleteView(generic.DeleteView):
     model = Consulta
     template_name_suffix = '_confirm_delete'
     success_url = reverse_lazy('visualizar_consultas')
+
+
+@method_decorator(login_required, name='get' )
+@method_decorator(user_passes_test(funcionario_required), name='get' )
+class ConsultaUpdateView(generic.UpdateView):
+    model = Consulta
+    fields = ['titulo','descripcion','fecha_inicio','fecha_finalizacion',]
+    template_name = 'consulta/modificar_consulta.html'
+
+    def get_success_url(self):
+	    return reverse_lazy('detalles_consulta', kwargs={'pk': self.object.pk})
+
+

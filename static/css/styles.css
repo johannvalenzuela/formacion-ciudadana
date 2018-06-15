@@ -97,8 +97,10 @@ body{
 }
 
 .section-things {
-    background: linear-gradient(to left, rgba(80, 92, 253, 0.8), rgba(0, 219, 222, 0.88));
-    background: -webkit-linear-gradient(135deg,rgba(80, 92, 253, 0.8), rgba(0, 219, 222, 0.8));
+    /* background: linear-gradient(to left, rgba(80, 92, 253, 0.8), rgba(0, 219, 222, 0.88));
+    background: -webkit-linear-gradient(135deg,rgba(80, 92, 253, 0.8), rgba(0, 219, 222, 0.8)); */
+    background: linear-gradient(to left, rgb(0, 82, 146), rgb(0, 150, 220));
+    background: -webkit-linear-gradient(135deg,rgba(0, 76, 136), rgba(0, 159, 227));
     padding-bottom: 5rem;
     color: white;
 }
