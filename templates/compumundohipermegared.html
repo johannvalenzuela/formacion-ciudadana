@@ -58,8 +58,8 @@
                             <a href="{% url 'biblioteca_digital' %}">
                                 <i class="mi mi-Library"></i> Recursos Académicos</a>
                         </li>
-                        <li>
-                            <a href="#">
+                        <li class="{% if request.resolver_match.url_name == 'visualizar_consultas' or request.resolver_match.view_name == 'crear_consulta' or request.resolver_match.view_name == 'detalles_consulta' %}active{% endif %}">
+                            <a href="{% url 'visualizar_consultas' %}">
                                 <i class="mi mi-Package"></i> Consultas Ciudadanas</a>
                         </li>
                         <li>
