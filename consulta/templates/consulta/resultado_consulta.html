@@ -21,7 +21,7 @@
                     </div>
                  
                     {% endif %}
-                    <a class="btn btn-primary" data-form="#" data-toggle="modal">
+                    <a class="recurso btn btn-primary" data-form="{% url 'consulta_update' consulta.pk %}" data-toggle="modal" data-target="#recursoModal">
                         <i class="mi mi-Edit mi-4x"></i> Editar
                     </a>
                     <a class="recurso btn btn-danger" data-form="{% url 'consulta_delete' consulta.pk %}" data-toggle="modal" data-target="#recursoModal">

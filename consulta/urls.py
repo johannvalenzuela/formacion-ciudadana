@@ -9,4 +9,5 @@ urlpatterns = [
     path('detallesconsulta/responderconsulta/', views.ResponderConsultaView.as_view(), name= 'responder_consulta'),
     path('visualizarpropuestaconsulta/', views.ConsultaVisualizarPropuestaView.as_view(), name= 'propuesta_consulta'),
     path('<int:pk>/eliminar', views.ConsultaDeleteView.as_view(), name='consulta_delete'),
+    path('<int:pk>/editar', views.ConsultaUpdateView.as_view(), name='consulta_update'),
 ]
