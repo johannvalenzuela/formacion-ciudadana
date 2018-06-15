@@ -24,7 +24,7 @@
                 <div class="grid-container">
                     {% if lista_consultas %} {% for consulta in lista_consultas %}
                     <div class="grid-item">
-                        <a href="{{ consulta.id }}">
+                        <a href="{% url 'detalles_consulta' consulta.id %}">
                             <div class="m-4">
                                 <div class="text-uppercase">
                                     <h4>
