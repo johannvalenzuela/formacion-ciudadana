@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.views import generic
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
-from .forms import ConsultaForm
+from .forms import ConsultaPropuestaForm, ConsultaForm
 from django.core.exceptions import ObjectDoesNotExist
 
 #modelos
@@ -123,8 +123,7 @@ class PropuestaConsultaCreateView(generic.CreateView):
     Muestra un formulario para la creación de una alternativa de una consulta
     en específica.
     '''
-    model = ConsultaPropuesta
-    fields = ['titulo', 'descripcion', 'contenido']
+    form_class = ConsultaPropuestaForm
     template_name = "consulta/propuesta_create_form.html"
 
     def form_valid(self, form):  
@@ -150,8 +149,7 @@ class PropuestaConsultaUpdateView(generic.UpdateView):
     '''
     Es la clase para editar un grupo de un encargado en especifico.
     '''
-    model = ConsultaPropuesta
-    fields = ['titulo', 'descripcion', 'contenido']
+    form_class = ConsultaPropuestaForm
     template_name = "consulta/propuesta_update_form.html"
 
     def get_success_url(self):
