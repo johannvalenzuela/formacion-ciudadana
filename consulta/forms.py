@@ -1,5 +1,5 @@
 from django import forms
-from .models import Consulta, ConsultaPropuesta, ConsultaRespuesta
+from .models import Consulta, ConsultaRespuesta
 from datetime import datetime
 from django.forms.widgets import SelectDateWidget
 
@@ -16,14 +16,3 @@ class ConsultaForm(forms.ModelForm):
             model = Consulta
             fields = ('titulo', 'descripcion', 'fecha_inicio', 'fecha_finalizacion')
 
-
-class ConsultaPropuestaForm(forms.Form):
-    '''
-    Formulario para crear alternativas para una consulta
-    '''
-    titulo = forms.CharField()
-    descripcion = forms.CharField(widget= forms.Textarea) 
-    contenido = forms.CharField(widget= forms.Textarea) 
-    class Meta:
-            model = ConsultaPropuesta
-            fields = ('titulo', 'descripcion', 'contenido')
