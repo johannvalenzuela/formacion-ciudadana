@@ -111,6 +111,10 @@ class PropuestaConsultaVisualizarView(generic.DetailView):
     model = ConsultaPropuesta
     template_name = 'consulta/propuesta_detalles.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['propuestas'] = ConsultaPropuesta.objects.filter(recurso=self.object.pk)
+        return context
 
 @method_decorator(login_required, name='get' )
 @method_decorator(user_passes_test(funcionario_required), name='get' )
