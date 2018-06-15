@@ -6,7 +6,7 @@ from .forms import ConsultaPropuestaForm, ConsultaForm
 from django.core.exceptions import ObjectDoesNotExist
 
 #modelos
-from .models import Consulta, Consulta_propuesta
+from .models import Consulta, ConsultaPropuesta
 from gestion_usuarios.models import Encargado
 
 #decorators
@@ -89,10 +89,10 @@ class ResponderConsultaView(generic.TemplateView):
         '''
         Funcion para realizar la votación
         '''
-        propuesta = get_object_or_404(Consulta_propuesta, pk=propuesta_id)
+        propuesta = get_object_or_404(ConsultaPropuesta, pk=propuesta_id)
         try:
             propuesta_seleccionada = propuesta.choice_set.get(pk=request.POST['eleccion'])
-        except (KeyError, Consulta_propuesta.DoesNotExist):
+        except (KeyError, ConsultaPropuesta.DoesNotExist):
             return render(request, 'consulta/responder_consulta.html',{
                 'propuesta': propuesta,
                 'error_message': "Usted no seleccionó ninguna propuesta",
