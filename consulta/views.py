@@ -52,6 +52,10 @@ class CrearConsultaView(generic.CreateView):
     template_name = 'consulta/consulta_create_form.html'
     success_url = reverse_lazy('visualizar_consultas')
 
+    def form_valid(self, form):  
+        form.instance.autor = self.request.user
+        return super().form_valid(form)
+
 
 @method_decorator(login_required, name='get' )
 class ResponderConsultaView(generic.TemplateView):
