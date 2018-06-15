@@ -26,12 +26,21 @@ class VisualizarConsultasView(generic.ListView):
     '''
     Muestra la vista de todas las consultas que el usuario puede ver
     '''
-    template_name = 'consulta/visualizar_consultas.html'
+    template_name = 'consulta/consulta_lista.html'
     context_object_name = 'lista_consultas'
 
     def get_queryset(self):
         """Retorna las consultas."""
         return Consulta.objects.order_by('-fecha_inicio')
+
+class DetallesConsultaView(generic.DetailView):
+    '''
+    Muesta la vista de una consulta en especifico
+    donde se mostraran los detalles de ella
+    '''
+    model = Consulta
+    template_name = 'consulta/consulta_detalles.html'
+
 
 @method_decorator(login_required, name='get' )
 @method_decorator(user_passes_test(funcionario_required), name='get' )
@@ -40,42 +49,9 @@ class CrearConsultaView(generic.CreateView):
     Muesta la vista para crear una consulta nueva
     '''
     form_class = ConsultaForm
-    template_name = 'consulta/crear_consulta.html'
+    template_name = 'consulta/create_form.html'
     success_url = reverse_lazy('visualizar_consultas')
 
-@method_decorator(login_required, name='get' )
-@method_decorator(user_passes_test(funcionario_required), name='get' )
-class ConsultaCrearPropuestaView(generic.CreateView):
-    '''
-    Muestra la vista para crear una propuesta(respuesta) de una consulta
-    '''
-    form_class = ConsultaPropuestaForm
-    template_name = 'consulta/crear_propuesta_consulta.html'
-
-
-class ConsultaVisualizarPropuestaView(generic.CreateView):
-    '''
-    Muestra la vista para ver una propuesta(respuesta) de una consulta
-    '''
-    form_class = ConsultaPropuestaForm
-    template_name = 'consulta/visualizar_propuesta_consulta.html'
-
-
-class DetallesConsultaView(generic.DetailView):
-    '''
-    Muesta la vista de una consulta en especifico
-    donde se mostraran los detalles de ella
-    '''
-    model = Consulta
-    template_name = 'consulta/resultado_consulta.html'
-
-    def obtenerConsulta(self, pk):
-        print(pk)
-        allData = Consulta.objects.all()
-        print(allData)
-        consultaId = allData.objects.get(pk=pk)
-        print(consultaId)
-        return consultaId
 
 @method_decorator(login_required, name='get' )
 class ResponderConsultaView(generic.TemplateView):
@@ -83,7 +59,7 @@ class ResponderConsultaView(generic.TemplateView):
     Muestra la vista para responder una consulta
     '''
     model = Consulta
-    template_name = 'consulta/responder_consulta.html'
+    template_name = 'consulta/consulta_votar.html'
   
     def votar(request, propuesta_id):
         '''
@@ -115,9 +91,71 @@ class ConsultaDeleteView(generic.DeleteView):
 class ConsultaUpdateView(generic.UpdateView):
     model = Consulta
     fields = ['titulo','descripcion','fecha_inicio','fecha_finalizacion',]
-    template_name = 'consulta/modificar_consulta.html'
+    template_name = 'consulta/consulta_update_form.html'
 
     def get_success_url(self):
 	    return reverse_lazy('detalles_consulta', kwargs={'pk': self.object.pk})
+
+
+
+#-----------------------------------------PROPUESTAS-----------------------------------
+
+class PropuestaConsultaVisualizarView(generic.DetailView):
+    '''
+    Muestra la vista para ver una propuesta(respuesta) de una consulta
+    '''
+    model = ConsultaPropuesta
+    template_name = 'consulta/propuesta_detalles.html'
+
+
+@method_decorator(login_required, name='get' )
+@method_decorator(user_passes_test(funcionario_required), name='get' )
+class PropuestaConsultaCreateView(generic.CreateView):
+    '''
+    Muestra un formulario para la creación de una alternativa de una consulta
+    en específica.
+    '''
+    form_class = ConsultaPropuestaForm
+    template_name = "consulta/propuesta_create_form.html"
+
+    def form_valid(self, form):  
+        try:
+            consulta = Consulta.objects.get(pk=self.kwargs['pk'])
+        except ObjectDoesNotExist:
+            messages.error(self.request, 'Consulta no encontrada')
+            return redirect('')
+        else:
+            form.instance.consulta = consulta
+            form.instance.autor = self.request.user
+
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        consulta = Consulta.objects.get(pk=self.kwargs['pk'])
+        return redirect('detalles_consulta', pk=consulta)
+
+
+@method_decorator(login_required, name='get' )
+@method_decorator(user_passes_test(funcionario_required), name='get' )
+class PropuestaConsultaUpdateView(generic.UpdateView):
+    '''
+    Es la clase para editar un grupo de un encargado en especifico.
+    '''
+    form_class = ConsultaPropuestaForm
+    template_name = "consulta/propuesta_update_form.html"
+    success_url = reverse_lazy('lista_grupos')
+
+
+@method_decorator(login_required, name='get' )
+@method_decorator(user_passes_test(funcionario_required), name='get' )
+class PropuestaConsultaDeleteView(generic.DeleteView):
+    '''
+    Es la clase para eliminar un grupo de un encargado en especifico.
+    '''
+    model = Grupo
+    template_name = "consulta/propuesta_confirm_delete.html"
+    success_url = reverse_lazy('lista_grupos')
+
+
 
 
