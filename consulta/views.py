@@ -143,7 +143,10 @@ class PropuestaConsultaUpdateView(generic.UpdateView):
     '''
     form_class = ConsultaPropuestaForm
     template_name = "consulta/propuesta_update_form.html"
-    success_url = reverse_lazy('lista_grupos')
+
+    def get_success_url(self):
+        propuesta = ConsultaPropuesta.objects.get(pk=self.kwargs['pk'])
+        return redirect('visualizar_propuesta', pk=propuesta)
 
 
 @method_decorator(login_required, name='get' )
@@ -152,9 +155,12 @@ class PropuestaConsultaDeleteView(generic.DeleteView):
     '''
     Es la clase para eliminar un grupo de un encargado en especifico.
     '''
-    model = Grupo
+    model = ConsultaPropuesta
     template_name = "consulta/propuesta_confirm_delete.html"
-    success_url = reverse_lazy('lista_grupos')
+
+    def get_success_url(self):
+        propuesta = ConsultaPropuesta.objects.get(pk=self.kwargs['pk'])
+        return redirect('visualizar_propuesta', pk=propuesta)
 
 
 
