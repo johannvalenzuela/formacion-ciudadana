@@ -2,9 +2,17 @@ from django.shortcuts import render, redirect
 from django.views import generic
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
-from .models import Consulta, Consulta_propuesta
 from .forms import ConsultaPropuestaForm, ConsultaForm
 from django.core.exceptions import ObjectDoesNotExist
+
+#modelos
+from .models import Consulta, Consulta_propuesta
+from gestion_usuarios.models import Encargado
+
+#decorators
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import user_passes_test
 
 def funcionario_required(user):
     try:
@@ -12,6 +20,7 @@ def funcionario_required(user):
     except ObjectDoesNotExist:
         return None
     return encargado
+
 
 class VisualizarConsultasView(generic.ListView):
     '''
@@ -24,6 +33,8 @@ class VisualizarConsultasView(generic.ListView):
         """Retorna las consultas."""
         return Consulta.objects.order_by('-fecha_inicio')
 
+@method_decorator(login_required, name='get' )
+@method_decorator(user_passes_test(funcionario_required), name='get' )
 class CrearConsultaView(generic.CreateView):
     '''
     Muesta la vista para crear una consulta nueva
@@ -32,6 +43,8 @@ class CrearConsultaView(generic.CreateView):
     template_name = 'consulta/crear_consulta.html'
     success_url = reverse_lazy('visualizar_consultas')
 
+@method_decorator(login_required, name='get' )
+@method_decorator(user_passes_test(funcionario_required), name='get' )
 class ConsultaCrearPropuestaView(generic.CreateView):
     '''
     Muestra la vista para crear una propuesta(respuesta) de una consulta
@@ -39,12 +52,14 @@ class ConsultaCrearPropuestaView(generic.CreateView):
     form_class = ConsultaPropuestaForm
     template_name = 'consulta/crear_propuesta_consulta.html'
 
+
 class ConsultaVisualizarPropuestaView(generic.CreateView):
     '''
     Muestra la vista para ver una propuesta(respuesta) de una consulta
     '''
     form_class = ConsultaPropuestaForm
     template_name = 'consulta/visualizar_propuesta_consulta.html'
+
 
 class DetallesConsultaView(generic.DetailView):
     '''
@@ -62,6 +77,7 @@ class DetallesConsultaView(generic.DetailView):
         print(consultaId)
         return consultaId
 
+@method_decorator(login_required, name='get' )
 class ResponderConsultaView(generic.TemplateView):
     '''
     Muestra la vista para responder una consulta
@@ -86,12 +102,9 @@ class ResponderConsultaView(generic.TemplateView):
             propuesta_seleccionada.save()
         return HttpResponseRedirect(reverse('consulta:detalles_consulta', args=(propuesta.id,)))
 
+@method_decorator(login_required, name='get' )
+@method_decorator(user_passes_test(funcionario_required), name='get' )
 class ConsultaDeleteView(generic.DeleteView):
     model = Consulta
     template_name_suffix = '_confirm_delete'
     success_url = reverse_lazy('visualizar_consultas')
-
-# def ConsultaDeleteView(request, pk):
-#     consulta = Consulta.objects.get(pk=pk)
-#     consulta.delete()
-#     return redirect('visualizar_consultas')
