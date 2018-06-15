@@ -1,4 +1,4 @@
-<form class="well recurso-form" method="POST" action="#">
+<form class="well recurso-form" method="POST" action="{% url 'consulta_delete' object.pk %}">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -11,7 +11,7 @@
                 {% csrf_token %} ¿Estás seguro que deseas eliminar "{{ object }}"?
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                 <button type="submit" class="btn btn-danger">Eliminar</button>
             </div>
         </div>
