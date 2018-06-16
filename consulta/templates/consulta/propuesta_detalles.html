@@ -1,0 +1,22 @@
+{% extends 'compumundohipermegared.html' %} {% block titulo %}
+<title>{{ object.titulo }}</title>
+{% endblock %} {% block content %}
+
+
+<p>{{object.titulo}}</p>
+<p>{{object.descripcion}}</p>
+<p>{{object.contenido}}</p>
+<p>{{object.votos}}</p>
+<p>{{object.fecha_creacion}}</p>
+
+
+{% comment %} boton para modificar o eliminar propuesta solo para el autor de la consulta {% endcomment %}
+{% if object.autor == user %}
+<a href="{% url 'editar_propuesta' object.pk %}">
+<button>Editar propuesta</button></a>
+<a href="{% url 'eliminar_propuesta' object.pk %}">
+<button>Eliminar propuesta</button></a>
+{% else %}
+{% endif %}
+
+{% endblock content %}
