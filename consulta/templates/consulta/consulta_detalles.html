@@ -32,13 +32,47 @@
 </div>
 {% comment %} boton para agregar propuesta solo para el autor de la consulta {% endcomment %}
 {% if object.autor == user %}
-<a href="{% url 'crear_propuesta' object.pk %}">
-<button>Agregar propuesta</button></a>
+<div class="pb-5">
+    <a class="btn btn-primary float-right btn-sm p-2 mt-3" href="{% url 'crear_propuesta' object.pk %}">
+        <i class="mi mi-Add mi-4x"></i> AGREGAR PROPUESTA
+    </a>
+</div>
 {% else %}
 {% endif %}
-<br><br>
 {% comment %} LISTA DE PROPUESTAS {% endcomment %}
-{% if propuestas %}
+
+<div class="section-resources">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 ml-auto mr-auto p-0">
+                <div class="grid-container" style="grid-template-columns: 1fr;">
+                    {% if propuestas %} {% for propuesta in propuestas %}
+                    <div class="grid-item">
+                        <a href="{% url 'visualizar_propuesta' propuesta.pk %}">
+                            <div class="m-2 p-2">
+                                <div class="text-uppercase">
+                                    <h4>
+                                        <strong>{{ propuesta.titulo }}</strong>
+                                    </h4>
+                                </div>
+                                <div class="text-justify">
+                                    <p>{{ propuesta.descripcion }}</p>
+                                </div>
+                                <div class="text-justify">
+                                    <i class="mi mi-Package"></i><small> Cantidad de votos: {{ propuesta.votos }}</small>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    {% endfor %} {% else %} <div class="bg-white rounded p-4 m-4 text-center">No existen <strong>propuestas</strong> en estos momentos.</div> {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- {% if propuestas %}
     {% for propuesta in propuestas %}
         
         <a href="{% url 'visualizar_propuesta' propuesta.pk %}">
@@ -52,7 +86,7 @@
     {% endfor %}   
 {% else %}
     <p>No existen propuestas en este momento.</p>
-{% endif %}
+{% endif %} -->
 
 <div class="modal" id="recursoModal"></div>
 {% endblock content %}

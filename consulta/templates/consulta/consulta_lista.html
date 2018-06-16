@@ -14,15 +14,16 @@
 </div>
 <div class="pb-5">
     <a href={% url 'crear_consulta' %}>
-        <button class="btn btn-primary float-right mb-3 text-uppercase">Crear Consulta</button>
+        <button class="btn btn-primary float-right mb-3 text-uppercase"><i class="mi mi-Add mi-4x"></i> CREAR CONSULTA</button>
     </a>
 </div>
 <div class="section-resources">
     <div class="container">
         <div class="row">
             <div class="col-md-12 ml-auto mr-auto p-0">
+                {% if lista_consultas %} 
                 <div class="grid-container" style="grid-template-columns: repeat(3, 1fr);">
-                    {% if lista_consultas %} {% for consulta in lista_consultas %}
+                    {% for consulta in lista_consultas %}
                     <div class="grid-item" style="background: linear-gradient(to left, rgb(0, 82, 146), rgb(0, 150, 220));">
                         <a href="{% url 'detalles_consulta' consulta.id %}">
                             <div class="m-3 text-white">
@@ -60,7 +61,8 @@
                             </div>
                         </a>
                     </div>
-                    {% endfor %} {% else %} No existen <strong>consultas ciudadanas</strong> en estos momentos. {% endif %}
+                    {% endfor %} {% else %} 
+                    <div class="bg-white rounded p-4 m-4 text-center">No existen <strong>consultas ciudadanas</strong> en estos momentos.</div> {% endif %}
                 </div>
             </div>
         </div>
