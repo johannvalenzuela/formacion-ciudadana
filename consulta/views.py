@@ -137,7 +137,7 @@ class PropuestaConsultaCreateView(generic.CreateView):
             form.instance.consulta = consulta
             form.instance.autor = self.request.user
             form.save()
-        return redirect('detalles_consulta', pk=self.kwargs['pk'])
+        return self.get_success_url()
 
     def get_success_url(self):
         return redirect('detalles_consulta', pk=self.kwargs['pk'])
@@ -149,13 +149,16 @@ class PropuestaConsultaUpdateView(generic.UpdateView):
     '''
     Es la clase para editar un grupo de un encargado en especifico.
     '''
+    model = ConsultaPropuesta
     form_class = ConsultaPropuestaForm
     template_name = "consulta/propuesta_update_form.html"
 
     def get_success_url(self):
-        propuesta = ConsultaPropuesta.objects.get(pk=self.kwargs['pk'])
-        return redirect('visualizar_propuesta', pk=propuesta)
+        return redirect('visualizar_propuesta', pk=self.kwargs['pk'])
 
+    def form_valid(self, form):
+        form.save()
+        return self.get_success_url()
 
 @method_decorator(login_required, name='get' )
 @method_decorator(user_passes_test(funcionario_required), name='get' )
@@ -165,10 +168,7 @@ class PropuestaConsultaDeleteView(generic.DeleteView):
     '''
     model = ConsultaPropuesta
     template_name = "consulta/propuesta_confirm_delete.html"
-
-    def get_success_url(self):
-        propuesta = ConsultaPropuesta.objects.get(pk=self.kwargs['pk'])
-        return redirect('visualizar_propuesta', pk=propuesta)
+    success_url = reverse_lazy("visualizar_consultas")
 
 
 
