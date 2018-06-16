@@ -29,7 +29,7 @@
             </div>
         </div>
     </div>
-{% comment %} boton para agregar propuesta solo para el autor del recurso {% endcomment %}
+{% comment %} boton para agregar propuesta solo para el autor de la consulta {% endcomment %}
 {% if object.autor == user %}
 <a href="{% url 'crear_propuesta' object.pk %}">
 <button>Agregar propuesta</button></a>
@@ -44,8 +44,7 @@
         <p>{{propuesta.fecha_creacion}}</p>
         <p>{{propuesta.contenido}}</p>
         <p>{{propuesta.votos}}</p>
-
-        {% comment %} boton para modificar o eliminar propuesta solo para el autor del recurso {% endcomment %}
+        {% comment %} boton para modificar o eliminar propuesta solo para el autor de la consulta {% endcomment %}
         {% if object.autor == user %}
         <a href="{% url 'editar_propuesta' propuesta.pk %}">
         <button>Editar propuesta</button></a>
@@ -53,6 +52,8 @@
         <button>Eliminar propuesta</button></a>
         {% else %}
         {% endif %}
+        <br>
+        
     {% endfor %}   
 {% else %}
     <p>No existen propuestas en este momento.</p>

@@ -1,0 +1,13 @@
+{% extends 'compumundohipermegared.html' %} {% block titulo %}
+<title>Crear propuesta de consulta</title>
+{% endblock %} 
+
+{% block content %}
+
+<form method="POST">
+    {% csrf_token %}
+    {{form.as_p}}
+
+    <button type="submit">Crear</button>
+</form>
+{% endblock content %}
