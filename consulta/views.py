@@ -41,6 +41,10 @@ class DetallesConsultaView(generic.DetailView):
     model = Consulta
     template_name = 'consulta/consulta_detalles.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['propuestas'] = ConsultaPropuesta.objects.filter(consulta=self.object.pk)
+        return context
 
 @method_decorator(login_required, name='get' )
 @method_decorator(user_passes_test(funcionario_required), name='get' )
@@ -111,10 +115,6 @@ class PropuestaConsultaVisualizarView(generic.DetailView):
     model = ConsultaPropuesta
     template_name = 'consulta/propuesta_detalles.html'
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['propuestas'] = ConsultaPropuesta.objects.filter(recurso=self.object.pk)
-        return context
 
 @method_decorator(login_required, name='get' )
 @method_decorator(user_passes_test(funcionario_required), name='get' )
@@ -123,6 +123,7 @@ class PropuestaConsultaCreateView(generic.CreateView):
     Muestra un formulario para la creación de una alternativa de una consulta
     en específica.
     '''
+    model = ConsultaPropuesta
     form_class = ConsultaPropuestaForm
     template_name = "consulta/propuesta_create_form.html"
 
@@ -135,12 +136,11 @@ class PropuestaConsultaCreateView(generic.CreateView):
         else:
             form.instance.consulta = consulta
             form.instance.autor = self.request.user
-
-        return super().form_valid(form)
+            form.save()
+        return redirect('detalles_consulta', pk=self.kwargs['pk'])
 
     def get_success_url(self):
-        consulta = Consulta.objects.get(pk=self.kwargs['pk'])
-        return redirect('detalles_consulta', pk=consulta)
+        return redirect('detalles_consulta', pk=self.kwargs['pk'])
 
 
 @method_decorator(login_required, name='get' )
