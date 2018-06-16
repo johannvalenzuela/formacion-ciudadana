@@ -12,11 +12,16 @@
 
 {% comment %} boton para modificar o eliminar propuesta solo para el autor de la consulta {% endcomment %}
 {% if object.autor == user %}
-<a href="{% url 'editar_propuesta' object.pk %}">
-<button>Editar propuesta</button></a>
-<a href="{% url 'eliminar_propuesta' object.pk %}">
-<button>Eliminar propuesta</button></a>
+
+<a class="recurso btn btn-primary" data-form="{% url 'editar_propuesta' object.pk %}" data-toggle="modal" data-target="#recursoModal">
+    <i class="mi mi-Edit mi-4x"></i> Editar propuesta
+</a>
+<a class="recurso btn btn-danger" data-form="{% url 'eliminar_propuesta' object.pk %}" data-toggle="modal" data-target="#recursoModal">
+    <i class="mi mi-Download mi-4x"></i> Eliminar propuesta
+</a>
+
 {% else %}
 {% endif %}
 
+<div class="modal" id="recursoModal"></div>
 {% endblock content %}
