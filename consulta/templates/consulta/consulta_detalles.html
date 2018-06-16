@@ -35,23 +35,17 @@
 <button>Agregar propuesta</button></a>
 {% else %}
 {% endif %}
-
+<br><br>
 {% comment %} LISTA DE PROPUESTAS {% endcomment %}
 {% if propuestas %}
     {% for propuesta in propuestas %}
+        
+        <a href="{% url 'visualizar_propuesta' propuesta.pk %}">
+        <div>
         <p>{{propuesta.titulo}}</p>
         <p>{{propuesta.descripcion}}</p>
-        <p>{{propuesta.fecha_creacion}}</p>
-        <p>{{propuesta.contenido}}</p>
         <p>{{propuesta.votos}}</p>
-        {% comment %} boton para modificar o eliminar propuesta solo para el autor de la consulta {% endcomment %}
-        {% if object.autor == user %}
-        <a href="{% url 'editar_propuesta' propuesta.pk %}">
-        <button>Editar propuesta</button></a>
-        <a href="{% url 'eliminar_propuesta' propuesta.pk %}">
-        <button>Eliminar propuesta</button></a>
-        {% else %}
-        {% endif %}
+        </div></a>
         <br>
         
     {% endfor %}   
