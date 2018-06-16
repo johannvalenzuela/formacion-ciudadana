@@ -29,6 +29,7 @@
             </div>
         </div>
     </div>
+</div>
 {% comment %} boton para agregar propuesta solo para el autor de la consulta {% endcomment %}
 {% if object.autor == user %}
 <a href="{% url 'crear_propuesta' object.pk %}">
@@ -53,4 +54,5 @@
     <p>No existen propuestas en este momento.</p>
 {% endif %}
 
+<div class="modal" id="recursoModal"></div>
 {% endblock content %}
