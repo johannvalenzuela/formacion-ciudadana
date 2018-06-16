@@ -17,7 +17,7 @@ class ConsultaForm(forms.ModelForm):
             fields = ('titulo', 'descripcion', 'fecha_inicio', 'fecha_finalizacion')
 
 
-class ConsultaPropuestaForm(forms.Form):
+class ConsultaPropuestaForm(forms.ModelForm):
     '''
     Formulario para crear alternativas para una consulta
     '''
