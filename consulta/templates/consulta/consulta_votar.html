@@ -1,7 +1,31 @@
 {% extends 'compumundohipermegared.html' %} {% block titulo %}
-<title>Votación {{consulta.nombre}} </title>
+<title>Votación de {{consulta.titulo}} </title>
 {% endblock %} {% block content %}
 
 
+<h2>{{consulta.titulo}}</h2>
+<!-- MENSAJE DE ERROR ACA -->
+{% if messages %} {% for message in messages %}
+<script>
+    alert('{{ message }}')
+</script>
+{% endfor %} {% endif %}
+
+{% if propuestas %}
+    <form method="POST">
+    {% csrf_token %}
+    {% for propuesta in propuestas %}
+    
+    <div>
+        <input type="radio" name="eleccion" id="eleccion{{ forloop.counter }}" value="{{ propuesta.pk }}" />
+        <label for="eleccion{{ forloop.counter }}">{{propuesta.titulo}}</label><br />
+    </div>
+
+    {% endfor %}  
+    <button type="submit">Votar</button>
+    </form> 
+{% else %}
+    <p>No existen propuestas en este momento.</p>
+{% endif %}
 
 {% endblock content %}
