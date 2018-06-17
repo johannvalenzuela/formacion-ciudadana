@@ -30,6 +30,12 @@
         </div>
     </div>
 </div>
+{% comment %} boton para VOTAR {% endcomment %}
+<div class="pb-5">
+    <a class="btn btn-primary float-left btn-sm p-2 mt-3" href="{% url 'consulta_votar' object.pk %}">
+        <i class="mi mi-Add mi-4x"></i> VOTAR
+    </a>
+</div>
 {% comment %} boton para agregar propuesta solo para el autor de la consulta {% endcomment %}
 {% if object.autor == user %}
 <div class="pb-5">
