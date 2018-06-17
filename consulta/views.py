@@ -6,7 +6,7 @@ from .forms import ConsultaPropuestaForm, ConsultaForm
 from django.core.exceptions import ObjectDoesNotExist
 
 #modelos
-from .models import Consulta, ConsultaPropuesta
+from .models import Consulta, ConsultaPropuesta, ConsultaRespuesta
 from gestion_usuarios.models import Encargado
 
 #decorators
@@ -69,23 +69,66 @@ class ResponderConsultaView(generic.TemplateView):
     model = Consulta
     template_name = 'consulta/consulta_votar.html'
   
-    def votar(request, propuesta_id):
+    @login_required
+    def votar(self, request, pk):
         '''
-        Funcion para realizar la votación
+        vista para votar en una consulta
         '''
-        propuesta = get_object_or_404(ConsultaPropuesta, pk=propuesta_id)
-        try:
-            propuesta_seleccionada = propuesta.choice_set.get(pk=request.POST['eleccion'])
-        except (KeyError, ConsultaPropuesta.DoesNotExist):
-            return render(request, 'consulta/responder_consulta.html',{
-                'propuesta': propuesta,
-                'error_message': "Usted no seleccionó ninguna propuesta",
-            })
-        else:
-            propuesta_seleccionada.votos +=1
-            propuesta_seleccionada.save()
-        return HttpResponseRedirect(reverse('consulta:detalles_consulta', args=(propuesta.id,)))
+        if request.method == 'POST':
+            #primero se obtienen la consulta, el votante y la alternativa que marco
+            consulta = get_object_or_404(Consulta, pk=pk)
+            votante = get_object_or_404(Usuario, rut=self.request.user.rut, num_documento=self.request.user.num_documento) 
+            propuesta = get_object_or_404(ConsultaPropuesta, pk=request.POST.get('eleccion'))
+            puedeVotar=False
 
+            #antes de seguir se verifica si ya voto anteriormente
+            try:
+                ConsultaRespuesta.objects.get(rut=votante.rut)
+            except ObjectDoesNotExist:
+                #segundo se verifica si es una elección libre(ciudadana) o tiene restricciones
+                if consulta.grupo.all.count > 0:
+                    grupos = consulta.grupo.all()
+
+                    for grupo in grupos:
+                        autorizados = RutAutorizados.objects.filter(grupo__in=grupo)
+                        
+                        for autorizado in autorizados:
+                            if autorizado.rut == votante.rut:
+                                puedeVotar=True
+                                break
+
+                        if puedeVotar:
+                            break
+                else:
+                    puedeVotar=True            
+                #por último el usuario si puede vota
+                if puedeVotar:
+                    voto = ConsultaRespuesta.objects.create(
+                        rut = votante.rut,
+                        consulta = consulta,
+                        consulta_propuesta = propuesta,
+                    )
+                    consulta.voto+=1
+                    consulta.save()
+                    
+                
+        return self.get_success_url()
+                
+            
+
+
+            
+
+    def get_success_url(self):
+        return redirect('detalles_consulta', pk=self.request.kwargs['pk'])
+ 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['consulta'] = get_object_or_404(Consulta, pk=kwargs['pk'])
+        context['propuestas'] = ConsultaPropuesta.objects.filter(consulta=kwargs['pk'])
+        return context
+
+    
 @method_decorator(login_required, name='get' )
 @method_decorator(user_passes_test(funcionario_required), name='get' )
 class ConsultaDeleteView(generic.DeleteView):
