@@ -9,7 +9,7 @@ from django.shortcuts import get_object_or_404
 #modelos
 from .models import Consulta, ConsultaPropuesta, ConsultaRespuesta
 from gestion_usuarios.models import Encargado, RutAutorizados
-
+from django.conf import settings
 #decorators
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
@@ -63,6 +63,7 @@ class CrearConsultaView(generic.CreateView):
 
 
 @method_decorator(login_required, name='get' )
+@method_decorator(login_required, name='post' )
 class ResponderConsultaView(generic.TemplateView):
     '''
     Muestra la vista para responder una consulta
@@ -70,15 +71,19 @@ class ResponderConsultaView(generic.TemplateView):
     model = Consulta
     template_name = 'consulta/consulta_votar.html'
   
-    @login_required
-    def votar(self, request, pk):
+
+    def post(self, request, pk):
         '''
         vista para votar en una consulta
         '''
         if request.method == 'POST':
             #primero se obtienen la consulta, el votante y la alternativa que marco
             consulta = get_object_or_404(Consulta, pk=pk)
-            votante = get_object_or_404(Usuario, rut=self.request.user.rut, num_documento=self.request.user.num_documento) 
+            try:
+                votante = settings.AUTH_USER_MODEL.objects.get(rut=request.user.rut, num_documento=request.user.num_documento)
+            except ObjectDoesNotExist:
+                messages.error(request, 'El usuario no ha ingresado su rut y/o numero de documento')
+                return self.get_success_url()
             propuesta = get_object_or_404(ConsultaPropuesta, pk=request.POST.get('eleccion'))
             puedeVotar=False
 
@@ -113,7 +118,7 @@ class ResponderConsultaView(generic.TemplateView):
                     finally:
                         consulta.voto+=1
                         consulta.save()
-                    messages.error(self.request, 'Votación realizada con éxito!')
+                    messages.error(request, 'Votación realizada con éxito!')
                     
                              
         return self.get_success_url()
