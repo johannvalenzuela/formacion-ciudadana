@@ -5,11 +5,12 @@ from django.urls import reverse, reverse_lazy
 from .forms import ConsultaPropuestaForm, ConsultaForm
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import get_object_or_404
+from django.contrib import messages
 
 #modelos
 from .models import Consulta, ConsultaPropuesta, ConsultaRespuesta
 from gestion_usuarios.models import Encargado, RutAutorizados
-from django.conf import settings
+from autenticacion.models import Usuario
 #decorators
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
@@ -79,11 +80,18 @@ class ResponderConsultaView(generic.TemplateView):
         if request.method == 'POST':
             #primero se obtienen la consulta, el votante y la alternativa que marco
             consulta = get_object_or_404(Consulta, pk=pk)
-            try:
-                votante = settings.AUTH_USER_MODEL.objects.get(rut=request.user.rut, num_documento=request.user.num_documento)
-            except ObjectDoesNotExist:
+            
+                #se valida de que exista rut y numero de documento
+            if request.user.rut or request.user.num_documento:
+                try:
+                    votante = Usuario.objects.get(rut=request.user.rut, num_documento=request.user.num_documento)
+                except ObjectDoesNotExist:
+                    messages.error(request, 'El usuario no ha ingresado su rut y/o numero de documento')
+                    return redirect('consulta_votar', pk=pk)
+            else:
                 messages.error(request, 'El usuario no ha ingresado su rut y/o numero de documento')
-                return self.get_success_url()
+                return redirect('consulta_votar', pk=pk)
+           
             propuesta = get_object_or_404(ConsultaPropuesta, pk=request.POST.get('eleccion'))
             puedeVotar=False
 
