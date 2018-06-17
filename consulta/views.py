@@ -4,10 +4,11 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 from .forms import ConsultaPropuestaForm, ConsultaForm
 from django.core.exceptions import ObjectDoesNotExist
+from django.shortcuts import get_object_or_404
 
 #modelos
 from .models import Consulta, ConsultaPropuesta, ConsultaRespuesta
-from gestion_usuarios.models import Encargado
+from gestion_usuarios.models import Encargado, RutAutorizados
 
 #decorators
 from django.contrib.auth.decorators import login_required
@@ -101,17 +102,20 @@ class ResponderConsultaView(generic.TemplateView):
                             break
                 else:
                     puedeVotar=True            
-                #por último el usuario si puede vota
+                #por último el usuario realiza la votación
                 if puedeVotar:
-                    voto = ConsultaRespuesta.objects.create(
+                    try:
+                        voto = ConsultaRespuesta.objects.create(
                         rut = votante.rut,
                         consulta = consulta,
                         consulta_propuesta = propuesta,
-                    )
-                    consulta.voto+=1
-                    consulta.save()
+                        )
+                    finally:
+                        consulta.voto+=1
+                        consulta.save()
+                    messages.error(self.request, 'Votación realizada con éxito!')
                     
-                
+                             
         return self.get_success_url()
                 
             
