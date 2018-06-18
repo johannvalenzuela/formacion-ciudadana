@@ -2,8 +2,11 @@
 <title>Votación de {{consulta.titulo}} </title>
 {% endblock %} {% block content %}
 
+<div class="bg-white position-relative rounded-top p-2 mt-4 shadow-sm">
+    <h3 class="mb-1">{{consulta.titulo}}</h3>
+    <span>¿Por cúal de estas propuestas disponibles en '<strong>{{consulta.titulo}}</strong>' deseas votar?</span>
+</div>
 
-<h2>{{consulta.titulo}}</h2>
 <!-- MENSAJE DE ERROR ACA -->
 {% if messages %} {% for message in messages %}
 <script>
@@ -12,18 +15,21 @@
 {% endfor %} {% endif %}
 
 {% if propuestas %}
+<div class="bg-white rounded-bottom pt-1 shadow-sm">
     <form method="POST">
     {% csrf_token %}
     {% for propuesta in propuestas %}
-    
-    <div>
+    <div class="bg-light shadow-sm m-2 mt-2 p-2">
         <input type="radio" name="eleccion" id="eleccion{{ forloop.counter }}" value="{{ propuesta.pk }}" />
         <label for="eleccion{{ forloop.counter }}">{{propuesta.titulo}}</label><br />
     </div>
 
     {% endfor %}  
-    <button type="submit">Votar</button>
+    <div class="p-2">
+        <button type="submit" class="btn btn-primary m-0 p-2">VOTAR</button>
+    </div>
     </form> 
+</div>
 {% else %}
     <p>No existen propuestas en este momento.</p>
 {% endif %}
