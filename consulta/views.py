@@ -77,6 +77,7 @@ class ResponderConsultaView(generic.TemplateView):
         '''
         vista para votar en una consulta
         '''
+        puedeVotar=False
         if request.method == 'POST':
             #primero se obtienen la consulta, el votante y la alternativa que marco
             consulta = get_object_or_404(Consulta, pk=pk)
@@ -91,15 +92,15 @@ class ResponderConsultaView(generic.TemplateView):
                 return redirect('datos_faltantes', pk_consulta=pk)
            
             propuesta = get_object_or_404(ConsultaPropuesta, pk=request.POST.get('eleccion'))
-            puedeVotar=False
+            
 
             #antes de seguir se verifica si ya voto anteriormente
             try:
                 ConsultaRespuesta.objects.get(rut=votante.rut)
             except ObjectDoesNotExist:
                 #segundo se verifica si es una elección libre(ciudadana) o tiene restricciones
-                if consulta.grupo.all.count > 0:
-                    grupos = consulta.grupo.all()
+                grupos = consulta.grupo.all()
+                if grupos.count() > 0:
 
                     for grupo in grupos:
                         autorizados = RutAutorizados.objects.filter(grupo__in=grupo)
@@ -116,17 +117,21 @@ class ResponderConsultaView(generic.TemplateView):
                 #por último el usuario realiza la votación
                 if puedeVotar:
                     try:
-                        voto = ConsultaRespuesta.objects.create(
+                        ConsultaRespuesta.objects.create(
                         rut = votante.rut,
                         consulta = consulta,
                         consulta_propuesta = propuesta,
                         )
                     finally:
-                        consulta.voto+=1
-                        consulta.save()
-                    messages.error(request, 'Votación realizada con éxito!')
-                    
-                             
+                        propuesta.votos+=1
+                        propuesta.save()
+                        messages.error(request, 'Votación realizada con éxito!')
+
+        if puedeVotar:
+            pass
+        else:
+            messages.error(request, 'La votación no pudo ser realizada')
+
         return self.get_success_url()
                 
             
@@ -135,7 +140,7 @@ class ResponderConsultaView(generic.TemplateView):
             
 
     def get_success_url(self):
-        return redirect('detalles_consulta', pk=self.request.kwargs['pk'])
+        return redirect('detalles_consulta', pk=self.kwargs['pk'])
  
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -164,7 +169,6 @@ class ConsultaUpdateView(generic.UpdateView):
 
 
 @method_decorator(login_required, name='get' )
-@method_decorator(user_passes_test(funcionario_required), name='get' )
 class DatosFaltantesView(generic.UpdateView):
     '''
     Muesta la vista agregar el rut y el numero de documento si el usuario intenta votar

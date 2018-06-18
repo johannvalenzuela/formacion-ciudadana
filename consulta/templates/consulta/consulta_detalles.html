@@ -1,6 +1,12 @@
 {% extends 'compumundohipermegared.html' %} {% block titulo %}
 <title>{{ object.titulo }}</title>
 {% endblock %} {% block content %}
+<!-- MENSAJE DE ERROR ACA -->
+{% if messages %} {% for message in messages %}
+<script>
+    alert('{{ message }}')
+</script>
+{% endfor %} {% endif %}
 <div class="container-fluid" style="padding: .5rem 1.5rem;">
     <div class="section-things rounded-top pb-3">
         <div class="container-fluid">
