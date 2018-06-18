@@ -1,0 +1,13 @@
+{% extends 'compumundohipermegared.html' %} {% block titulo %}
+<title>Formulario datos faltantes </title>
+{% endblock %} {% block content %}
+
+<h4>Para realizar la votación debe ingresar su rut y numero de documento</h4>
+<form method="POST">
+    {% csrf_token %}
+    {{form.as_p}}
+
+    <button type="submit">Guardar</button>
+</form>
+
+{% endblock content %}
