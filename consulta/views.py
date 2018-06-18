@@ -96,7 +96,7 @@ class ResponderConsultaView(generic.TemplateView):
 
             #antes de seguir se verifica si ya voto anteriormente
             try:
-                ConsultaRespuesta.objects.get(rut=votante.rut)
+                ConsultaRespuesta.objects.get(consulta=consulta ,rut=votante.rut)
             except ObjectDoesNotExist:
                 #segundo se verifica si es una elección libre(ciudadana) o tiene restricciones
                 grupos = consulta.grupo.all()
@@ -125,10 +125,15 @@ class ResponderConsultaView(generic.TemplateView):
                     finally:
                         propuesta.votos+=1
                         propuesta.save()
-                        messages.error(request, 'Votación realizada con éxito!')
+            
+            else:
+                messages.error(request, 'usuario ya realizó la votación anteriormente')
+                return self.get_success_url()
+            
+            
 
         if puedeVotar:
-            pass
+            messages.success(request, 'Votación realizada con éxito!')
         else:
             messages.error(request, 'La votación no pudo ser realizada')
 
