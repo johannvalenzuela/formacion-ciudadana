@@ -8,6 +8,7 @@ urlpatterns = [
     path('detallesconsulta/<int:pk>/votar/', views.ResponderConsultaView.as_view(), name= 'consulta_votar'),
     path('detallesconsulta/<int:pk>/eliminar', views.ConsultaDeleteView.as_view(), name='consulta_delete'),
     path('detallesconsulta/<int:pk>/editar', views.ConsultaUpdateView.as_view(), name='consulta_update'),
+    path('detallesconsulta/<int:pk_consulta>/votar/datos_faltantes', views.DatosFaltantesView.as_view(), name= 'datos_faltantes'),
 
     #crear, modificar, visualizar y eliminar propuestas de consulta
     path('detallesconsulta/<int:pk>/crearpropuestaconsulta/', views.PropuestaConsultaCreateView.as_view(), name ='crear_propuesta'),

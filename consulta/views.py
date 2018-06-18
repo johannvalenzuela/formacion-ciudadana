@@ -86,11 +86,9 @@ class ResponderConsultaView(generic.TemplateView):
                 try:
                     votante = Usuario.objects.get(rut=request.user.rut, num_documento=request.user.num_documento)
                 except ObjectDoesNotExist:
-                    messages.error(request, 'El usuario no ha ingresado su rut y/o numero de documento')
-                    return redirect('consulta_votar', pk=pk)
+                    return redirect('datos_faltantes', pk_consulta=pk)
             else:
-                messages.error(request, 'El usuario no ha ingresado su rut y/o numero de documento')
-                return redirect('consulta_votar', pk=pk)
+                return redirect('datos_faltantes', pk_consulta=pk)
            
             propuesta = get_object_or_404(ConsultaPropuesta, pk=request.POST.get('eleccion'))
             puedeVotar=False
@@ -165,7 +163,27 @@ class ConsultaUpdateView(generic.UpdateView):
 	    return reverse_lazy('detalles_consulta', kwargs={'pk': self.object.pk})
 
 
+@method_decorator(login_required, name='get' )
+@method_decorator(user_passes_test(funcionario_required), name='get' )
+class DatosFaltantesView(generic.UpdateView):
+    '''
+    Muesta la vista agregar el rut y el numero de documento si el usuario intenta votar
+    y no los ha ingresado
+    '''
+    model = Usuario
+    fields = ['rut', 'num_documento']
+    template_name = 'consulta/consulta_datos_faltantes.html'
 
+    def get_object(self):
+        usuario = get_object_or_404(Usuario, pk=self.request.user.pk)
+        return usuario
+    
+    def form_valid(self, form):
+        form.save()
+        return self.get_success_url()
+
+    def get_success_url(self):
+        return redirect('consulta_votar', pk=self.kwargs['pk_consulta'])
 #-----------------------------------------PROPUESTAS-----------------------------------
 
 class PropuestaConsultaVisualizarView(generic.DetailView):
