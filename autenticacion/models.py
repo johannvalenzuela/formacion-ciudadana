@@ -55,8 +55,10 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
     apellido_materno = models.CharField(max_length=50, null=True, blank=True) 
     email = models.EmailField(_('email address'), unique=True, blank=False) 
     username = models.CharField(max_length=50, null=True, blank=True)
+    foto = models.ImageField(upload_to='fotos_usuarios/', blank=True, null=True)
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
+    
 
     objects = UserManager()
 
