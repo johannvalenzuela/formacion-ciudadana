@@ -4,10 +4,50 @@
 
 {% block content %}
 
-<form method="POST">
-    {% csrf_token %}
-    {{form.as_p}}
+<div class="bg-white rounded-top position-relative shadow-sm text-center p-2 mt-4">
+        <h4 class="font-weight-bold pb-2">Agregar nueva propuesta</h4>
+    </div>
+<div class="bg-white rounded-bottom p-3 shadow-sm">
+    <form method="POST">
+        {% csrf_token %}
+        <div class="form-group row">
+            <label for="id_titulo" class="col-sm-2 col-form-label">Título:</label>
+            <div class="col-sm-10">
+                {% if form.titulo.errors %}
+                <input type="text" class="form-control-plaintext" maxlength="50" id="id_titulo" name="titulo" value="{{form.titulo.value}}"
+                    placeholder="Ej: Propuesta #1" required>
+                <small class="text-danger"> Ya existe una propuesta con este titulo. Por favor ingrese otro.</small>
+                {% else %}
+                <input type="text" class="form-control-plaintext" maxlength="50" id="id_titulo" name="titulo" placeholder="Ej: Propuesta #1"
+                    required> 
+                {% endif %}
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="id_descripcion" class="col-sm-2 col-form-label">Descripción:</label>
+            <div class="col-sm-10">
+                {% if form.errors %}
+                <textarea class="form-control" name="descripcion" id="id_descripcion" rows="5" required>{{form.descripcion.value}}</textarea>
+                {% else %}
+                <textarea class="form-control" name="descripcion" id="id_descripcion" rows="5" required></textarea>
+                {% endif %}
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="id_contenido" class="col-sm-2 col-form-label">Contenido:</label>
+            <div class="col-sm-10">
+                {% if form.errors %}
+                <textarea class="form-control" name="contenido" id="id_contenido" rows="5" required>{{form.contenido.value}}</textarea>
+                {% else %}
+                <textarea class="form-control" name="contenido" id="id_contenido" rows="5" required></textarea>
+                {% endif %}
+            </div>
+        </div>
 
-    <button type="submit">Crear</button>
-</form>
+        <div class="p-2">
+            <button type="submit" class="btn btn-primary btn-block m-0 p-2">CREAR</button>
+        </div>
+    </form>
+</div>
+
 {% endblock content %}
