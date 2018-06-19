@@ -203,5 +203,24 @@ class EliminarGrupoView(generic.DeleteView):
     success_url = reverse_lazy('lista_grupos')
 
 
+class ProfileView(generic.DetailView):
+    '''
+    Muesta la vista del profile del usuario
+    '''
+    model = Usuario
+    context_object_name = 'usuario'
+    template_name = 'gestion_usuarios/usuario_profile.html'
+
+class ProfileUpdateView(generic.UpdateView):
+    '''
+    Muesta la vista para eliminar valores del profile del usuario 
+    '''
+    model = Usuario
+    context_object_name = 'usuario'
+    fields = ['nombre','apellido_paterno','apellido_materno','email','rut', 'num_documento', 'fecha_nacimiento']
+    template_name = 'gestion_usuarios/usuario_profile_editar.html'
+    success_url = reverse_lazy('profile')
+
+    
 
 
