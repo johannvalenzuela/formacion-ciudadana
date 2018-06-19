@@ -145,7 +145,7 @@ class AgregarGrupoView(generic.CreateView):
     Es la clase para agregar un grupo de un encargado en especifico.
     '''
     model = Grupo
-    fields = ['nombre']
+    fields = ['nombre', 'establecimiento']
     template_name = 'gestion_usuarios/grupo_agregar_form.html'
     success_url = reverse_lazy('lista_grupos')
 
@@ -176,7 +176,7 @@ class EditarGrupoView(generic.UpdateView):
     Es la clase para editar un grupo de un encargado en especifico.
     '''
     model = Grupo
-    fields = ['nombre',]
+    fields = ['nombre', 'establecimiento']
     template_name_suffix = '_editar_form'
     success_url = reverse_lazy('lista_grupos')
 
