@@ -10,7 +10,7 @@
     <p>{{usuario.num_documento}}</p>
     <p>{{usuario.fecha_nacimiento}}</p>
     {% if usuario.foto %}
-        <img src="{{usuario.foto.url}}">
+        <img src="../media/{{ usuario.foto }}">
     {% endif %}
 
     <a href="{% url 'profile_editar' %}">
