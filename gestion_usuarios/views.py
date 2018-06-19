@@ -211,6 +211,9 @@ class ProfileView(generic.DetailView):
     context_object_name = 'usuario'
     template_name = 'gestion_usuarios/usuario_profile.html'
 
+    def get_object(self):
+        return self.request.user
+
 class ProfileUpdateView(generic.UpdateView):
     '''
     Muesta la vista para eliminar valores del profile del usuario 
@@ -220,6 +223,9 @@ class ProfileUpdateView(generic.UpdateView):
     fields = ['nombre','apellido_paterno','apellido_materno','email','rut', 'num_documento', 'fecha_nacimiento']
     template_name = 'gestion_usuarios/usuario_profile_editar.html'
     success_url = reverse_lazy('profile')
+
+    def get_object(self):
+        return self.request.user
 
     
 
