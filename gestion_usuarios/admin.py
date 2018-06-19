@@ -7,6 +7,7 @@ from .models import Encargado
 from .models import Supervisor
 from .models import Grupo
 from django.db import models
+from django.core.exceptions import ObjectDoesNotExist
 
 #aqui comienza las librerias importadas del response_add
 import json
@@ -51,16 +52,28 @@ class EncargadoAdmin(admin.ModelAdmin):
             current_app=self.admin_site.name,
         )
         #se crean los grupos
-        Grupo.objects.create(
+        try:
+            Grupo.objects.get(nombre="alumnos", Establecimiento=obj.establecimiento)
+        except ObjectDoesNotExist:
+            pass
+        else:
+            Grupo.objects.create(
             nombre="alumnos",
             autor=obj,
             establecimiento=obj.establecimiento
-        )
-        Grupo.objects.create(
+            )
+        
+        try:
+            Grupo.objects.get(nombre="apoderados", Establecimiento=obj.establecimiento)
+        except ObjectDoesNotExist:
+            pass
+        else:
+            Grupo.objects.create(
             nombre="apoderados",
             autor=obj,
             establecimiento=obj.establecimiento
-        )
+            )
+        
         # Add a link to the object's change form if the user can edit the obj.
         if self.has_change_permission(request, obj):
             obj_repr = format_html('<a href="{}">{}</a>', urlquote(obj_url), obj)
