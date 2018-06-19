@@ -1,0 +1,15 @@
+{% extends 'compumundohipermegared.html' %}{% block titulo %}
+<title>Profile {{usuario.nombre}} {{usuario.apellido_paterno}} {{usuario.apellido_materno}}</title>
+{% endblock %} {% block content %}
+
+    <p>{{usuario.nombre}}</p>
+    <p>{{usuario.apellido_paterno}}</p>
+    <p>{{usuario.apellido_materno}}</p>
+    <p>{{usuario.email}}</p>
+    <p>{{usuario.rut}}</p>
+    <p>{{usuario.num_documento}}</p>
+    <p>{{usuario.fecha_nacimiento}}</p>
+
+    <a href="{% url 'profile_editar' %}"></a>
+
+{% endblock %}

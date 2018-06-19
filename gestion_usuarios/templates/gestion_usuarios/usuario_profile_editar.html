@@ -1,0 +1,12 @@
+{% extends 'compumundohipermegared.html' %}{% block titulo %}
+<title>Editar Profile {{usuario.nombre}} {{usuario.apellido_paterno}} {{usuario.apellido_materno}}</title>
+{% endblock %} {% block content %}
+
+    <form action="" method="POST">
+        {% csrf_token %}
+        {{form.as_p}}
+        <button type="submit">Editar</button>
+    </form>
+
+
+{% endblock %}
