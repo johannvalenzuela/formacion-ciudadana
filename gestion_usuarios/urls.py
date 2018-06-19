@@ -9,4 +9,7 @@ urlpatterns = [
     path('grupos/editar_grupo/<int:pk>/', views.EditarGrupoView.as_view(), name='editar_grupo'),
     path('agregar_usuario_form/<int:pk_grupo>', views.AgregarUsuarioGrupoView.as_view(), name='agregar_usuario_form'),
     path('remover_usuario_grupo_form/<int:pk_grupo>/<int:pk_usuario>', views.EliminarUsuarioGrupoView.as_view(), name='remover_usuario_form'),
+    #Profile
+    path('profile/', views.ProfileView.as_view(), name='profile'),
+    path('profile/editar', views.ProfileUpdateView.as_view(), name='profile_editar'),
 ]
