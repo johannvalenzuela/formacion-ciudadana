@@ -6,6 +6,7 @@ from .forms import ConsultaPropuestaForm, ConsultaForm
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import get_object_or_404
 from django.contrib import messages
+from django.db.models import Q
 
 #modelos
 from .models import Consulta, ConsultaPropuesta, ConsultaRespuesta
@@ -33,13 +34,16 @@ class VisualizarConsultasView(generic.ListView):
 
     def get_queryset(self):
         """Retorna las consultas."""
-        try:
-            autorizados = RutAutorizados.objects.get(rut= self.request.user.rut)
-        except ObjectDoesNotExist:
-          return Consulta.objects.filter(grupo=None).order_by('-fecha_inicio')
+        if self.request.user.is_anonymous:
+            return Consulta.objects.filter(grupo=None).order_by('-fecha_inicio')
+        else:
+            try:
+                autorizados = RutAutorizados.objects.get(rut= self.request.user.rut)
+            except ObjectDoesNotExist:
+                return Consulta.objects.filter(grupo=None).order_by('-fecha_inicio')
 
-        return Consulta.objects.filter(grupo__in=autorizados.grupo).order_by('-fecha_inicio')
-        
+        return Consulta.objects.filter(Q(grupo__in=autorizados.grupo.all()) | Q(grupo=None)).order_by('-fecha_inicio')
+
         
 
 class DetallesConsultaView(generic.DetailView):
