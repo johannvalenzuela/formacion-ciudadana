@@ -218,14 +218,22 @@ class PropuestaConsultaCreateView(generic.CreateView):
 
     def form_valid(self, form):  
         try:
+            #Primero se valida de que la consulta sea valida
             consulta = Consulta.objects.get(pk=self.kwargs['pk'])
         except ObjectDoesNotExist:
             messages.error(self.request, 'Consulta no encontrada')
             return redirect('')
         else:
-            form.instance.consulta = consulta
-            form.instance.autor = self.request.user
-            form.save()
+            #Despues se valida de que no exista otra propuesta con el mismo nombre
+            validacionNombre=False
+            try:
+                propuestas = ConsultaPropuesta.objects.get(titulo=form.instance.titulo,consulta=consulta)
+            except ObjectDoesNotExist:
+                form.instance.consulta = consulta
+                form.instance.autor = self.request.user
+                form.save()
+            else:
+                messages.error(self.request, 'No se pueden repetir los nombres de las propuestas')
         return self.get_success_url()
 
     def get_success_url(self):
