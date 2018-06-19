@@ -14,7 +14,7 @@ class ConsultaForm(forms.ModelForm):
 
     class Meta:
             model = Consulta
-            fields = ('titulo', 'descripcion', 'fecha_inicio', 'fecha_finalizacion')
+            fields = ('titulo', 'descripcion', 'fecha_inicio', 'fecha_finalizacion','grupo')
 
 
 class ConsultaPropuestaForm(forms.ModelForm):
