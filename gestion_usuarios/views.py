@@ -6,7 +6,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponseRedirect
 from django.contrib import messages
 from django.shortcuts import get_object_or_404
-
+from .forms import ProfileForm
 
 #decorators
 from django.contrib.auth.decorators import login_required
@@ -220,7 +220,7 @@ class ProfileUpdateView(generic.UpdateView):
     '''
     model = Usuario
     context_object_name = 'usuario'
-    fields = ['nombre','apellido_paterno','apellido_materno','email','rut', 'num_documento', 'fecha_nacimiento']
+    form_class = ProfileForm
     template_name = 'gestion_usuarios/usuario_profile_editar.html'
     success_url = reverse_lazy('profile')
 
