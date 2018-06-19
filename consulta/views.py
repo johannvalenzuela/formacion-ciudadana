@@ -33,7 +33,14 @@ class VisualizarConsultasView(generic.ListView):
 
     def get_queryset(self):
         """Retorna las consultas."""
-        return Consulta.objects.order_by('-fecha_inicio')
+        try:
+            autorizados = RutAutorizados.objects.get(rut= self.request.user.rut)
+        except ObjectDoesNotExist:
+          return Consulta.objects.filter(grupo=None).order_by('-fecha_inicio')
+
+        return Consulta.objects.filter(grupo__in=autorizados.grupo).order_by('-fecha_inicio')
+        
+        
 
 class DetallesConsultaView(generic.DetailView):
     '''
@@ -101,16 +108,11 @@ class ResponderConsultaView(generic.TemplateView):
                 #segundo se verifica si es una elección libre(ciudadana) o tiene restricciones
                 grupos = consulta.grupo.all()
                 if grupos.count() > 0:
-
-                    for grupo in grupos:
-                        autorizados = RutAutorizados.objects.filter(grupo__in=grupo)
+                    autorizados = RutAutorizados.objects.filter(grupo__in=grupos)
                         
-                        for autorizado in autorizados:
-                            if autorizado.rut == votante.rut:
-                                puedeVotar=True
-                                break
-
-                        if puedeVotar:
+                    for autorizado in autorizados:
+                        if autorizado.rut == votante.rut:
+                            puedeVotar=True
                             break
                 else:
                     puedeVotar=True            
