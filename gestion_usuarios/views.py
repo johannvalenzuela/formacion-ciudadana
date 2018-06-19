@@ -157,13 +157,12 @@ class AgregarGrupoView(generic.CreateView):
         establecimiento = autor.establecimiento
         titulo = form.instance.nombre
         try:
-            grupoNuevo = Grupo.objects.get(nombre=titulo, autor=autor, establecimiento=establecimiento)
+            grupoNuevo = Grupo.objects.get(nombre=titulo, establecimiento=establecimiento)
         except ObjectDoesNotExist:
             form.instance.autor = autor
             form.instance.establecimiento = establecimiento
         else:
-            messages.error(self.request, 'El nombre que eligió ya existe')
-            #return self.render_to_response(self.get_context_data(form=form))
+            messages.error(self.request, 'El nombre del grupo que eligió ya existe')
             return redirect('lista_grupos')
             
         return super().form_valid(form)
