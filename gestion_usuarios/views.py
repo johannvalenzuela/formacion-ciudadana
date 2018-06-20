@@ -22,7 +22,12 @@ def funcionario_required(user):
     try:
         encargado = Encargado.objects.get(usuario=user)
     except ObjectDoesNotExist:
-        return None
+        try:
+            supervisor = Supervisor.objects.get(usuario=user)
+        except ObjectDoesNotExist:
+            return None
+        else:
+            return supervisor
     return encargado
 
 
