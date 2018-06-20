@@ -27,7 +27,8 @@ class Actividad(models.Model):
     una consulta, la subida de un recurso académico...
     '''
     titulo = models.CharField(max_length=50)
-    descripcion = models.CharField(max_length=300)
-    link = models.URLField(max_length=200)
+    tipo = models.CharField(max_length=50)
+    link = models.CharField(max_length=100)
+    link_pk = models.IntegerField(default=0)
     encargado = models.ForeignKey(Encargado,on_delete=models.CASCADE)
     fecha = models.DateField("%d-%m-%Y", default=datetime.now)
