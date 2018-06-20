@@ -1,0 +1,32 @@
+{% extends 'compumundohipermegared.html' %}{% block titulo %}
+<title>Grupos de actividades</title>
+{% endblock %} {% block content %}
+<!-- MENSAJE DE ERROR ACA -->
+{% if messages %} {% for message in messages %}
+<script>
+    alert('{{ message }}')
+</script>
+{% endfor %} {% endif %}
+
+<a href="{% url 'agregar_supervisor' %}">
+    <button class = "btn btn-primary float-right mb-3 text-uppercase">
+    <i class="mi mi-Add mi-4x"></i>
+        Agregar encargado</button>
+</a>
+
+
+{% if actividades %}
+{% for actividad in actividades  %}
+<p>{{actividad.titulo}}</p>
+<p>{{actividad.descripcion}}</p>
+<p>{{actividad.encargado}}</p>
+<p>{{actividad.fecha}}</p>
+{% endfor %}
+
+{% else %}
+<p>No existen actividades en este momento.</p>
+{% endif %}
+    
+
+
+{% endblock %}
