@@ -18,15 +18,22 @@ class PoliticaPrivacidad(TemplateView):
 
 def login_success(request):
     """
-    Redirects users based on whether they are in the admins group
+    Es la vista para redireccionar a los usuarios cuando se autentifican
     """
     usuario = request.user
     try:
         encargado = Encargado.objects.get(usuario=usuario)
     except ObjectDoesNotExist:
-        return redirect("home")
-    else:
-        return redirect("biblioteca_digital")
+        try:
+            #supervisor = Supervisor.objects.get(usuario=usuario)
+        except ObjectDoesNotExist:
+            #si es supervisor redirecciona
+            return redirect("visualizar_consultas")
+        else:
+            #si no es ni encargado ni supervisor redirecciona a las consultas
+            return redirect("visualizar_actividades")
+    #si es encargado redirecciona a la biblioteca digital    
+    return redirect("biblioteca_digital")
 
         
     
