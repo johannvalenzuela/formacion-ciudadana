@@ -4,7 +4,6 @@ from .models import Departamento_Provincial_Educacion
 from .models import Establecimiento
 from .models import Asignatura
 from .models import Encargado
-from .models import Supervisor
 from .models import Grupo
 from django.db import models
 from django.core.exceptions import ObjectDoesNotExist
@@ -140,15 +139,10 @@ class EncargadoAdmin(admin.ModelAdmin):
             self.message_user(request, msg, messages.SUCCESS)
             return self.response_post_save_add(request, obj)  
 
-class SupervisorAdmin(admin.ModelAdmin):
-    list_display = ('usuario','asignatura', 'departamento_Provincial_Educacion', 'servicio_Local_Educacion')
-    search_fields = ('usuario','asignatura', 'departamento_Provincial_Educacion', 'servicio_Local_Educacion')
-    
-    
+   
 class GrupoAdmin(admin.ModelAdmin):
     list_display = ('nombre','autor', 'establecimiento')
     search_fields = ('nombre','autor', 'establecimiento')
+    
 admin.site.register(Grupo,GrupoAdmin)
-
 admin.site.register(Encargado,EncargadoAdmin)
-admin.site.register(Supervisor,SupervisorAdmin)
