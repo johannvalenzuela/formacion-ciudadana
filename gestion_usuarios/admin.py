@@ -52,7 +52,7 @@ class EncargadoAdmin(admin.ModelAdmin):
         )
         #se crean los grupos
         try:
-            Grupo.objects.get(nombre="alumnos", Establecimiento=obj.establecimiento)
+            Grupo.objects.get(nombre="alumnos", establecimiento=obj.establecimiento)
         except ObjectDoesNotExist:
             pass
         else:
@@ -63,7 +63,7 @@ class EncargadoAdmin(admin.ModelAdmin):
             )
         
         try:
-            Grupo.objects.get(nombre="apoderados", Establecimiento=obj.establecimiento)
+            Grupo.objects.get(nombre="apoderados", establecimiento=obj.establecimiento)
         except ObjectDoesNotExist:
             pass
         else:
