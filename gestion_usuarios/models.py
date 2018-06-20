@@ -4,6 +4,8 @@ import os
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 
+
+
 class Servicio_Local_Educacion(models.Model):
     nombre = models.CharField(max_length = 50)
     def __str__(self):
@@ -47,7 +49,7 @@ class Encargado(models.Model):
     establecimiento = models.ForeignKey('Establecimiento', on_delete = models.CASCADE)
     asignatura = models.ForeignKey('Asignatura', on_delete = models.CASCADE)
     usuario = models.OneToOneField(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
-    #supervisor = models.ForeignKey('Supervisor',on_delete=models.CASCADE, blank=True, null=True)
+    supervisor = models.ForeignKey('analitica.Supervisor',on_delete=models.CASCADE, blank=True, null=True)
 
     def __str__(self):
         return self.usuario.__str__()
