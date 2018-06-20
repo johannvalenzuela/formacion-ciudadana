@@ -1,10 +1,12 @@
 from django.views import generic
 from django.urls import reverse_lazy
 from django.core.exceptions import ObjectDoesNotExist
+from django.contrib import messages
+
 
 #modelos
 from .models import Supervisor, Actividad
-from gestion_usuarios import Encargado
+from gestion_usuarios.models import Encargado
 
 class ActividadesListView(generic.ListView):
     '''
@@ -25,6 +27,25 @@ class ActividadesListView(generic.ListView):
             supervisados = Encargado.objects.filter(supervisor=supervisor)
             return Actividad.objects.filter(encargado__in=supervisados)
             
-# class AsociarEncargadoView(generic.ListView):
-#     template_name = 'gestion_usuarios/asociar_encargado.html'
-#     success_url = reverse_lazy = ('lista_actividades')
+class AsociarEncargadoView(generic.ListView):
+    """
+    Muestra la lista de los encargados que puede agregar un supervisor para ser
+    supervisado
+    (posiblemente se elimine, porque es pega del administrador ver esto)
+    """
+    model = Encargado
+    context_object_name = 'encargados'
+    template_name = 'gestion_usuarios/asociar_encargado.html'
+    success_url = reverse_lazy('lista_actividades')
+
+    def get_queryset(self):
+        """ Retorna los encargados que puede agregar el encargado"""
+        try:
+            encargados = Encargado.objects.filter(supervisor=None)
+        except ObjectDoesNotExist:
+            messages.error("No existe encargados para poder supervisar en este momento.")
+            return self.success_url
+        else:
+            return encargados
+
+
