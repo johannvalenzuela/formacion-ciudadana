@@ -10,10 +10,14 @@
 
 {% if actividades %}
 {% for actividad in actividades  %}
-<p>{{actividad.titulo}}</p>
-<p>{{actividad.descripcion}}</p>
-<p>{{actividad.encargado}}</p>
-<p>{{actividad.fecha}}</p>
+    <a href="{% url actividad.link actividad.link_pk %}">
+    <div>
+        <p>{{actividad.titulo}}</p>
+        <p>{{actividad.tipo}}</p>
+        <p>{{actividad.encargado}}</p>
+        <p>{{actividad.fecha}}</p>
+    </div>
+    </a>
 {% endfor %}
 
 {% else %}
