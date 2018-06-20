@@ -24,14 +24,17 @@ def login_success(request):
     try:
         encargado = Encargado.objects.get(usuario=usuario)
     except ObjectDoesNotExist:
-        try:
-            #supervisor = Supervisor.objects.get(usuario=usuario)
-        except ObjectDoesNotExist:
-            #si es supervisor redirecciona
-            return redirect("visualizar_consultas")
-        else:
-            #si no es ni encargado ni supervisor redirecciona a las consultas
-            return redirect("visualizar_actividades")
+
+        # try:
+        #     #supervisor = Supervisor.objects.get(usuario=usuario)
+        # except ObjectDoesNotExist:
+        #     #si es supervisor redirecciona
+        return redirect("visualizar_consultas")
+        # else:
+        #     #si no es ni encargado ni supervisor redirecciona a las consultas
+        #     return redirect("visualizar_actividades")
+
+
     #si es encargado redirecciona a la biblioteca digital    
     return redirect("biblioteca_digital")
 
