@@ -16,12 +16,18 @@ from django.contrib.auth.decorators import user_passes_test
 #modelos
 from .models import Recurso, ValoracionRecurso, ComentarioRecurso
 from gestion_usuarios.models import Encargado
+from analitica.models import Actividad, Supervisor
 
 def funcionario_required(user):
     try:
         encargado = Encargado.objects.get(usuario=user)
     except ObjectDoesNotExist:
-        return None
+        try:
+            supervisor = Supervisor.objects.get(usuario=user)
+        except ObjectDoesNotExist:
+            return None
+        else:
+            return supervisor
     return encargado
 
 
@@ -106,9 +112,20 @@ class CrearRecursoView(generic.CreateView):
     template_name = 'biblioteca_digital/recurso_create_form.html'
     success_url = reverse_lazy('biblioteca_digital')
 
-    def form_valid(self, form):  
-        form.instance.autor = self.request.user
-        form.save()
+    def form_valid(self, form):
+        try:
+            form.instance.autor = self.request.user
+            form.save()
+        finally:
+            encargado = Encargado.objects.get(usuario=self.request.user)
+            Actividad.objects.create(
+                titulo="%s" % (form.instance.titulo),
+                tipo="recurso académico",
+                link="recurso-detail",
+                link_pk=form.instance.pk,
+                encargado=encargado
+            )
+        
         return super().form_valid(form)
 
 @method_decorator(login_required, name='get' )
