@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'biblioteca_digital.apps.BibliotecaDigitalConfig',
     'autenticacion.apps.AutenticacionConfig',
     'gestion_usuarios.apps.GestionUsuariosConfig',
-    
+    'analitica.apps.AnaliticaConfig',
+
     'social_django',
 ]
 
