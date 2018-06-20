@@ -42,27 +42,3 @@ class ActividadesListView(generic.ListView):
             supervisados = Encargado.objects.filter(supervisor=supervisor)
             return Actividad.objects.filter(encargado__in=supervisados)
 
-@method_decorator(login_required, name='get' )
-@method_decorator(user_passes_test(supervisor_required), name='get')           
-class AsociarEncargadoView(generic.ListView):
-    """
-    Muestra la lista de los encargados que puede agregar un supervisor para ser
-    supervisado
-    (posiblemente se elimine, porque es pega del administrador ver esto)
-    """
-    model = Encargado
-    context_object_name = 'encargados'
-    template_name = 'analitica/asociar_encargado.html'
-    success_url = reverse_lazy('lista_actividades')
-
-    def get_queryset(self):
-        """ Retorna los encargados que puede agregar el encargado"""
-        try:
-            encargados = Encargado.objects.filter(supervisor=None)
-        except ObjectDoesNotExist:
-            messages.error("No existe encargados para poder supervisar en este momento.")
-            return self.success_url
-        else:
-            return encargados
-
-

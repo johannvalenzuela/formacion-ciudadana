@@ -8,13 +8,6 @@
 </script>
 {% endfor %} {% endif %}
 
-<a href="{% url 'agregar_supervisor' %}">
-    <button class = "btn btn-primary float-right mb-3 text-uppercase">
-    <i class="mi mi-Add mi-4x"></i>
-        Agregar encargado</button>
-</a>
-
-
 {% if actividades %}
 {% for actividad in actividades  %}
 <p>{{actividad.titulo}}</p>
