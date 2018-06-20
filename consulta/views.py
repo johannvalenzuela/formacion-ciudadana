@@ -12,6 +12,8 @@ from django.db.models import Q
 from .models import Consulta, ConsultaPropuesta, ConsultaRespuesta
 from gestion_usuarios.models import Encargado, RutAutorizados
 from autenticacion.models import Usuario
+from analitica.models import Supervisor
+
 #decorators
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
@@ -21,7 +23,12 @@ def funcionario_required(user):
     try:
         encargado = Encargado.objects.get(usuario=user)
     except ObjectDoesNotExist:
-        return None
+        try:
+            supervisor = Supervisor.objects.get(usuario=user)
+        except ObjectDoesNotExist:
+            return None
+        else:
+            return supervisor
     return encargado
 
 
