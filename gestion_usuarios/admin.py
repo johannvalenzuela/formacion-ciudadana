@@ -50,28 +50,25 @@ class EncargadoAdmin(admin.ModelAdmin):
             args=(quote(obj.pk),),
             current_app=self.admin_site.name,
         )
-        #se crean los grupos
+        #se crean los grupos por defecto del encargado
         try:
             Grupo.objects.get(nombre="alumnos", establecimiento=obj.establecimiento)
         except ObjectDoesNotExist:
-            pass
-        else:
             Grupo.objects.create(
             nombre="alumnos",
             autor=obj,
             establecimiento=obj.establecimiento
             )
-        
+             
         try:
             Grupo.objects.get(nombre="apoderados", establecimiento=obj.establecimiento)
         except ObjectDoesNotExist:
-            pass
-        else:
             Grupo.objects.create(
             nombre="apoderados",
             autor=obj,
             establecimiento=obj.establecimiento
             )
+            
         
         # Add a link to the object's change form if the user can edit the obj.
         if self.has_change_permission(request, obj):
