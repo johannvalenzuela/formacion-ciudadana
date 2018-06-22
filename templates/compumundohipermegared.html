@@ -1,5 +1,5 @@
 {% load static %}
-
+{% load validacion_navbar %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -38,10 +38,22 @@
                             <a href="/">
                                 <i class="mi mi-Home"></i> Inicio</a>
                         </li>
+
+                        {% if request|supervisor_required %}
+                        <li>
+                            <a href="{% url 'visualizar_actividades' %}">
+                                <i class="mi mi-Feedback"></i> Actividades Supervisores</a>
+                        </li>
+                        {% endif %}
+
+                        {% if request|funcionario_required %}
                         <li>
                             <a href="#">
                                 <i class="mi mi-ChatBubbles"></i> Mensajes</a>
                         </li>
+                        {% endif %}
+
+                        {% if request|encargado_required %}
                         <li class="{% if request.path == '/gestion_usuarios/lista_usuarios/alumnos/' or request.path == '/gestion_usuarios/agregar_usuario_form/1' %}active{% endif %}">
                             <a href="{% url 'lista_usuarios' 'alumnos' %}">
                                 <i class="mi mi-Education"></i> Alumnos</a>
@@ -54,18 +66,25 @@
                             <a href="{% url 'lista_grupos' %}">
                                 <i class="mi mi-People"></i> Grupos</a>
                         </li>
+                        {% endif %}
+
+                        {% if request|funcionario_required %}
                         <li class="{% if request.resolver_match.url_name == 'biblioteca_digital' or request.resolver_match.view_name == 'recurso-detail'%}active{% endif %}">
                             <a href="{% url 'biblioteca_digital' %}">
                                 <i class="mi mi-Library"></i> Recursos Académicos</a>
                         </li>
+                        {% endif %}
                         <li class="{% if request.resolver_match.url_name == 'visualizar_consultas' or request.resolver_match.view_name == 'crear_consulta' or request.resolver_match.view_name == 'detalles_consulta' %}active{% endif %}">
                             <a href="{% url 'visualizar_consultas' %}">
                                 <i class="mi mi-Package"></i> Consultas Ciudadanas</a>
                         </li>
+                        {% if request|funcionario_required %}
                         <li>
                             <a href="#">
                                 <i class="mi mi-Feedback"></i> Foro</a>
                         </li>
+                        {% endif %}
+
                     </ul>
 
                     {% endblock %}
