@@ -18,18 +18,7 @@ from analitica.models import Supervisor
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import user_passes_test
-
-def funcionario_required(user):
-    try:
-        encargado = Encargado.objects.get(usuario=user)
-    except ObjectDoesNotExist:
-        try:
-            supervisor = Supervisor.objects.get(usuario=user)
-        except ObjectDoesNotExist:
-            return None
-        else:
-            return supervisor
-    return encargado
+from gestion_usuarios.decorators import funcionario_required, encargado_required
 
 
 class VisualizarConsultasView(generic.ListView):
@@ -67,7 +56,7 @@ class DetallesConsultaView(generic.DetailView):
         return context
 
 @method_decorator(login_required, name='get' )
-@method_decorator(user_passes_test(funcionario_required), name='get' )
+@method_decorator(user_passes_test(encargado_required), name='get' )
 class CrearConsultaView(generic.CreateView):
     '''
     Muesta la vista para crear una consulta nueva
@@ -152,11 +141,6 @@ class ResponderConsultaView(generic.TemplateView):
 
         return self.get_success_url()
                 
-            
-
-
-            
-
     def get_success_url(self):
         return redirect('detalles_consulta', pk=self.kwargs['pk'])
  
@@ -168,7 +152,7 @@ class ResponderConsultaView(generic.TemplateView):
 
     
 @method_decorator(login_required, name='get' )
-@method_decorator(user_passes_test(funcionario_required), name='get' )
+@method_decorator(user_passes_test(encargado_required), name='get' )
 class ConsultaDeleteView(generic.DeleteView):
     model = Consulta
     template_name_suffix = '_confirm_delete'
@@ -176,7 +160,7 @@ class ConsultaDeleteView(generic.DeleteView):
 
 
 @method_decorator(login_required, name='get' )
-@method_decorator(user_passes_test(funcionario_required), name='get' )
+@method_decorator(user_passes_test(encargado_required), name='get' )
 class ConsultaUpdateView(generic.UpdateView):
     model = Consulta
     fields = ['titulo','descripcion','fecha_inicio','fecha_finalizacion',]
@@ -217,7 +201,7 @@ class PropuestaConsultaVisualizarView(generic.DetailView):
 
 
 @method_decorator(login_required, name='get' )
-@method_decorator(user_passes_test(funcionario_required), name='get' )
+@method_decorator(user_passes_test(encargado_required), name='get' )
 class PropuestaConsultaCreateView(generic.CreateView):
     '''
     Muestra un formulario para la creación de una alternativa de una consulta
@@ -252,7 +236,7 @@ class PropuestaConsultaCreateView(generic.CreateView):
 
 
 @method_decorator(login_required, name='get' )
-@method_decorator(user_passes_test(funcionario_required), name='get' )
+@method_decorator(user_passes_test(encargado_required), name='get' )
 class PropuestaConsultaUpdateView(generic.UpdateView):
     '''
     Es la clase para editar un grupo de un encargado en especifico.
@@ -269,7 +253,7 @@ class PropuestaConsultaUpdateView(generic.UpdateView):
         return self.get_success_url()
 
 @method_decorator(login_required, name='get' )
-@method_decorator(user_passes_test(funcionario_required), name='get' )
+@method_decorator(user_passes_test(encargado_required), name='get' )
 class PropuestaConsultaDeleteView(generic.DeleteView):
     '''
     Es la clase para eliminar un grupo de un encargado en especifico.

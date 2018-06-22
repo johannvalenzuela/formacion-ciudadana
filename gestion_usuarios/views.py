@@ -12,27 +12,15 @@ from .forms import ProfileForm
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import user_passes_test
+from .decorators import funcionario_required, encargado_required
 
 #Modelos
 from .models import Grupo, Encargado,RutAutorizados
 from autenticacion.models import Usuario
 
 
-def funcionario_required(user):
-    try:
-        encargado = Encargado.objects.get(usuario=user)
-    except ObjectDoesNotExist:
-        try:
-            supervisor = Supervisor.objects.get(usuario=user)
-        except ObjectDoesNotExist:
-            return None
-        else:
-            return supervisor
-    return encargado
-
-
 @method_decorator(login_required, name='get' )
-@method_decorator(user_passes_test(funcionario_required), name='get')
+@method_decorator(user_passes_test(encargado_required), name='get')
 class ListaUsuariosView(generic.ListView):
     '''
     Vista de la lista de usuarios de un grupo de un encargado.
@@ -53,7 +41,7 @@ class ListaUsuariosView(generic.ListView):
 
 
 @method_decorator(login_required, name='get' )
-@method_decorator(user_passes_test(funcionario_required), name='get')
+@method_decorator(user_passes_test(encargado_required), name='get')
 class ListaGruposView(generic.ListView):
     '''
     Vista de la lista de grupos de un encargado.
@@ -69,7 +57,7 @@ class ListaGruposView(generic.ListView):
 
 
 @method_decorator(login_required, name='get' )
-@method_decorator(user_passes_test(funcionario_required), name='get')
+@method_decorator(user_passes_test(encargado_required), name='get')
 class AgregarUsuarioGrupoView(generic.CreateView):
     '''
     Es la clase para agregar un grupo de un encargado en especifico.
@@ -114,7 +102,7 @@ class AgregarUsuarioGrupoView(generic.CreateView):
         return render(request, "gestion_usuarios/usuario_add_form.html", args)
 
 @method_decorator(login_required, name='get' )
-@method_decorator(user_passes_test(funcionario_required), name='get')
+@method_decorator(user_passes_test(encargado_required), name='get')
 class EliminarUsuarioGrupoView(generic.DeleteView):
     '''
     Es la clase para eliminar un grupo de un encargado en especifico.
@@ -144,7 +132,7 @@ class EliminarUsuarioGrupoView(generic.DeleteView):
         
 
 @method_decorator(login_required, name='get' )
-@method_decorator(user_passes_test(funcionario_required), name='get')
+@method_decorator(user_passes_test(encargado_required), name='get')
 class AgregarGrupoView(generic.CreateView):
     '''
     Es la clase para agregar un grupo de un encargado en especifico.
@@ -175,7 +163,7 @@ class AgregarGrupoView(generic.CreateView):
 
 
 @method_decorator(login_required, name='get' )
-@method_decorator(user_passes_test(funcionario_required), name='get')
+@method_decorator(user_passes_test(encargado_required), name='get')
 class EditarGrupoView(generic.UpdateView):
     '''
     Es la clase para editar un grupo de un encargado en especifico.
@@ -197,7 +185,7 @@ class EditarGrupoView(generic.UpdateView):
 
 
 @method_decorator(login_required, name='get' )
-@method_decorator(user_passes_test(funcionario_required), name='get')
+@method_decorator(user_passes_test(encargado_required), name='get')
 class EliminarGrupoView(generic.DeleteView):
     '''
     Es la clase para eliminar un grupo de un encargado en especifico.
@@ -206,7 +194,7 @@ class EliminarGrupoView(generic.DeleteView):
     template_name_suffix = '_eliminar_form'
     success_url = reverse_lazy('lista_grupos')
 
-
+@method_decorator(login_required, name='get' )
 class ProfileView(generic.DetailView):
     '''
     Muesta la vista del profile del usuario
@@ -218,6 +206,7 @@ class ProfileView(generic.DetailView):
     def get_object(self):
         return self.request.user
 
+@method_decorator(login_required, name='get' )
 class ProfileUpdateView(generic.UpdateView):
     '''
     Muesta la vista para eliminar valores del profile del usuario 

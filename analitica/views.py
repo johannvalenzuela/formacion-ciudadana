@@ -8,18 +8,13 @@ from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import user_passes_test
+from .decorators import supervisor_required
 
 #modelos
 from .models import Supervisor, Actividad
 from gestion_usuarios.models import Encargado
 
-def supervisor_required(user):
-    try:
-        supervisor = Supervisor.objects.get(usuario=user)
-    except ObjectDoesNotExist:
-        return None
-    
-    return supervisor
+
 
 @method_decorator(login_required, name='get' )
 @method_decorator(user_passes_test(supervisor_required), name='get')

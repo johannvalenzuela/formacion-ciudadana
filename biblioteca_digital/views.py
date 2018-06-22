@@ -17,23 +17,15 @@ from django.contrib.auth.decorators import user_passes_test
 from .models import Recurso, ValoracionRecurso, ComentarioRecurso
 from gestion_usuarios.models import Encargado
 from analitica.models import Actividad, Supervisor
-
-def funcionario_required(user):
-    try:
-        encargado = Encargado.objects.get(usuario=user)
-    except ObjectDoesNotExist:
-        try:
-            supervisor = Supervisor.objects.get(usuario=user)
-        except ObjectDoesNotExist:
-            return None
-        else:
-            return supervisor
-    return encargado
+from gestion_usuarios.decorators import funcionario_required, encargado_required
 
 
 @method_decorator(login_required, name='get' )
 @method_decorator(user_passes_test(funcionario_required), name='get' )
 class BibliotecaView(generic.ListView):
+    '''
+    Muestra la lista de todos los recursos académicos.
+    '''
     template_name = 'biblioteca_digital/principal.html'
     context_object_name = 'lista_recursos'
     paginate_by = 10
@@ -45,6 +37,9 @@ class BibliotecaView(generic.ListView):
 @method_decorator(login_required, name='get' )
 @method_decorator(user_passes_test(funcionario_required), name='get')
 class RecursoDetailView(generic.DetailView):
+    '''
+    Muestra el detalle de un recurso académico
+    '''
     model = Recurso
     template_name = 'biblioteca_digital/recurso.html'
     
@@ -108,6 +103,9 @@ def descargar(request, pk):
 @method_decorator(login_required, name='get' )
 @method_decorator(user_passes_test(funcionario_required), name='get' )
 class CrearRecursoView(generic.CreateView): 
+    '''
+    Vista para crear un recurso académico.
+    '''
     form_class = RecursoForm 
     template_name = 'biblioteca_digital/recurso_create_form.html'
     success_url = reverse_lazy('biblioteca_digital')
@@ -131,6 +129,9 @@ class CrearRecursoView(generic.CreateView):
 @method_decorator(login_required, name='get' )
 @method_decorator(user_passes_test(funcionario_required), name='get')
 class RecursoUpdateView(generic.UpdateView):
+    '''
+    Vista para modificar un recurso académico.
+    '''
     model = Recurso
     fields = ['titulo', 'descripcion','tema','imagen_descriptiva','archivo',]
     template_name_suffix = '_update_form'
@@ -142,6 +143,9 @@ class RecursoUpdateView(generic.UpdateView):
 @method_decorator(login_required, name='get' )
 @method_decorator(user_passes_test(funcionario_required), name='get')
 class RecursoDeleteView(generic.DeleteView):
+    '''
+    vista para eliminar un recurso académico.
+    '''
     model = Recurso
     template_name_suffix = '_confirm_delete'
     success_url = reverse_lazy('biblioteca_digital')
@@ -150,6 +154,9 @@ class RecursoDeleteView(generic.DeleteView):
 @method_decorator(login_required, name='get' )
 @method_decorator(user_passes_test(funcionario_required), name='get')
 class ComentarioRecursoDeleteView(generic.DeleteView):
+    '''
+    vista para eliminar un comentario de un recurso académico.
+    '''
     model = ComentarioRecurso
     template_name_suffix = '_confirm_delete'
     
@@ -160,6 +167,9 @@ class ComentarioRecursoDeleteView(generic.DeleteView):
 @method_decorator(login_required, name='get' )
 @method_decorator(user_passes_test(funcionario_required), name='get')
 class ComentarioRecursoUpdateView(generic.UpdateView):
+    '''
+    vista para editar un comentario de un recurso académico.
+    '''
     model = ComentarioRecurso
     fields = ['comentario']
     template_name_suffix = '_update_form'
