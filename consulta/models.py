@@ -13,7 +13,7 @@ class Consulta(models.Model):
     fecha_finalizacion = models.DateField("%d-%m-%Y", null=False) 
     fecha_inicio = models.DateField("%d-%m-%Y", default=datetime.now) 
     descripcion = models.CharField(max_length = 255) 
-    grupo = models.ManyToManyField(Grupo)
+    grupo = models.ManyToManyField(Grupo, blank=True, default=None)
 
     def __str__(self): 
         return (self.titulo) 
