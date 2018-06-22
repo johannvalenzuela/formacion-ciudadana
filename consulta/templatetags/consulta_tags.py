@@ -40,6 +40,8 @@ def puede_votar_consulta(request, consulta):
     Función para saber si el usuario puede votar en la consulta
     '''
     rut_user = request.user.rut
+    if not rut_user:
+        return True
     try:
         ConsultaRespuesta.objects.get(consulta=consulta ,rut=rut_user)
     except ObjectDoesNotExist:
