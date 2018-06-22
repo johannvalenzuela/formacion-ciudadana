@@ -37,14 +37,22 @@ class VisualizarConsultasView(generic.ListView):
             supervisor=Supervisor.objects.get(usuario=self.request.user)
         except ObjectDoesNotExist:
             try:
-                autorizados = RutAutorizados.objects.get(rut= self.request.user.rut)
+                encargado = Encargado.objects.get(usuario=self.request.user)
             except ObjectDoesNotExist:
-                #si no tiene rut solo se le muestran las consultas ciudadanas
-                return Consulta.objects.filter(grupo=None).order_by('fecha_inicio')
+                try:
+                    autorizados = RutAutorizados.objects.get(rut= self.request.user.rut)
+                except ObjectDoesNotExist:
+                    #si no tiene rut solo se le muestran las consultas ciudadanas
+                    return Consulta.objects.filter(grupo=None).order_by('fecha_inicio')
+                else:
+                    return Consulta.objects.filter(Q(grupo__in=autorizados.grupo.all()) | Q(grupo=None)).order_by('-fecha_inicio')
             else:
-                return Consulta.objects.filter(Q(grupo__in=autorizados.grupo.all()) | Q(grupo=None)).order_by('-fecha_inicio')
+                #si el usuario es encargado se muestran los grupos creados por el
+                #y las consultas ciudadanas
+                return Consulta.objects.filter(Q(autor=encargado) | Q(grupo=None)).order_by('fecha_inicio')
+          
         else:
-            #si el usuario es encargado se muestran los grupos creados por su supervisor
+            #si el usuario es supervisor se muestran los grupos creados por sus encargados
             #y las consultas ciudadanas
             encargados = Encargado.objects.filter(supervisor=supervisor)
             return Consulta.objects.filter(Q(autor__in=encargados) | Q(grupo=None)).order_by('fecha_inicio')
@@ -76,17 +84,17 @@ class CrearConsultaView(generic.CreateView):
     success_url = reverse_lazy('visualizar_consultas')
 
     def form_valid(self, form):
+        encargado = Encargado.objects.get(usuario=self.request.user)
         try:
-            form.instance.autor = self.request.user
+            form.instance.autor = encargado
             form.save()
         finally:
-            encargado = Encargado.objects.get(usuario=self.request.user)
             Actividad.objects.create(
                 titulo="%s" % (form.instance.titulo),
-                tipo="recurso académico",
+                tipo="Consulta",
                 link="detalles_consulta",
                 link_pk=form.instance.pk,
-                encargado=encargado
+                encargado=encargado,
             )  
         
         return super().form_valid(form)
