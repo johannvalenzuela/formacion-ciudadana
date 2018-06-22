@@ -11,7 +11,7 @@ from django.db.models import Q
 from .models import Consulta, ConsultaPropuesta, ConsultaRespuesta
 from gestion_usuarios.models import Encargado, RutAutorizados
 from autenticacion.models import Usuario
-from analitica.models import Actividad
+from analitica.models import Actividad, Supervisor
 
 #decorators
 from django.contrib.auth.decorators import login_required
@@ -29,15 +29,26 @@ class VisualizarConsultasView(generic.ListView):
 
     def get_queryset(self):
         """Retorna las consultas."""
+        #Si el usuario es anonimo se muestran todos los grupos que no tengan grupos
         if self.request.user.is_anonymous:
-            return Consulta.objects.filter(grupo=None).order_by('-fecha_inicio')
-        else:
+            return Consulta.objects.filter(grupo=None).order_by('fecha_inicio')
+        
+        try:
+            supervisor=Supervisor.objects.get(usuario=self.request.user)
+        except ObjectDoesNotExist:
             try:
                 autorizados = RutAutorizados.objects.get(rut= self.request.user.rut)
             except ObjectDoesNotExist:
-                return Consulta.objects.filter(grupo=None).order_by('-fecha_inicio')
-
-        return Consulta.objects.filter(Q(grupo__in=autorizados.grupo.all()) | Q(grupo=None)).order_by('-fecha_inicio')
+                #si no tiene rut solo se le muestran las consultas ciudadanas
+                return Consulta.objects.filter(grupo=None).order_by('fecha_inicio')
+            else:
+                return Consulta.objects.filter(Q(grupo__in=autorizados.grupo.all()) | Q(grupo=None)).order_by('-fecha_inicio')
+        else:
+            #si el usuario es encargado se muestran los grupos creados por su supervisor
+            #y las consultas ciudadanas
+            encargados = Encargado.objects.filter(supervisor=supervisor)
+            return Consulta.objects.filter(Q(autor__in=encargados) | Q(grupo=None)).order_by('fecha_inicio')
+        
 
         
 
@@ -73,7 +84,7 @@ class CrearConsultaView(generic.CreateView):
             Actividad.objects.create(
                 titulo="%s" % (form.instance.titulo),
                 tipo="recurso académico",
-                link="recurso-detail",
+                link="detalles_consulta",
                 link_pk=form.instance.pk,
                 encargado=encargado
             )  
