@@ -1,6 +1,7 @@
 {% extends 'compumundohipermegared.html' %} {% block titulo %}
 <title>{{ object.titulo }}</title>
 {% endblock %} {% block content %}
+{% load consulta_tags %}
 <!-- MENSAJE DE ERROR ACA -->
 {% if messages %} {% for message in messages %}
 <script>
@@ -53,7 +54,7 @@
 </div>
 
 {% comment %} boton para agregar propuesta solo para el autor de la consulta {% endcomment %}
-{% if object.autor == user %}
+{% if request|is_autor_consulta:object.autor %}
 <div class="pb-5">
     <a class="btn btn-primary float-right btn-sm p-2 mt-3" href="{% url 'crear_propuesta' object.pk %}">
         <i class="mi mi-Add mi-4x"></i> AGREGAR PROPUESTA
