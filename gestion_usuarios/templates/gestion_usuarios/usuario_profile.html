@@ -1,7 +1,7 @@
 {% extends 'compumundohipermegared.html' %}{% block titulo %}
 <title>Profile {{usuario.nombre}} {{usuario.apellido_paterno}} {{usuario.apellido_materno}}</title>
 {% endblock %} {% block content %}
-
+{% load validacion_navbar %}
 <div class="pb-5">
     <a href={% url 'profile_editar' %}>
         <button class="btn btn-primary float-right mb-3 text-uppercase"><i class="mi mi-EditMirrored mi-4x"></i> MODIFICAR DATOS</button>
@@ -16,8 +16,13 @@
         {% endif %}
     </div>
     <div class="col-md-6">
-        <h4 class="font-weight-bold mb-3">{{usuario.nombre}} {{usuario.apellido_paterno}} {{usuario.apellido_materno}}</h4>
-
+        <h4 class="font-weight-bold text-uppercase">{{usuario.nombre}} {{usuario.apellido_paterno}} {{usuario.apellido_materno}}</h4>
+        {% if request|encargado_required %}
+        <span class="badge badge-primary mb-3">ENCARGADO</span>
+        {% endif %}
+        {% if request|supervisor_required %}
+        <span class="badge badge-primary mb-3">SUPERVISOR</span>
+        {% endif %}
         <div class="mb-2">
             <div>
                 <span class="font-weight-bold text-muted">CORREO ELECTRÓNICO</span>
