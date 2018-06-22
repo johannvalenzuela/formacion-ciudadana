@@ -5,70 +5,68 @@
     <div class="text-center mb-3">
         <h4 class="font-weight-bold pb-2">Crear Consulta Ciudadana</h4>
     </div>
-    <table>
-        <form method="POST" enctype="multipart/form-data" action="">
-            {% csrf_token %}
-            <div class="form-group row">
-                <label for="id_titulo" class="col-sm-2 col-form-label">Título:</label>
-                <div class="col-sm-10">
-                    {% if form.titulo.errors %}
-                    <input type="text" class="form-control-plaintext" maxlength="50" id="id_titulo" name="titulo" value="{{form.titulo.value}}"
-                        placeholder="Ej: Recurso #1" required>
-                    <small class="text-danger"> Ya existe un consulta con este titulo. Por favor ingrese otro.</small>
-                    {% else %}
-                    <input type="text" class="form-control-plaintext" maxlength="50" id="id_titulo" name="titulo" placeholder="Ej: Consulta #1"
-                        required> {% endif %}
-                </div>
+    <form method="POST" enctype="multipart/form-data" action="">
+        {% csrf_token %}
+        <div class="form-group row">
+            <label for="id_titulo" class="col-sm-2 col-form-label">Título:</label>
+            <div class="col-sm-10">
+                {% if form.titulo.errors %}
+                <input type="text" class="form-control-plaintext" maxlength="50" id="id_titulo" name="titulo" value="{{form.titulo.value}}"
+                    placeholder="Ej: Recurso #1" required>
+                <small class="text-danger"> Ya existe un consulta con este titulo. Por favor ingrese otro.</small>
+                {% else %}
+                <input type="text" class="form-control-plaintext" maxlength="50" id="id_titulo" name="titulo" placeholder="Ej: Consulta #1"
+                    required> {% endif %}
             </div>
-            <div class="form-group row">
-                <label for="id_descripcion" class="col-sm-2 col-form-label">Descripción:</label>
-                <div class="col-sm-10">
-                    {% if form.errors %}
-                    <textarea class="form-control" name="descripcion" id="id_descripcion" rows="5" required>{{form.descripcion.value}}</textarea> {% else %}
-                    <textarea class="form-control" name="descripcion" id="id_descripcion" rows="5" required></textarea> {% endif %}
-                </div>
+        </div>
+        <div class="form-group row">
+            <label for="id_descripcion" class="col-sm-2 col-form-label">Descripción:</label>
+            <div class="col-sm-10">
+                {% if form.errors %}
+                <textarea class="form-control" name="descripcion" id="id_descripcion" rows="5" required>{{form.descripcion.value}}</textarea> {% else %}
+                <textarea class="form-control" name="descripcion" id="id_descripcion" rows="5" required></textarea> {% endif %}
             </div>
-            <div class="form-group row">
-                <label for="id_fecha_inicio" class="col-sm-2 col-form-label">Fecha Inicio:</label>
-                <div class="col-sm-10">
-                    {% if form.errors %}
-                    <input type="date" class="form-control-plaintext" id="id_fecha_inicio" name="fecha_inicio" value="{{form.fecha_inicio.value}}"
-                        required> {% else %}
-                    <input type="date" class="form-control-plaintext" id="id_fecha_inicio" name="fecha_inicio" required> {% endif %}
-                </div>
+        </div>
+        <div class="form-group row">
+            <label for="id_fecha_inicio" class="col-sm-2 col-form-label">Fecha Inicio:</label>
+            <div class="col-sm-10">
+                {% if form.errors %}
+                <input type="date" class="form-control-plaintext" id="id_fecha_inicio" name="fecha_inicio" value="{{form.fecha_inicio.value}}"
+                    required> {% else %}
+                <input type="date" class="form-control-plaintext" id="id_fecha_inicio" name="fecha_inicio" required> {% endif %}
             </div>
-            <div class="form-group row">
-                <label for="id_fecha_finalizacion" class="col-sm-2 col-form-label">Fecha Término:</label>
-                <div class="col-sm-10">
-                    {% if form.errors %}
-                    <input type="date" class="form-control-plaintext" id="id_fecha_finalizacion" name="fecha_finalizacion" value="{{form.fecha_finalizacion.value}}"
-                        required> {% else %}
-                    <input type="date" class="form-control-plaintext" id="id_fecha_finalizacion" name="fecha_finalizacion" required> {% endif %}
-                </div>
+        </div>
+        <div class="form-group row">
+            <label for="id_fecha_finalizacion" class="col-sm-2 col-form-label">Fecha Término:</label>
+            <div class="col-sm-10">
+                {% if form.errors %}
+                <input type="date" class="form-control-plaintext" id="id_fecha_finalizacion" name="fecha_finalizacion" value="{{form.fecha_finalizacion.value}}"
+                    required> {% else %}
+                <input type="date" class="form-control-plaintext" id="id_fecha_finalizacion" name="fecha_finalizacion" required> {% endif %}
             </div>
+        </div>
 
-            <div class="form-group row">
-                <label for="id_grupo" class="col-sm-2 col-form-label">Grupo:</label>
-                <div class="col-sm-10">
-                    <small class="text-muted">Puedes seleccionar mas de un grupo</small>
-                    <select multiple class="form-control" name="grupo" id="id_grupo" size="{{form.grupo|length}}" required>
-                        {% for grupo in form.grupo %}
-                        <!-- <option value="{{forloop.counter}}">{{g}}</option> -->
-                        {{grupo}}
-                        {% endfor %}
-                    </select>
-                </div>
+        <div class="form-group row">
+            <label for="id_grupo" class="col-sm-2 col-form-label">Grupo:</label>
+            <div class="col-sm-10">
+                <small class="text-muted">Puedes seleccionar mas de un grupo</small>
+                <select multiple class="form-control" name="grupo" id="id_grupo" size="{{form.grupo|length}}" required>
+                    {% for grupo in form.grupo %}
+                    <!-- <option value="{{forloop.counter}}">{{g}}</option> -->
+                    {{grupo}}
+                    {% endfor %}
+                </select>
             </div>
+        </div>
 
-            <!-- <tr>
-                <td>{{ form.as_table }}</td>
-            </tr> -->
-            <tr>
-            <td>
-                <input class="btn btn-primary btn-block" type="submit" value="Guardar">
-            </td>
-            </tr>
-        </form>
-    </table>
+        <!-- <tr>
+            <td>{{ form.as_table }}</td>
+        </tr> -->
+        <tr>
+        <td>
+            <input class="btn btn-primary btn-block" type="submit" value="Guardar">
+        </td>
+        </tr>
+    </form>
 </div>
 {% endblock content %}
