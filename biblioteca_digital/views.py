@@ -6,7 +6,7 @@ from django.conf import settings
 import os
 from .forms import RecursoForm
 from django.shortcuts import redirect
-from django.core.exceptions import ObjectDoesNotExist
+
 
 #decorators
 from django.contrib.auth.decorators import login_required
@@ -16,8 +16,8 @@ from django.contrib.auth.decorators import user_passes_test
 #modelos
 from .models import Recurso, ValoracionRecurso, ComentarioRecurso
 from gestion_usuarios.models import Encargado
-from analitica.models import Actividad, Supervisor
-from gestion_usuarios.decorators import funcionario_required, encargado_required
+from analitica.models import Actividad
+from gestion_usuarios.decorators import funcionario_required
 
 
 @method_decorator(login_required, name='get' )
