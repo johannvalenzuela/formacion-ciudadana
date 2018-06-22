@@ -138,17 +138,22 @@ class ResponderConsultaView(generic.TemplateView):
                             break
                 else:
                     puedeVotar=True            
-                #por último el usuario realiza la votación
+                finalizado=True
                 if puedeVotar:
-                    try:
-                        ConsultaRespuesta.objects.create(
-                        rut = votante.rut,
-                        consulta = consulta,
-                        consulta_propuesta = propuesta,
-                        )
-                    finally:
-                        propuesta.votos+=1
-                        propuesta.save()
+                    #se verifica que la votación no haya finalizado
+                    if datetime.now < consulta.fecha_finalizacion:
+                        finalizado=False
+
+                        #por último el usuario realiza la votación
+                        try:
+                            ConsultaRespuesta.objects.create(
+                            rut = votante.rut,
+                            consulta = consulta,
+                            consulta_propuesta = propuesta,
+                            )
+                        finally:
+                            propuesta.votos+=1
+                            propuesta.save()
             
             else:
                 messages.error(request, 'usuario ya realizó la votación anteriormente')
@@ -157,7 +162,10 @@ class ResponderConsultaView(generic.TemplateView):
             
 
         if puedeVotar:
-            messages.success(request, 'Votación realizada con éxito!')
+            if not finalizado:
+                messages.success(request, 'Votación realizada con éxito!')
+            else:
+                messages.success(request, 'La votacion no pudo ser realizada porque ya terminó')
         else:
             messages.error(request, 'La votación no pudo ser realizada')
 
