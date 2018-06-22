@@ -339,6 +339,10 @@ h2, h3, h4, h5, h6 {
     content: "";
 }
 
+input:placeholder-shown {
+    border: 2px solid red !important;
+}
+
 @media only screen and (max-width: 766px) {
     .login-section::after {
         width: 0;
