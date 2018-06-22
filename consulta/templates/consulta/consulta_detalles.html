@@ -54,7 +54,7 @@
 </div>
 
 {% comment %} boton para agregar propuesta solo para el autor de la consulta {% endcomment %}
-{% if request|is_autor_consulta:object.autor %}
+{% if request|is_autor_consulta:object.autor and request|is_finalizado_consulta:object.fecha_finalizacion %}
 <div class="pb-5">
     <a class="btn btn-primary float-right btn-sm p-2 mt-3" href="{% url 'crear_propuesta' object.pk %}">
         <i class="mi mi-Add mi-4x"></i> AGREGAR PROPUESTA
@@ -66,6 +66,8 @@
 
 <div class="section-resources">
     {% comment %} boton para VOTAR {% endcomment %}
+    {% if request|is_finalizado_consulta:object.fecha_finalizacion %}
+    
     <div class="card col-md-12 mt-4 mb-1 pb-2 rounded-0 shadow-sm">
         <div class="card-body">
             <h5 class="card-text pt-2 text-center">¿Te interesa alguna propuesta? Entonces, ¡Vota por alguna de ellas!</h5>
@@ -76,6 +78,8 @@
             </a>
         </div>
     </div>
+    {% else %}
+    {% endif %}
     <div class="container">
         <div class="row">
             <div class="col-md-12 ml-auto mr-auto p-0">
