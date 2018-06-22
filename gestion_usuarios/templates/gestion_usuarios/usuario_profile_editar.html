@@ -33,13 +33,16 @@
             </div>
         </div>
         <div class="form-group row">
-            <label for="rut" class="col-sm-2 col-form-label">RUT:</label>
+            <label for="id_rut" class="col-sm-2 col-form-label">RUT:</label>
             <div class="col-sm-10">
                 {% if form.rut.value %}
-                <input type="text" class="form-control" maxlength="12" id="rut" name="rut" pattern="\d{3,8}-[\d|kK]{1}" value="{{form.rut.value}}" title="Debe ingresar el rut 'sin puntos'"
+                <input type="text" class="form-control" maxlength="12" id="id_rut" name="rut" pattern="\d{3,8}-[\d|kK]{1}" value="{{form.rut.value}}" title="Debe ingresar el rut 'sin puntos'"
                     placeholder="Ej: 12345678-9 (sin puntos)" required>
+                    {% if form.rut.errors %}
+                    <small class="text-danger"> Ya existe un usuario con este rut. Por favor ingrese otro.</small>
+                    {% endif %}
                 {% else %}
-                    <input type="text" class="form-control" maxlength="12" id="rut" name="rut" pattern="\d{3,8}-[\d|kK]{1}" title="Debe ingresar el rut 'sin puntos'"
+                    <input type="text" class="form-control" maxlength="12" id="id_rut" name="rut" pattern="\d{3,8}-[\d|kK]{1}" title="Debe ingresar el rut 'sin puntos'"
                 placeholder="Ej: 12345678-9 (sin puntos)" required>
                 {% endif %}
             </div>
@@ -49,6 +52,9 @@
             <div class="col-sm-10">
                 {% if form.num_documento.value %}
                 <input type="text" class="form-control-plaintext" maxlength="15" id="id_num_documento" name="num_documento" value="{{form.num_documento.value}}" required> 
+                    {% if form.num_documento.errors %}
+                    <small class="text-danger"> Ya existe un usuario con este n° de documento. Por favor ingrese otro.</small>
+                    {% endif %}
                 {% else %}
                 <input type="text" class="form-control-plaintext" maxlength="15" id="id_num_documento" name="num_documento" required> 
                 {% endif %}
@@ -57,13 +63,27 @@
         <div class="form-group row">
             <label for="id_fecha_nacimiento" class="col-sm-2 col-form-label">Fecha de Nacimiento:</label>
             <div class="col-sm-10">
-                <input type="date" class="form-control-plaintext" id="id_fecha_nacimiento" name="fecha_nacimiento" value="{{form.fecha_nacimiento.value}}" required>
+                {% if form.errors %}
+                <input type="text" class="form-control" maxlength="12" id="id_fecha_nacimiento" name="fecha_nacimiento" pattern="\d{1,2}/\d{1,2}/\d{4}"  value="{{form.fecha_nacimiento.value}}" title="Debe escribirlo en el formato DD/MM/AAAA"
+                    placeholder="Ej: 13/06/1995" required>
+                {% else %}
+                    <input type="text" class="form-control" maxlength="12" id="id_fecha_nacimiento" name="fecha_nacimiento" pattern="\d{1,2}/\d{1,2}/\d{4}" value="{{form.fecha_nacimiento.value|date:'d/m/Y'}}" title="Debe escribirlo en el formato DD/MM/AAAA"
+                placeholder="Ej: 13/06/1995" required>
+                {% endif %}
             </div>
         </div>
+        <!-- <div class="form-group row">
+            <label for="id_fecha_nacimiento" class="col-sm-2 col-form-label">Fecha de Nacimiento:</label>
+            <div class="col-sm-10">
+                <input type="date" class="form-control-plaintext" id="id_fecha_nacimiento" name="fecha_nacimiento" value="{{form.fecha_nacimiento.value|date:'d/m/Y'}}" required>
+            </div>
+        </div> -->
         <div class="form-group row">
             <label for="id_foto" class="col-sm-2 col-form-label">Foto de Perfil: </label>
             <div class="col-sm-10">
+                {% if form.foto.value %}
                 <small>Actualmente: {{form.foto.value.url}}</small>
+                {% endif %}
                 <input type="file" class="dropify form-control-plaintext" id="id_foto" name="foto" required>
             </div>
         </div>
@@ -76,21 +96,4 @@
         <button class="btn btn-primary btn-block" type="submit">GUARDAR CAMBIOS</button>
     </form>
 </div>
-
-<!-- 
-
-    <form action="" enctype="multipart/form-data" method="POST">
-        <p><label for="id_nombre">Nombre:</label> <input type="text" name="nombre" value="Israel" required="" id="id_nombre"></p>
-<p><label for="id_apellido_paterno">Apellido paterno:</label> <input type="text" name="apellido_paterno" value="Ogas" required="" id="id_apellido_paterno"></p>
-<p><label for="id_apellido_materno">Apellido materno:</label> <input type="text" name="apellido_materno" value="Vega" required="" id="id_apellido_materno"></p>
-<p><label for="id_email">Email:</label> <input type="email" name="email" value="ogasvega.israel@gmail.com" required="" id="id_email"></p>
-<p><label for="id_rut">Rut:</label> <input type="text" name="rut" value="18997752-2" required="" id="id_rut"></p>
-<p><label for="id_num_documento">Num documento:</label> <input type="text" name="num_documento" value="123456789012345" required="" id="id_num_documento"></p>
-<p><label for="id_fecha_nacimiento">Fecha nacimiento:</label> <input type="text" name="fecha_nacimiento" value="13/06/1995" required="" id="id_fecha_nacimiento"></p>
-<p><label for="id_foto">Foto:</label> Actualmente: <a href="/media/fotos_usuarios/profile.png">fotos_usuarios/profile.png</a><br>
-Modificar:
-<input type="file" name="foto" id="id_foto"></p>
-        <button type="submit">Editar</button>
-    </form> -->
-
 {% endblock %}
