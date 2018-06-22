@@ -150,7 +150,7 @@ class ResponderConsultaView(generic.TemplateView):
                 finalizado=True
                 if puedeVotar:
                     #se verifica que la votación no haya finalizado
-                    if datetime.now < consulta.fecha_finalizacion:
+                    if datetime.date(datetime.now()) < consulta.fecha_finalizacion:
                         finalizado=False
 
                         #por último el usuario realiza la votación
@@ -264,7 +264,7 @@ class PropuestaConsultaCreateView(generic.CreateView):
                 propuestas = ConsultaPropuesta.objects.get(titulo=form.instance.titulo,consulta=consulta)
             except ObjectDoesNotExist:
                 #se verifica que la votación no haya finalizado
-                if datetime.now < consulta.fecha_finalizacion:
+                if datetime.date(datetime.now()) < consulta.fecha_finalizacion:
                     form.instance.consulta = consulta
                     form.instance.autor = self.request.user
                     form.save()

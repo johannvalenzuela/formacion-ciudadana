@@ -28,7 +28,7 @@ def is_finalizado_consulta(request, fecha_finalizacion):
     Función para saber si la consulta ya finalizó
     '''
     ahora = datetime.date(datetime.now())
-    if ahora < fecha_finalizacion:
+    if ahora > fecha_finalizacion:
         return False
 
     return True
