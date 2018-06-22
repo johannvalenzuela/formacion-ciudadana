@@ -50,23 +50,16 @@
             <label for="id_grupo" class="col-sm-2 col-form-label">Grupo:</label>
             <div class="col-sm-10">
                 <small class="text-muted">Puedes seleccionar mas de un grupo</small>
-                <select multiple class="form-control" name="grupo" id="id_grupo" size="{{form.grupo|length}}" required>
+                <select multiple class="form-control" name="grupo" id="id_grupo" size="{{form.grupo|length}}">
                     {% for grupo in form.grupo %}
-                    <!-- <option value="{{forloop.counter}}">{{g}}</option> -->
                     {{grupo}}
                     {% endfor %}
                 </select>
+                <small class="text-muted">Si no seleccionas ningun grupo sera una "Votación Ciudadana"</small>
             </div>
         </div>
 
-        <!-- <tr>
-            <td>{{ form.as_table }}</td>
-        </tr> -->
-        <tr>
-        <td>
             <input class="btn btn-primary btn-block" type="submit" value="Guardar">
-        </td>
-        </tr>
     </form>
 </div>
 {% endblock content %}
