@@ -2,19 +2,74 @@
 <title>Profile {{usuario.nombre}} {{usuario.apellido_paterno}} {{usuario.apellido_materno}}</title>
 {% endblock %} {% block content %}
 
-    <p>{{usuario.nombre}}</p>
-    <p>{{usuario.apellido_paterno}}</p>
-    <p>{{usuario.apellido_materno}}</p>
-    <p>{{usuario.email}}</p>
-    <p>{{usuario.rut}}</p>
-    <p>{{usuario.num_documento}}</p>
-    <p>{{usuario.fecha_nacimiento}}</p>
-    {% if usuario.foto %}
-        <img src="../media/{{ usuario.foto }}">
-    {% endif %}
-
-    <a href="{% url 'profile_editar' %}">
-        <button>Editar</button>
+<div class="pb-5">
+    <a href={% url 'profile_editar' %}>
+        <button class="btn btn-primary float-right mb-3 text-uppercase"><i class="mi mi-EditMirrored mi-4x"></i> MODIFICAR DATOS</button>
     </a>
+</div>
+<div class="col-md-12 bg-white rounded row align-items-center shadow-sm m-1 p-3 mt-4">
+    <div class="col-md-6">
+        {% if usuario.foto %}
+        <img class="img-fluid img-thumbnail rounded mx-auto d-block mt-2 mb-2" width="256" height="256" src="../media/{{ usuario.foto }}"> 
+        {% else %}
+        <img class="img-fluid img-thumbnail rounded-circle mx-auto d-block mt-2" width="256" height="256" src="../../../static/assets/profile.png"> 
+        {% endif %}
+    </div>
+    <div class="col-md-6">
+        <h4 class="font-weight-bold mb-3">{{usuario.nombre}} {{usuario.apellido_paterno}} {{usuario.apellido_materno}}</h4>
 
+        <div class="mb-2">
+            <div>
+                <span class="font-weight-bold text-muted">CORREO ELECTRÓNICO</span>
+            </div>
+            <div>
+                <span>{{usuario.email}}</span>
+            </div>
+        </div>
+
+        <div class="mb-2">
+            <div>
+                <span class="font-weight-bold text-muted">FECHA DE NACIMIENTO</span>
+            </div>
+            <div>
+                {% if usuario.fecha_nacimiento %}
+                <span>{{usuario.fecha_nacimiento}}</span>
+                {% else %}
+                <span class="text-danger">¡No tiene asociad@ ninguna
+                    <strong>FECHA DE NACIMIENTO</strong>!</span>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="mb-2">
+            <div>
+                <span class="font-weight-bold text-muted">RUT</span>
+            </div>
+            <div>
+                {% if usuario.rut %}
+                <span>{{usuario.rut}}</span>
+                {% else %}
+                <span class="text-danger">¡No tiene asociad@ ningún
+                    <strong>RUT</strong>!</span>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="mb-2">
+            <div>
+                <span class="font-weight-bold text-muted">N° DE DOCUMENTO</span>
+            </div>
+            <div>
+                {% if usuario.num_documento %}
+                <span>{{usuario.num_documento}}</span>
+                {% else %}
+                <span class="text-danger">¡No tiene asociad@ ningún
+                    <strong>N° DOCUMENTO</strong>!</span>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- <i class="mi mi-AddTo"></i> Añadir uno -->
 {% endblock %}
