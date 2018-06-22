@@ -1,6 +1,5 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect
 from django.views import generic
-from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 from .forms import ConsultaPropuestaForm, ConsultaForm
 from django.core.exceptions import ObjectDoesNotExist
@@ -12,13 +11,13 @@ from django.db.models import Q
 from .models import Consulta, ConsultaPropuesta, ConsultaRespuesta
 from gestion_usuarios.models import Encargado, RutAutorizados
 from autenticacion.models import Usuario
-from analitica.models import Supervisor
+from analitica.models import Actividad
 
 #decorators
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import user_passes_test
-from gestion_usuarios.decorators import funcionario_required, encargado_required
+from gestion_usuarios.decorators import encargado_required
 
 
 class VisualizarConsultasView(generic.ListView):
@@ -65,8 +64,20 @@ class CrearConsultaView(generic.CreateView):
     template_name = 'consulta/consulta_create_form.html'
     success_url = reverse_lazy('visualizar_consultas')
 
-    def form_valid(self, form):  
-        form.instance.autor = self.request.user
+    def form_valid(self, form):
+        try:
+            form.instance.autor = self.request.user
+            form.save()
+        finally:
+            encargado = Encargado.objects.get(usuario=self.request.user)
+            Actividad.objects.create(
+                titulo="%s" % (form.instance.titulo),
+                tipo="recurso académico",
+                link="recurso-detail",
+                link_pk=form.instance.pk,
+                encargado=encargado
+            )  
+        
         return super().form_valid(form)
 
 
