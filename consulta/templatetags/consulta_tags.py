@@ -3,7 +3,8 @@ from django.core.exceptions import ObjectDoesNotExist
 from datetime import datetime
 
 #modelos
-from gestion_usuarios.models import Encargado
+from gestion_usuarios.models import Encargado, RutAutorizados
+from consulta.models import ConsultaRespuesta
 
 register = template.Library()
 
@@ -32,3 +33,28 @@ def is_finalizado_consulta(request, fecha_finalizacion):
         return False
 
     return True
+
+@register.filter
+def puede_votar_consulta(request, consulta):
+    '''
+    Función para saber si el usuario puede votar en la consulta
+    '''
+    rut_user = request.user.rut
+    if not rut_user:
+        return False
+    try:
+        ConsultaRespuesta.objects.get(consulta=consulta ,rut=rut_user)
+    except ObjectDoesNotExist:
+        #se verifica si es una elección libre(ciudadana) o tiene restricciones
+        grupos = consulta.grupo.all()
+        if grupos.count() > 0:
+            autorizados = RutAutorizados.objects.filter(grupo__in=grupos)
+                
+            for autorizado in autorizados:
+                if autorizado.rut == rut_user:
+                    return True
+                    break
+        else:
+            return True   
+    
+    return False
