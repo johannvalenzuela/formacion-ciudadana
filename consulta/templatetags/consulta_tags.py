@@ -1,5 +1,6 @@
 from django import template
 from django.core.exceptions import ObjectDoesNotExist
+from datetime import datetime
 
 #modelos
 from gestion_usuarios.models import Encargado
@@ -20,3 +21,14 @@ def is_autor_consulta(request, autor):
         if encargado==autor:
             return True
     return False
+
+@register.filter
+def is_finalizado_consulta(request, fecha_finalizacion):
+    '''
+    Función para saber si la consulta ya finalizó
+    '''
+    ahora = datetime.date(datetime.now())
+    if ahora < fecha_finalizacion:
+        return False
+
+    return True
