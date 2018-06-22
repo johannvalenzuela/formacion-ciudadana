@@ -27,4 +27,4 @@ def encargado_required(user):
     except ObjectDoesNotExist:
         return None
     
-    return supervisor
+    return encargado
