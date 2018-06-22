@@ -1,7 +1,7 @@
 {% extends 'compumundohipermegared.html' %} {% block titulo %}
 <title>Consultas Ciudadanas</title>
 {% endblock %} {% block content %}
-
+{% load validacion_navbar %}
 <div class="card col-md-12 mt-4 mb-2 pb-4">
     <div class="card-body">
         <h3 class="card-title">Consultas Ciudadanas</h3>
@@ -12,11 +12,13 @@
             <strong>eliminar</strong> y mucho mas. </p>
     </div>
 </div>
+{% if request|encargado_required %}
 <div class="pb-5">
     <a href={% url 'crear_consulta' %}>
         <button class="btn btn-primary float-right mb-3 text-uppercase"><i class="mi mi-Add mi-4x"></i> CREAR CONSULTA</button>
     </a>
 </div>
+{% endif %}
 <div class="section-resources">
     <div class="container">
         <div class="row">
