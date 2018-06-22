@@ -2,11 +2,95 @@
 <title>Editar Profile {{usuario.nombre}} {{usuario.apellido_paterno}} {{usuario.apellido_materno}}</title>
 {% endblock %} {% block content %}
 
+<div class="bg-white rounded p-3 mt-4 shadow-sm">
+    <div class="text-center mb-3">
+        <h4 class="font-weight-bold pb-2">Modificar Mis Datos</h4>
+    </div>
     <form action="" enctype="multipart/form-data" method="POST">
         {% csrf_token %}
-        {{form.as_p}}
-        <button type="submit">Editar</button>
-    </form>
+        <div class="form-group row">
+            <label for="id_nombre" class="col-sm-2 col-form-label">Nombre:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control-plaintext" maxlength="50" id="id_nombre" name="nombre" value="{{form.nombre.value}}" autocomplete='given-name' required> 
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="id_apellido_paterno" class="col-sm-2 col-form-label">Apellido Paterno:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control-plaintext" maxlength="50" id="id_apellido_paterno" name="apellido_paterno" value="{{form.apellido_paterno.value}}" autocomplete='family-name' required> 
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="id_apellido_materno" class="col-sm-2 col-form-label">Apellido Materno:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control-plaintext" maxlength="50" id="id_apellido_materno" name="apellido_materno" value="{{form.apellido_materno.value}}" autocomplete='additional-name' required> 
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="id_email" class="col-sm-2 col-form-label">Correo Electrónico:</label>
+            <div class="col-sm-10">
+                <input type="email" class="form-control-plaintext" maxlength="50" id="id_email" name="email" value="{{form.email.value}}" autocomplete='email' required> 
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="rut" class="col-sm-2 col-form-label">RUT:</label>
+            <div class="col-sm-10">
+                {% if form.rut.value %}
+                <input type="text" class="form-control" maxlength="12" id="rut" name="rut" pattern="\d{3,8}-[\d|kK]{1}" value="{{form.rut.value}}" title="Debe ingresar el rut 'sin puntos'"
+                    placeholder="Ej: 12345678-9 (sin puntos)" required>
+                {% else %}
+                    <input type="text" class="form-control" maxlength="12" id="rut" name="rut" pattern="\d{3,8}-[\d|kK]{1}" title="Debe ingresar el rut 'sin puntos'"
+                placeholder="Ej: 12345678-9 (sin puntos)" required>
+                {% endif %}
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="id_num_documento" class="col-sm-2 col-form-label">N° de Documento:</label>
+            <div class="col-sm-10">
+                {% if form.num_documento.value %}
+                <input type="text" class="form-control-plaintext" maxlength="15" id="id_num_documento" name="num_documento" value="{{form.num_documento.value}}" required> 
+                {% else %}
+                <input type="text" class="form-control-plaintext" maxlength="15" id="id_num_documento" name="num_documento" required> 
+                {% endif %}
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="id_fecha_nacimiento" class="col-sm-2 col-form-label">Fecha de Nacimiento:</label>
+            <div class="col-sm-10">
+                <input type="date" class="form-control-plaintext" id="id_fecha_nacimiento" name="fecha_nacimiento" value="{{form.fecha_nacimiento.value}}" required>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="id_foto" class="col-sm-2 col-form-label">Foto de Perfil: </label>
+            <div class="col-sm-10">
+                <small>Actualmente: {{form.foto.value.url}}</small>
+                <input type="file" class="dropify form-control-plaintext" id="id_foto" name="foto" required>
+            </div>
+        </div>
 
+        <!-- {{form.as_p}} -->
+        {% if form.errors %}
+        <p>{{form.errors}}</p>
+        {% endif %}
+        
+        <button class="btn btn-primary btn-block" type="submit">GUARDAR CAMBIOS</button>
+    </form>
+</div>
+
+<!-- 
+
+    <form action="" enctype="multipart/form-data" method="POST">
+        <p><label for="id_nombre">Nombre:</label> <input type="text" name="nombre" value="Israel" required="" id="id_nombre"></p>
+<p><label for="id_apellido_paterno">Apellido paterno:</label> <input type="text" name="apellido_paterno" value="Ogas" required="" id="id_apellido_paterno"></p>
+<p><label for="id_apellido_materno">Apellido materno:</label> <input type="text" name="apellido_materno" value="Vega" required="" id="id_apellido_materno"></p>
+<p><label for="id_email">Email:</label> <input type="email" name="email" value="ogasvega.israel@gmail.com" required="" id="id_email"></p>
+<p><label for="id_rut">Rut:</label> <input type="text" name="rut" value="18997752-2" required="" id="id_rut"></p>
+<p><label for="id_num_documento">Num documento:</label> <input type="text" name="num_documento" value="123456789012345" required="" id="id_num_documento"></p>
+<p><label for="id_fecha_nacimiento">Fecha nacimiento:</label> <input type="text" name="fecha_nacimiento" value="13/06/1995" required="" id="id_fecha_nacimiento"></p>
+<p><label for="id_foto">Foto:</label> Actualmente: <a href="/media/fotos_usuarios/profile.png">fotos_usuarios/profile.png</a><br>
+Modificar:
+<input type="file" name="foto" id="id_foto"></p>
+        <button type="submit">Editar</button>
+    </form> -->
 
 {% endblock %}
