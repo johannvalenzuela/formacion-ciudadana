@@ -39,9 +39,13 @@ def puede_votar_consulta(request, consulta):
     '''
     Función para saber si el usuario puede votar en la consulta
     '''
-    rut_user = request.user.rut
-    if not rut_user:
+    if request.user.is_anonymous:
         return True
+
+    if not request.user.rut:
+        return True
+        
+    rut_user = request.user.rut
     try:
         ConsultaRespuesta.objects.get(consulta=consulta ,rut=rut_user)
     except ObjectDoesNotExist:
