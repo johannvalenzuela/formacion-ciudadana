@@ -6,6 +6,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import get_object_or_404
 from django.contrib import messages
 from django.db.models import Q
+from datetime import datetime
 
 #modelos
 from .models import Consulta, ConsultaPropuesta, ConsultaRespuesta
@@ -262,9 +263,11 @@ class PropuestaConsultaCreateView(generic.CreateView):
             try:
                 propuestas = ConsultaPropuesta.objects.get(titulo=form.instance.titulo,consulta=consulta)
             except ObjectDoesNotExist:
-                form.instance.consulta = consulta
-                form.instance.autor = self.request.user
-                form.save()
+                #se verifica que la votación no haya finalizado
+                if datetime.now < consulta.fecha_finalizacion:
+                    form.instance.consulta = consulta
+                    form.instance.autor = self.request.user
+                    form.save()
             else:
                 messages.error(self.request, 'No se pueden repetir los nombres de las propuestas')
         return self.get_success_url()
