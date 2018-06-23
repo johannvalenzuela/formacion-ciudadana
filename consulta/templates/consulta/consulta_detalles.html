@@ -41,12 +41,16 @@
                     </div>
                  
                     {% endif %}
+                    {% if request|is_autor_consulta:object.autor %}
                     <a class="recurso btn btn-primary border" data-form="{% url 'consulta_update' object.pk %}" data-toggle="modal" data-target="#recursoModal">
                         <i class="mi mi-Edit mi-4x"></i> Editar
                     </a>
                     <a class="recurso btn btn-danger" data-form="{% url 'consulta_delete' object.pk %}" data-toggle="modal" data-target="#recursoModal">
                         <i class="mi mi-Download mi-4x"></i> Eliminar
                     </a>
+                    {% else %}
+                    {% endif %}
+                    
                 </div>
             </div>
         </div>
