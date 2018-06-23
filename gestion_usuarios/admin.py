@@ -4,7 +4,7 @@ from .models import Departamento_Provincial_Educacion
 from .models import Establecimiento
 from .models import Asignatura
 from .models import Encargado
-from .models import Grupo
+from .models import Grupo,RutAutorizados
 from django.db import models
 from django.core.exceptions import ObjectDoesNotExist
 
@@ -140,6 +140,7 @@ class EncargadoAdmin(admin.ModelAdmin):
 class GrupoAdmin(admin.ModelAdmin):
     list_display = ('nombre','autor', 'establecimiento')
     search_fields = ('nombre','autor', 'establecimiento')
-    
+
+admin.site.register(RutAutorizados)
 admin.site.register(Grupo,GrupoAdmin)
 admin.site.register(Encargado,EncargadoAdmin)
