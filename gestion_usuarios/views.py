@@ -29,9 +29,9 @@ class ListaUsuariosView(generic.ListView):
 
     def get(self, request, nombreGrupo):
         autor = Encargado.objects.get(usuario=self.request.user)
-        grupo = Grupo.objects.get(nombre=nombreGrupo, autor=autor)
+        grupo = Grupo.objects.get(nombre=nombreGrupo, establecimiento=autor.establecimiento)
         
-        grupoFuncion = Grupo.objects.filter(nombre=nombreGrupo, autor=autor)
+        grupoFuncion = Grupo.objects.filter(nombre=nombreGrupo, establecimiento=autor.establecimiento)
         usuarios = RutAutorizados.objects.filter(grupo__in=grupoFuncion)
         args = {
             "grupo": grupo,
@@ -53,14 +53,14 @@ class ListaGruposView(generic.ListView):
     def get_queryset(self):
         """Retorna los grupos."""
         autor = Encargado.objects.get(usuario=self.request.user)
-        return Grupo.objects.filter(autor=autor)
+        return Grupo.objects.filter(establecimiento=autor.establecimiento)
 
 
 @method_decorator(login_required, name='get' )
 @method_decorator(user_passes_test(encargado_required), name='get')
 class AgregarUsuarioGrupoView(generic.CreateView):
     '''
-    Es la clase para agregar un grupo de un encargado en especifico.
+    Es la clase para agregar un usuario de un encargado a un grupo en especifico.
     '''
     model = RutAutorizados
     fields = ['rut','nombre']
@@ -105,7 +105,7 @@ class AgregarUsuarioGrupoView(generic.CreateView):
 @method_decorator(user_passes_test(encargado_required), name='get')
 class EliminarUsuarioGrupoView(generic.DeleteView):
     '''
-    Es la clase para eliminar un grupo de un encargado en especifico.
+    Es la clase para eliminar un usuario de un encargado de un grupo en especifico.
     '''
     model = RutAutorizados
     template_name = 'gestion_usuarios/usuarioGrupo_delete_form.html'
@@ -147,13 +147,12 @@ class AgregarGrupoView(generic.CreateView):
         Esta funcion se tira si el formulario es valido
         '''
         autor = Encargado.objects.get(usuario=self.request.user)
-        establecimiento = autor.establecimiento
+        establecimiento = form.instance.establecimiento
         titulo = form.instance.nombre
         try:
             grupoNuevo = Grupo.objects.get(nombre=titulo, establecimiento=establecimiento)
         except ObjectDoesNotExist:
             form.instance.autor = autor
-            form.instance.establecimiento = establecimiento
         else:
             messages.error(self.request, 'El nombre del grupo que eligió ya existe')
             return redirect('lista_grupos')
