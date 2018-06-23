@@ -30,34 +30,41 @@ class VisualizarConsultasView(generic.ListView):
 
     def get_queryset(self):
         """Retorna las consultas."""
-        #Si el usuario es anonimo se muestran todos los grupos que no tengan grupos
+        consultasNone = Consulta.objects.filter(grupo=None)
+
+        #Si es USUARIO ANONIMO, se muestran todos los grupos que no tengan grupos
         if self.request.user.is_anonymous:
-            return Consulta.objects.filter(grupo=None).order_by('fecha_inicio')
+            return consultasNone.order_by('fecha_inicio')
         
+        #si tiene RUT, se obtienen las consultas que estan en los grupos
+        try:
+            autorizado = RutAutorizados.objects.get(rut=self.request.user.rut)
+        except ObjectDoesNotExist:
+            consultas=consultasNone | Consulta.objects.filter(grupo=None)
+        else:
+            grupos_autorizados = autorizado.grupo.all()
+            consultas=consultasNone | Consulta.objects.filter(grupo__in=grupos_autorizados)
+        
+
+        #Si es SUPERVISOR, se obtienen las consultas realizadas por sus encargados
         try:
             supervisor=Supervisor.objects.get(usuario=self.request.user)
-        except ObjectDoesNotExist:
+        except ObjectDoesNotExist: 
+            #Si es ENCARGADO, se obtienen las consultas realizadas ellos mismos
             try:
                 encargado = Encargado.objects.get(usuario=self.request.user)
             except ObjectDoesNotExist:
-                try:
-                    autorizados = RutAutorizados.objects.get(rut= self.request.user.rut)
-                except ObjectDoesNotExist:
-                    #si no tiene rut solo se le muestran las consultas ciudadanas
-                    return Consulta.objects.filter(grupo=None).order_by('fecha_inicio')
-                else:
-                    return Consulta.objects.filter(Q(grupo__in=autorizados.grupo.all()) | Q(grupo=None)).order_by('-fecha_inicio')
+                #si es USUARIO COMUN, se retornas solo las consultas obtenidas por el rut
+                return consultas.order_by('fecha_inicio')
             else:
-                #si el usuario es encargado se muestran los grupos creados por el
-                #y las consultas ciudadanas
-                return Consulta.objects.filter(Q(autor=encargado) | Q(grupo=None)).order_by('fecha_inicio')
-          
+                consultas_encargado = Consulta.objects.filter(autor=encargado)
+                consultas_join=consultas | consultas_encargado
+                return consultas_join.order_by('fecha_inicio')
         else:
-            #si el usuario es supervisor se muestran los grupos creados por sus encargados
-            #y las consultas ciudadanas
             encargados = Encargado.objects.filter(supervisor=supervisor)
-            return Consulta.objects.filter(Q(autor__in=encargados) | Q(grupo=None)).order_by('fecha_inicio')
-        
+            consultas_supervisor = Consulta.objects.filter(autor__in=encargados)
+            consultas_join=consultas | consultas_supervisor
+            return consultas_join.order_by('fecha_inicio')
 
         
 
