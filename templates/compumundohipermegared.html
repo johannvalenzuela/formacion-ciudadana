@@ -46,12 +46,12 @@
                         </li>
                         {% endif %}
 
-                        {% if request|funcionario_required %}
+                        {% comment %} {% if request|funcionario_required %}
                         <li>
                             <a href="#">
                                 <i class="mi mi-ChatBubbles"></i> Mensajes</a>
                         </li>
-                        {% endif %}
+                        {% endif %} {% endcomment %}
 
                         {% if request|encargado_required %}
                         <li class="{% if request.path == '/gestion_usuarios/lista_usuarios/alumnos/' or request.path == '/gestion_usuarios/agregar_usuario_form/1' %}active{% endif %}">
@@ -78,12 +78,12 @@
                             <a href="{% url 'visualizar_consultas' %}">
                                 <i class="mi mi-Package"></i> Consultas Ciudadanas</a>
                         </li>
-                        {% if request|funcionario_required %}
+                        {% comment %} {% if request|funcionario_required %}
                         <li>
                             <a href="#">
                                 <i class="mi mi-Feedback"></i> Foro</a>
                         </li>
-                        {% endif %}
+                        {% endif %} {% endcomment %}
 
                     </ul>
 
