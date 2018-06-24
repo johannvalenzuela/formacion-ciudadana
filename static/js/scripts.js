@@ -1,11 +1,12 @@
-var valorado = false;
-window.onscroll = () => {
-    const nav = document.querySelector('#navBarSection');
-    if (nav) {
-        if (this.scrollY <= 50) nav.className = 'navbar fixed-top navbar-expand-lg navbar-transparent'; else nav.className = 'navbar navbar-expand-lg sticky-top navbar-light bg-light py-2 shadow';
-    }
-};
+// window.onscroll = () => {
+//     const nav = document.querySelector('#navBarSection');
+//     if (nav) {
+//         if (this.scrollY <= 50) nav.className = 'navbar fixed-top navbar-expand-lg navbar-transparent'; else nav.className = 'navbar navbar-expand-lg sticky-top navbar-light bg-light py-2 shadow';
+//     }
+// };
 
+
+var valorado = false;
 var $total_star_rating = $('.total-star-rating .mi');
 var $star_rating = $('.star-rating .mi');
 

@@ -43,8 +43,10 @@ body{
 }
 
 .header-filter:after{
-    background: linear-gradient(to left,rgba(0, 219, 222, 0.88), rgba(80, 92, 253, 0.8));
-    background: -webkit-linear-gradient(135deg,rgba(0, 219, 222, 0.88), rgba(80, 92, 253, 0.8));
+    /* background: linear-gradient(to left,rgba(0, 219, 222, 0.88), rgba(80, 92, 253, 0.8));
+    background: -webkit-linear-gradient(135deg,rgba(0, 219, 222, 0.88), rgba(80, 92, 253, 0.8)); */
+    background: linear-gradient(to left, rgb(0, 82, 146), rgb(0, 150, 220));
+    background: -webkit-linear-gradient(135deg,rgba(0, 76, 136), rgba(0, 159, 227));
     position: absolute;
     z-index: 1;
     width: 100%;
