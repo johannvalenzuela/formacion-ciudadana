@@ -5,25 +5,36 @@
 {% if messages %} {% for message in messages %}
 <script>
     alert('{{ message }}')
-</script>
-{% endfor %} {% endif %}
+</script> 
+{% endfor %} 
+{% endif %}
+<div class="card col-md-12 mt-4 mb-2 pb-4">
+    <div class="card-body">
+        <h3 class="card-title">Actividades de los Encargados</span></h3>
+        <p class="card-text">En esta sección puedes visualizar los <strong>recursos académicos</strong> o <strong>consultas ciudadanas</strong> que han realizado los Encargados hasta ahora.
+        </p>
+    </div>
+</div> 
 
 {% if actividades %}
-{% for actividad in actividades  %}
-    <a href="{% url actividad.link actividad.link_pk %}">
-    <div>
-        <p>{{actividad.titulo}}</p>
-        <p>{{actividad.tipo}}</p>
-        <p>{{actividad.encargado}}</p>
-        <p>{{actividad.fecha}}</p>
+<div class="bg-white rounded mt-4">
+    <div class="grid-container" style="grid-template-columns: repeat(3, 1fr)">
+        {% for actividad in actividades %}
+        <div class="grid-item bg-light">
+            <a href="{% url actividad.link actividad.link_pk %}">
+                <!-- <div class=" bg-primary rounded-top pb-5 p-2">&times</div> -->
+                <div class="p-3">
+                    <h4 class="text-uppercase font-weight-bold">{{actividad.titulo}}</h4>
+                    <span class="badge badge-default text-capitalize">{{actividad.tipo}}</span>
+                    <p>{{actividad.encargado}}</p>
+                    <small>{{actividad.fecha}}</small>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
     </div>
-    </a>
-{% endfor %}
+</div>
 
 {% else %}
-<p>No existen actividades en este momento.</p>
-{% endif %}
-    
-
-
-{% endblock %}
+<div class="bg-white rounded p-5 pt-5 pb-4 mt-4 shadow-sm text-center">No existen <strong>actividades</strong> en estos momentos</div>
+{% endif %} {% endblock %}
