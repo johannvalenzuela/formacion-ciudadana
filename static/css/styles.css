@@ -183,7 +183,7 @@ a, a:hover, a:focus {
     position: fixed;
     top: 0;
     left: 0;
-    height: 100vh;
+    height: 100%;
     z-index: 999;
     /* background: #2699FB; */
     background:#005292;
@@ -294,7 +294,7 @@ h2, h3, h4, h5, h6 {
 
 .dropdown-menu.show {
     display: block;
-    left: -6.8rem;
+    left: -8rem;
 }
 
 .grid-container {

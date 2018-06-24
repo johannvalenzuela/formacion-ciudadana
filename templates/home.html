@@ -1,9 +1,12 @@
 <!-- templates/home.html -->
-{% extends 'base.html' %} {% block title %}Home{% endblock %} {% block content %} {% if user.is_authenticated %} Hi {{ user.get_full_name
-}}!
-<p>
-  <a href="{% url 'logout' %}">logout</a>
-</p>
+{% extends 'base.html' %} {% block title %}Home{% endblock %} {% block content %} 
+{% if user.is_authenticated %} 
+
+  Hola {{ user.get_full_name }}!
+  <p>
+    <a class="btn btn-primary" href="{% url 'logout' %}">Cerrar Sesión</a>
+  </p>
+
 {% else %}
 
   <!-- <p>You are not logged in</p>
