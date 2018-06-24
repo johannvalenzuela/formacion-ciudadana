@@ -85,6 +85,12 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
         Returns the short name for the user. 
         ''' 
         return self.nombre 
+
+    def get_profile_image(self):
+        ''' 
+        Returns the image profile for the user. 
+        ''' 
+        return self.foto 
     
     
  
