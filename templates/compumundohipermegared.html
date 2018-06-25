@@ -118,15 +118,19 @@
                 </div>
 
                 <ul class="nav justify-content-end">
-                    <li class="nav-item">
+                    <li class="nav-item align-self-center">
                         <a class="nav-link" href="#">Mensajes</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item align-self-center">
                         <a class="nav-link" href="#">Notificaciones</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                            {% if user.foto.value %}
                             <img class="img-fluid rounded-circle border border-default" src="{{user.foto.url}}" width="32" style="height: 32px; object-fit: cover"> 
+                            {% else %}
+                            <img class="img-fluid rounded-circle border border-default" src="{% static 'assets/profile.png' %}" width="32" style="height: 32px; object-fit: cover">
+                            {% endif %}
                             {{ user.get_short_name }}
                         </a>
                         <div class="dropdown-menu">
