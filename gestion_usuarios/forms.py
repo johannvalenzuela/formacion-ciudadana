@@ -20,4 +20,4 @@ class ProfileForm(forms.ModelForm):
 
     class Meta:
         model = Usuario
-        fields=('nombre','apellido_paterno','apellido_materno','email','rut', 'num_documento', 'fecha_nacimiento', 'foto')
+        fields=('nombre','apellido_paterno','apellido_materno','email','rut', 'num_documento', 'fecha_nacimiento', 'foto',)

@@ -64,10 +64,10 @@
             <label for="id_fecha_nacimiento" class="col-sm-2 col-form-label">Fecha de Nacimiento:</label>
             <div class="col-sm-10">
                 {% if form.errors %}
-                <input type="text" class="form-control" maxlength="12" id="id_fecha_nacimiento" name="fecha_nacimiento" pattern="\d{1,2}/\d{1,2}/\d{4}"  value="{{form.fecha_nacimiento.value}}" title="Debe escribirlo en el formato DD/MM/AAAA"
+                <input type="text" class="form-control" maxlength="10" id="id_fecha_nacimiento" name="fecha_nacimiento" pattern="\d{1,2}/\d{1,2}/\d{4}"  value="{{form.fecha_nacimiento.value}}" title="Debe escribirlo en el formato DD/MM/AAAA"
                     placeholder="Ej: 13/06/1995" required>
                 {% else %}
-                    <input type="text" class="form-control" maxlength="12" id="id_fecha_nacimiento" name="fecha_nacimiento" pattern="\d{1,2}/\d{1,2}/\d{4}" value="{{form.fecha_nacimiento.value|date:'d/m/Y'}}" title="Debe escribirlo en el formato DD/MM/AAAA"
+                    <input type="text" class="form-control" maxlength="10" id="id_fecha_nacimiento" name="fecha_nacimiento" pattern="\d{1,2}/\d{1,2}/\d{4}" value="{{form.fecha_nacimiento.value|date:'d/m/Y'}}" title="Debe escribirlo en el formato DD/MM/AAAA"
                 placeholder="Ej: 13/06/1995" required>
                 {% endif %}
             </div>
@@ -82,9 +82,11 @@
             <label for="id_foto" class="col-sm-2 col-form-label">Foto de Perfil: </label>
             <div class="col-sm-10">
                 {% if form.foto.value %}
-                <small>Actualmente: {{form.foto.value.url}}</small>
-                {% endif %}
+                <small>Actualmente:  <a href="{{form.foto.value.url}}"> {{form.foto.value}}</a> </small>
+                <input type="file" class="dropify form-control-plaintext" id="id_foto" name="foto">
+                {% else %}
                 <input type="file" class="dropify form-control-plaintext" id="id_foto" name="foto" required>
+                {% endif %}
             </div>
         </div>
 
