@@ -21,3 +21,12 @@ class RecursoForm(forms.ModelForm):
     class Meta:
         model = Recurso
         fields = ('titulo', 'descripcion','tema','imagen_descriptiva','archivo',)
+
+class ComentarioForm(forms.ModelForm):
+    '''
+    Formulario para ingresar un comentario
+    '''
+
+    class Meta:
+        model = ComentarioRecurso
+        fields = ('comentario',)
