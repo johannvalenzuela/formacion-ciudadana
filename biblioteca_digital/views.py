@@ -4,9 +4,10 @@ from django.urls import reverse_lazy
 from django.shortcuts import get_object_or_404
 from django.conf import settings
 import os
-from .forms import RecursoForm
 from django.shortcuts import redirect
 
+#formularios
+from .forms import RecursoForm,ComentarioForm
 
 #decorators
 from django.contrib.auth.decorators import login_required
@@ -55,14 +56,15 @@ class RecursoDetailView(generic.DetailView):
         Funcion para realizar un comentario
         '''
         if request.method == "POST":
-            autor = request.user
-            comentarioActual = request.POST.get('comentario')
-            recursoActual = get_object_or_404(Recurso,pk=pk)
-            comentarioNuevo = ComentarioRecurso.objects.create(
-                autorComentario = request.user,
-                recurso = recursoActual,
-                comentario = comentarioActual
-            )
+
+            form = ComentarioForm(request.POST or None)
+
+            if form.is_valid():
+                comentario = form.save(commit=False)
+                comentario.autorComentario = request.user
+                comentario.recurso = get_object_or_404(Recurso,pk=pk)
+                comentario.save()
+
         return redirect('recurso-detail', pk=pk)
 
     @login_required
