@@ -68,6 +68,11 @@
                 <input type="password" id="id_password2" name="password2" autocomplete="new-password" required/>
                 <div class="alert alert-default pt-0" role="alert">
                   <span>{{ form.password2.help_text | safe}}</span>
+                  {% if form.password2.errors %}
+                  <div class="alert alert-danger pt-0" role="alert">
+                    <span>{{ form.password2.errors }}</span>
+                  </div>
+                  {% endif %}
                 </div>
               </fieldset>
               <button class="btn btn-primary btn-block" type="submit">Registrar</button>
