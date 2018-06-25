@@ -55,16 +55,16 @@ class VisualizarConsultasView(generic.ListView):
                 encargado = Encargado.objects.get(usuario=self.request.user)
             except ObjectDoesNotExist:
                 #si es USUARIO COMUN, se retornas solo las consultas obtenidas por el rut
-                return consultas.order_by('fecha_inicio')
+                return consultas.order_by('fecha_inicio').distinct()
             else:
                 consultas_encargado = Consulta.objects.filter(autor=encargado)
                 consultas_join=consultas | consultas_encargado
-                return consultas_join.order_by('fecha_inicio')
+                return consultas_join.order_by('fecha_inicio').distinct()  
         else:
             encargados = Encargado.objects.filter(supervisor=supervisor)
             consultas_supervisor = Consulta.objects.filter(autor__in=encargados)
             consultas_join=consultas | consultas_supervisor
-            return consultas_join.order_by('fecha_inicio')
+            return consultas_join.order_by('fecha_inicio').distinct()
 
         
 
