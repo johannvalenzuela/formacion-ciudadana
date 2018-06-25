@@ -5,6 +5,7 @@ from django.shortcuts import get_object_or_404
 from django.conf import settings
 import os
 from django.shortcuts import redirect
+from django.core.exceptions import ObjectDoesNotExist
 
 #formularios
 from .forms import RecursoForm,ComentarioForm
@@ -117,15 +118,19 @@ class CrearRecursoView(generic.CreateView):
             form.instance.autor = self.request.user
             form.save()
         finally:
-            encargado = Encargado.objects.get(usuario=self.request.user)
-            Actividad.objects.create(
+            try:
+                encargado = Encargado.objects.get(usuario=self.request.user)
+            except ObjectDoesNotExist:
+                pass
+            else: 
+                Actividad.objects.create(
                 titulo="%s" % (form.instance.titulo),
                 tipo="recurso académico",
                 link="recurso-detail",
                 link_pk=form.instance.pk,
                 encargado=encargado
-            )
-        
+                )
+            
         return super().form_valid(form)
 
 @method_decorator(login_required, name='get' )
