@@ -21,58 +21,56 @@
     </a>
 </div>
 
-<div class="section-resources">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12 ml-auto mr-auto p-0">
-                <div class="grid-container">
-                    {% if lista_recursos %} {% for recurso in lista_recursos %}
-                    <div class="grid-item">
-                        <a href="{{ recurso.id }}">
-                            <div style="height: 150px;">
-                                <div class="overlay-image">
-                                    <img class="img-resource" src="media/{{ recurso.imagen_descriptiva }}">
-                                </div>
-                                <div class="d-flex align-items-end flex-column position-relative" style="bottom: 9.4rem; right: 5px">
-                                    <div class="p-2">
-                                        {% if recurso.tema == 1 %}
-                                        <span class="badge badge-pill badge-primary">Formación Ciudadana</span>
-                                        {% elif recurso.tema == 2 %}
-                                        <span class="badge badge-pill badge-primary">Convivencia Escolar</span>
-                                        {% else %}
-                                        <span class="badge badge-pill badge-primary">Otros</span>
-                                        {% endif %}
-                                    </div>
-                                    <div class="bg-white rounded-0 mr-2 pr-1 pl-1">
-                                        <small class="text-muted">VALORACIÓN: {{recurso.valoracionTotal}}/5.0</small>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="m-2">
-                                <div class="text-muted mr-2 pb-1">
-                                    <small>
-                                        Creado por
-                                        <strong id="autor_recurso">{{ recurso.autor }}</strong> el
-                                        <strong>{{ recurso.fecha_creacion }}</strong>
-                                    </small>
-                                </div>
-                                <div class="text-uppercase">
-                                    <h4>
-                                        <strong>{{ recurso.titulo }}</strong>
-                                    </h4>
-                                </div>
-                                <div class="text-justify">
-                                    <p>{{ recurso.descripcion }}</p>
-                                </div>
-                            </div>
-                        </a>
+<div class="bg-white rounded shadow-sm mt-4 section-resources">
+    {% if lista_recursos %} 
+    <div class="grid-container">
+        {% for recurso in lista_recursos %}
+        <div class="grid-item">
+            <a href="{{ recurso.id }}">
+                <div style="height: 150px;">
+                    <div class="overlay-image">
+                        <img class="img-resource" src="media/{{ recurso.imagen_descriptiva }}">
                     </div>
-
-                    {% endfor %} {% else %} No existen recursos en estos momentos. {% endif %}
-
+                    <div class="d-flex align-items-end flex-column position-relative" style="bottom: 9.4rem; right: 5px">
+                        <div class="p-2">
+                            {% if recurso.tema == 1 %}
+                            <span class="badge badge-pill badge-primary">Formación Ciudadana</span>
+                            {% elif recurso.tema == 2 %}
+                            <span class="badge badge-pill badge-primary">Convivencia Escolar</span>
+                            {% else %}
+                            <span class="badge badge-pill badge-primary">Otros</span>
+                            {% endif %}
+                        </div>
+                        <div class="bg-white rounded-0 mr-2 pr-1 pl-1">
+                            <small class="text-muted">VALORACIÓN: {{recurso.valoracionTotal}}/5.0</small>
+                        </div>
+                    </div>
                 </div>
-            </div>
+                <div class="m-2">
+                    <div class="text-muted mr-2 pb-1">
+                        <small>
+                            Creado por
+                            <strong id="autor_recurso">{{ recurso.autor }}</strong> el
+                            <strong>{{ recurso.fecha_creacion }}</strong>
+                        </small>
+                    </div>
+                    <div class="text-uppercase">
+                        <h4>
+                            <strong>{{ recurso.titulo }}</strong>
+                        </h4>
+                    </div>
+                    <div class="text-justify">
+                        <p>{{ recurso.descripcion }}</p>
+                    </div>
+                </div>
+            </a>
         </div>
+
+        {% endfor %} 
+        {% else %} 
+            <div class="bg-white rounded p-4 m-4 text-center">No existen <strong>recursos académicos</strong> en estos momentos.</div> 
+        {% endif %}
+
     </div>
 </div>
 

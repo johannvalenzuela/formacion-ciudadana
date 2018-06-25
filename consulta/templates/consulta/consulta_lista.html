@@ -19,55 +19,51 @@
     </a>
 </div>
 {% endif %}
-<div class="section-resources">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12 ml-auto mr-auto p-0">
-                {% if lista_consultas %} 
-                <div class="grid-container" style="grid-template-columns: repeat(3, 1fr);">
-                    {% for consulta in lista_consultas %}
-                    <div class="grid-item" style="background: linear-gradient(to left, rgb(0, 82, 146), rgb(0, 150, 220));">
-                        <a href="{% url 'detalles_consulta' consulta.id %}">
-                            <div class="m-3 text-white">
-                                <div class="text-uppercase">
-                                    <h4>
-                                        <strong>{{consulta.titulo}}</strong>
-                                    </h4>
-                                </div>
-                                <div class="text-white mr-2 mb-2 pb-1">
-                                    <small>
-                                        Creado por
-                                        <strong id="autor_recurso"> {{ consulta.autor }}</strong> el
-                                        <strong>{{ consulta.fecha_creacion }}</strong>
-                                    </small>
-                                </div>
-                                <div class="text-justify font-weight-bold">
-                                    <p>{{ consulta.descripcion }}</p>
-                                </div>
-                                <div class="text-white mr-2 p-0">
-                                    <div class="row">
-                                        <div class="col-md-6 text-center">
-                                            <small>
-                                                <i class="mi mi-DateTime"></i> Inicio:
-                                                <strong id="autor_recurso">{{ consulta.fecha_inicio}}</strong>
-                                            </small>
-                                        </div>
-                                        <div class="col-md-6 text-center">
-                                            <small>
-                                                <i class="mi mi-DateTimeMirrored"></i> Término:
-                                                <strong>{{ consulta.fecha_finalizacion }}</strong>
-                                            </small>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
+<div class="bg-white rounded shadow-sm mt-4 section-resources">
+    {% if lista_consultas %} 
+    <div class="grid-container" style="grid-template-columns: repeat(3, 1fr);">
+        {% for consulta in lista_consultas %}
+        <div class="grid-item" style="background: linear-gradient(to left, rgb(0, 82, 146), rgb(0, 150, 220));">
+            <a href="{% url 'detalles_consulta' consulta.id %}">
+                <div class="m-3 text-white">
+                    <div class="text-uppercase">
+                        <h4>
+                            <strong>{{consulta.titulo}}</strong>
+                        </h4>
                     </div>
-                    {% endfor %} {% else %} 
-                    <div class="bg-white rounded p-4 m-4 text-center">No existen <strong>consultas ciudadanas</strong> en estos momentos.</div> {% endif %}
+                    <div class="text-white mr-2 mb-2 pb-1">
+                        <small>
+                            Creado por
+                            <strong id="autor_recurso"> {{ consulta.autor }}</strong> el
+                            <strong>{{ consulta.fecha_creacion }}</strong>
+                        </small>
+                    </div>
+                    <div class="text-justify font-weight-bold">
+                        <p>{{ consulta.descripcion }}</p>
+                    </div>
+                    <div class="text-white mr-2 p-0">
+                        <div class="row">
+                            <div class="col-md-6 text-center">
+                                <small>
+                                    <i class="mi mi-DateTime"></i> Inicio:
+                                    <strong id="autor_recurso">{{ consulta.fecha_inicio}}</strong>
+                                </small>
+                            </div>
+                            <div class="col-md-6 text-center">
+                                <small>
+                                    <i class="mi mi-DateTimeMirrored"></i> Término:
+                                    <strong>{{ consulta.fecha_finalizacion }}</strong>
+                                </small>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            </a>
         </div>
+        {% endfor %} 
+        {% else %} 
+            <div class="bg-white rounded p-4 m-4 text-center">No existen <strong>consultas ciudadanas</strong> en estos momentos.</div> 
+        {% endif %}
     </div>
 </div>
 {% endblock content %}
