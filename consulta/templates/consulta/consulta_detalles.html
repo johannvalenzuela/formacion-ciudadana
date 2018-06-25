@@ -68,7 +68,7 @@
 {% endif %}
 {% comment %} LISTA DE PROPUESTAS {% endcomment %}
 
-<div class="section-resources">
+<div class="section-resources mt-2">
     {% comment %} boton para VOTAR {% endcomment %}
     {% if request|is_finalizado_consulta:object.fecha_finalizacion and request|puede_votar_consulta:object %}
     

@@ -1,6 +1,7 @@
 {% extends 'compumundohipermegared.html' %} {% block titulo %}
 <title>Consultas Ciudadanas</title>
 {% endblock %} {% block content %}
+{% load static %}
 {% load validacion_navbar %}
 <div class="card col-md-12 mt-4 mb-2 pb-4">
     <div class="card-body">
@@ -10,6 +11,7 @@
             <strong>crear</strong>,
             <strong>editar</strong>,
             <strong>eliminar</strong> y mucho mas. </p>
+            <!-- <img src={% static 'assets/consulta-ciudadana-icon.svg' %} width="56" height="56" alt=""> -->
     </div>
 </div>
 {% if request|encargado_required %}
