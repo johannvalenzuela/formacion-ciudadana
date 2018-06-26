@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'gestion_usuarios.apps.GestionUsuariosConfig',
     'analitica.apps.AnaliticaConfig',
 
+    'axes',
     'social_django',
 ]
 
@@ -55,6 +56,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
+    
     'social_django.middleware.SocialAuthExceptionMiddleware',
 ]
 
@@ -125,6 +127,23 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+    },
+    'axes_cache': {
+        'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
+    }
+}
+
+#AXE configurations
+
+AXES_FAILURE_LIMIT = 5
+AXES_CACHE = 'axes_cache'
+AXES_ONLY_USER_FAILURES = True
+#AXES_LOCKOUT_TEMPLATE = 'autenticacion_baneada'
+
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
@@ -161,6 +180,7 @@ LOGOUT_REDIRECT_URL = 'home'
 
 
 AUTHENTICATION_BACKENDS = (
+    'axes.backends.AxesModelBackend',
     'social_core.backends.facebook.FacebookOAuth2',
     'social_core.backends.google.GoogleOpenId',
     'social_core.backends.google.GoogleOAuth2',
