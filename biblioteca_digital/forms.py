@@ -1,11 +1,13 @@
 from django import forms
 from .models import Recurso, ComentarioRecurso
+from .validators import file_size,pdf_type
 
 TEMA_ALTERNATIVAS = (
     (1, 'formacion ciudadana'),
     (2, 'convivencia escolar'),
     (3, 'otros'),
 )
+
 
 class RecursoForm(forms.ModelForm):
     '''
@@ -15,8 +17,8 @@ class RecursoForm(forms.ModelForm):
     titulo = forms.CharField()
     descripcion = forms.CharField(widget=forms.Textarea)
     tema = forms.ChoiceField(choices=TEMA_ALTERNATIVAS) 
-    imagen_descriptiva = forms.ImageField()
-    archivo = forms.FileField()
+    imagen_descriptiva = forms.ImageField(validators=[file_size])
+    archivo = forms.FileField(validators=[file_size,pdf_type])
 
     class Meta:
         model = Recurso
@@ -30,3 +32,6 @@ class ComentarioForm(forms.ModelForm):
     class Meta:
         model = ComentarioRecurso
         fields = ('comentario',)
+
+
+
