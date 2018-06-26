@@ -13,6 +13,14 @@ from django.utils.html import format_html
 from django.utils.module_loading import import_string
 from django.utils.translation import gettext as _, ngettext
 
+from django.core.exceptions import ValidationError
+import re
+
+def password_number_check(password):
+    digit_error = any(i.isdigit() for i in password)
+    if not digit_error:
+        raise ValidationError('La contraseña debe contener al menos un numero.')
+
 
 @functools.lru_cache(maxsize=None)
 def get_default_password_validators():
@@ -125,7 +133,7 @@ class UserAttributeSimilarityValidator:
     example, a password is validated against either part of an email address,
     as well as the full address.
     """
-    DEFAULT_USER_ATTRIBUTES = ('username', 'first_name', 'last_name', 'email')
+    DEFAULT_USER_ATTRIBUTES = ('nombre', 'apellido_paterno', 'apellido_materno', 'email')
 
     def __init__(self, user_attributes=DEFAULT_USER_ATTRIBUTES, max_similarity=0.7):
         self.user_attributes = user_attributes
@@ -147,7 +155,7 @@ class UserAttributeSimilarityValidator:
                     except FieldDoesNotExist:
                         verbose_name = attribute_name
                     raise ValidationError(
-                        _("The password is too similar to the %(verbose_name)s."),
+                        _("La contraseña es demasiado similar al %(verbose_name)s."),
                         code='password_too_similar',
                         params={'verbose_name': verbose_name},
                     )

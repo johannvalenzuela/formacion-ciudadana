@@ -5,6 +5,7 @@ from django.utils.translation import gettext, gettext_lazy as _
 from django.contrib.auth import (
     authenticate, get_user_model, password_validation,
 )
+from .custom_validator import password_number_check
 class CustomUserCreationForm(UserCreationForm):
 
     class Meta(UserCreationForm.Meta):
@@ -17,6 +18,7 @@ class CustomUserCreationForm(UserCreationForm):
     password1 = forms.CharField(
         label=_("Contraseña"),
         strip=False,
+        validators=[password_number_check],
         widget=forms.PasswordInput,
         help_text=password_validation.password_validators_help_text_html(),
     )

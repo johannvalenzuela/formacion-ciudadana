@@ -55,7 +55,7 @@
                 <label for="id_password1">Contraseña</label>
                 <input type="password" id="id_password1" name="password1" autocomplete="new-password" required/>
                 <div class="alert alert-default pt-0" role="alert">
-                  {{ form.password1.help_text | safe}}</span>
+                  <span>{{ form.password1.help_text | safe}}</span>
                 </div>
                 {% if form.password1.errors %}
                 <div class="alert alert-danger pt-0" role="alert">
