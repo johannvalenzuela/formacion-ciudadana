@@ -1,12 +1,21 @@
 <!-- templates/home.html -->
 {% extends 'base.html' %} {% block title %}Home{% endblock %} {% block content %} 
-{% if user.is_authenticated %} 
+{% if user.is_authenticated %}
 
-  Hola {{ user.get_full_name }}!
-  <p>
-    <a class="btn btn-primary" href="{% url 'logout' %}">Cerrar Sesión</a>
-  </p>
-
+<div class="p-4">
+  <div class="jumbotron jumbotron-fluid bg-white rounded mt-4">
+    <div class="container">
+        <h1 class="display-4">Inicio</h1>
+        <p class="lead">Bienvenido a la página de Inicio
+            <strong>{{ user.get_full_name }}</strong>!. 
+        </p>
+    </div>
+  </div>
+    Hola {{ user.get_full_name }}!
+    <p>
+      <a class="btn btn-primary" href="{% url 'logout' %}">Cerrar Sesión</a>
+    </p>
+</div>
 {% else %}
 
   <!-- <p>You are not logged in</p>

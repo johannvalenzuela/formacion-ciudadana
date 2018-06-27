@@ -30,12 +30,13 @@
 
 <!-- <a href="{% url 'agregar_grupo' %}">CREAR</a> -->
 
+{% load static %}
 <div class="grid-container mt-2" style="grid-template-columns: repeat(4, 1fr);">
     {% for grupo in lista_grupos %} {% if grupo.nombre in 'alumnos' or grupo.nombre in 'apoderados' %} {% else %}
     <div class="grid-item">
         <a href="{% url 'lista_usuarios' grupo.nombre %}">
             <div class="bg-light rounded" style="height: 14rem;">
-                <!-- <img class="img-resource" src=""> -->
+                <img class="img-resource" src="{% static 'assets/grupo.svg'%}">
             </div>
             <div class="pb-2 pt-2 m-1 text-center">
                 <h5>

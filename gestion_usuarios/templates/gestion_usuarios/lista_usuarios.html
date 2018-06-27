@@ -2,7 +2,7 @@
 <title>Lista de {{grupo.nombre}}</title>
 {% endblock %}
 {% block content %}
-
+{% load static %}
 <div class="card col-md-12 mt-4 mb-2 pb-4">
     <div class="card-body">
         <h3 class="card-title">Lista de <span class="text-capitalize">{{grupo.nombre}}</span></h3>
@@ -58,7 +58,7 @@
 </table>
 
 {% else %}
-    <div class="bg-white rounded p-5 pt-5 pb-4 mt-4 shadow-sm text-center">No se encontraron <strong>usuarios</strong> registrados</div>
+    <div class="bg-white rounded p-5 pt-5 pb-4 mt-4 shadow-sm text-center">No se encontraron <strong>{{ grupo.nombre }}</strong> registrados</div>
 {% endif %}
 <div class="modal" id="recursoModal"></div>
 {% endblock %}
