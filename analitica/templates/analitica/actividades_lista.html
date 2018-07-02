@@ -8,7 +8,9 @@
 </script> 
 {% endfor %} 
 {% endif %}
-<div class="card col-md-12 mt-4 mb-2 pb-4">
+{% load static %}
+<div class="card mt-4 mb-2 pb-4 w-100" style="flex-direction: column;">
+    <img class="img-fluid" src="{% static 'assets/analitica.svg' %}" alt="" style="height: 35vh; object-fit: cover">
     <div class="card-body">
         <h3 class="card-title">Actividades de los Encargados</span></h3>
         <p class="card-text">En esta sección puedes visualizar los <strong>recursos académicos</strong> o <strong>consultas ciudadanas</strong> que han realizado los Encargados hasta ahora.
