@@ -17,8 +17,8 @@ class RecursoForm(forms.ModelForm):
     titulo = forms.CharField(max_length=50,help_text='El título puede tener un máximo de 50 caracteres')
     descripcion = forms.CharField(max_length=255, help_text='La descripción puede tener un máximo de 255 caracteres', widget=forms.Textarea)
     tema = forms.ChoiceField(choices=TEMA_ALTERNATIVAS) 
-    imagen_descriptiva = forms.ImageField(validators=[file_size])
-    archivo = forms.FileField(validators=[file_size,pdf_type])
+    imagen_descriptiva = forms.ImageField(help_text='La imagen no debe superar los 5MB',validators=[file_size])
+    archivo = forms.FileField(help_text='El archivo debe estar en formato .pdf y no debe superar los 5MB',validators=[file_size,pdf_type])
 
     class Meta:
         model = Recurso
