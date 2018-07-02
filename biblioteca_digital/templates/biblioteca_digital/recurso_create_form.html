@@ -12,47 +12,76 @@
             <div class="form-group row">
                 <label for="id_titulo" class="col-sm-2 col-form-label">Título:</label>
                 <div class="col-sm-10">
-                    {% if form.titulo.errors %}
-                    <input type="text" class="form-control-plaintext" maxlength="50" id="id_titulo" name="titulo" value="{{form.titulo.value}}"
-                        placeholder="Ej: Recurso #1" required>
-                    <small class="text-danger"> Ya existe un recurso con este título. Por favor ingrese otro.</small>
-                    {% else %}
-                    <input type="text" class="form-control-plaintext" maxlength="50" id="id_titulo" name="titulo" placeholder="Ej: Recurso #1"
-                        required> 
-                    {% endif %}
+                    <input type="text" class="form-control-plaintext" id="id_titulo" name="{{ form.titulo.name }}" 
+                        {% if form.titulo.value != None %} value="{{ form.titulo.value|stringformat:'s' }}"{% endif %} 
+                        maxlength="{{ form.titulo.field.max_length }}"
+                        placeholder="Ej: Recurso #1" 
+                        {% if form.titulo.field.required %}required{% endif %}>
+                        
+                        {% if form.titulo.errors %}
+                        <ul class="list-unstyled">
+                            {% for error in form.titulo.errors %}
+                            <li><small class="text-danger">{{ error }}</small></li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                        
+                        {% if form.titulo.help_text %}
+                        <div class="bg-light rounded px-2 my-2">
+                            <small class="text-info">{{ form.titulo.help_text }}</small>
+                        </div>
+                        {% endif %}
                 </div>
             </div>
+
+
             <div class="form-group row">
                 <label for="id_descripcion" class="col-sm-2 col-form-label">Descripción:</label>
                 <div class="col-sm-10">
-                    {% if form.errors %}
-                    <textarea class="form-control" name="descripcion" id="id_descripcion" rows="5" required>{{form.descripcion.value}}</textarea>
-                    {% else %}
-                    <textarea class="form-control" name="descripcion" id="id_descripcion" rows="5" required></textarea>
+                    <textarea class="form-control" id="id_descripcion" rows="5" name="{{ form.descripcion.name }}" 
+                    maxlength="{{ form.descripcion.field.max_length }}" {% if form.descripcion.field.required %}required{% endif %}>{% if form.descripcion.value != None %}{{ form.descripcion.value|stringformat:'s' }}{% endif %}</textarea>
+                    <!-- <p>{{form.descripcion.value|length}}</p> -->
+                    {% if form.descripcion.errors %}
+                    <ul class="list-unstyled">
+                        {% for error in form.descripcion.errors %}
+                        <li><small class="text-danger">{{ error }}</small></li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+
+                    {% if form.descripcion.help_text %}
+                    <div class="bg-light rounded px-2 my-2">
+                        <small class="text-info">{{ form.descripcion.help_text }}</small>
+                    </div>
                     {% endif %}
                 </div>
             </div>
+
+
             <div class="form-group row">
                 <label for="id_tema" class="col-sm-2 col-form-label">Tema:</label>
                 <div class="col-sm-10">
-                    <select class="form-control" name="tema" id="id_tema">
+                    <select class="form-control" name="{{ form.tema.name }}" id="id_tema">
                         <option value="1">Formación Ciudadana</option>
                         <option value="2">Convivencia Escolar</option>
                         <option value="3">Otros</option>
                     </select>
                 </div>
             </div>
+
+            <!-- FALTA DESDE AQUI HACIA ABAJO -->
+
             <div class="form-group row">
                 {% if form.errors %}
                 <label for="id_imagen_descriptiva" class="col-sm-2 col-form-label">Imagen Descriptiva:</label>
                 <div class="col-sm-10">
                     <small>Actualmente:  <a href="{{form.imagen_descriptiva.value.url}}"> {{form.imagen_descriptiva.value}}</a> </small>
-                    <input type="file" class="dropify form-control-plaintext" id="id_imagen_descriptiva" name="imagen_descriptiva" required>
+                    <input type="file" class="dropify form-control-plaintext" id="id_imagen_descriptiva" name="{{ form.imagen_descriptiva.name }}" required>
                 </div>
                 {% else %}
                 <label for="id_imagen_descriptiva" class="col-sm-2 col-form-label">Imagen Descriptiva:</label>
                 <div class="col-sm-10">
-                    <input type="file" class="dropify form-control-plaintext" id="id_imagen_descriptiva" name="imagen_descriptiva" required>
+                    <input type="file" class="dropify form-control-plaintext" id="id_imagen_descriptiva" name="{{ form.imagen_descriptiva.name }}" required>
                 </div>
                 {% endif %}
             </div>
@@ -74,6 +103,10 @@
                 <input class="btn btn-primary btn-block" type="submit" value="Crear Recurso">
             </div>
         </form>
+
+        {% if form.errors %}
+        <dir>{{form.errors}}</dir>
+        {% endif %}
     </div>
 </div>
 {% endblock content %}
