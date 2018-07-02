@@ -3,21 +3,21 @@
 {% endblock %}{% block content %}
 
 <div class="row">
-    <div class="col-md-12 bg-white rounded p-4 mt-4">
+    <div class="col-md-12 bg-white shadow-sm rounded p-4 mt-4">
         <div class="text-center mb-3">
-            <h4 class="font-weight-bold pb-2">Crear nuevo recurso</h4>
+            <h4 class="font-weight-bold text-uppercase pb-2">Crear nuevo recurso</h4>
         </div>
         <form method="POST" enctype="multipart/form-data" action="{% url 'recurso-nuevo' %}">
             {% csrf_token %}
             <div class="form-group row">
                 <label for="id_titulo" class="col-sm-2 col-form-label">Título:</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control-plaintext" id="id_titulo" name="{{ form.titulo.name }}" 
+                    <input type="text" class="form-control-plaintext rounded" id="id_titulo" name="{{ form.titulo.name }}" 
                         {% if form.titulo.value != None %} value="{{ form.titulo.value|stringformat:'s' }}"{% endif %} 
                         maxlength="{{ form.titulo.field.max_length }}"
                         placeholder="Ej: Recurso #1" 
                         {% if form.titulo.field.required %}required{% endif %}>
-                        
+                        <!-- data-toggle="tooltip" title="{{ form.titulo.help_text }}" -->
                         {% if form.titulo.errors %}
                         <ul class="list-unstyled">
                             {% for error in form.titulo.errors %}
@@ -25,7 +25,7 @@
                             {% endfor %}
                         </ul>
                         {% endif %}
-                        
+
                         {% if form.titulo.help_text %}
                         <div class="bg-light rounded px-2 my-2">
                             <small class="text-info">{{ form.titulo.help_text }}</small>
@@ -69,39 +69,67 @@
                 </div>
             </div>
 
-            <!-- FALTA DESDE AQUI HACIA ABAJO -->
+            {% if form.errors %}
+                <div class="bg-light rounded px-2 my-2">
+                    <small class="text-danger">Por favor, vuelva a ingresar la imagen descriptiva y archivo</small>
+                </div>
+            {% endif %}
 
             <div class="form-group row">
-                {% if form.errors %}
                 <label for="id_imagen_descriptiva" class="col-sm-2 col-form-label">Imagen Descriptiva:</label>
                 <div class="col-sm-10">
+                    {% if form.imagen_descriptiva.value != None %}
                     <small>Actualmente:  <a href="{{form.imagen_descriptiva.value.url}}"> {{form.imagen_descriptiva.value}}</a> </small>
-                    <input type="file" class="dropify form-control-plaintext" id="id_imagen_descriptiva" name="{{ form.imagen_descriptiva.name }}" required>
+                    {% endif %}
+                    <input type="file" class="dropify form-control-plaintext" id="id_imagen_descriptiva" 
+                    name="{{ form.imagen_descriptiva.name }}" 
+                    {% if form.imagen_descriptiva.field.required %}required{% endif %}>
+                    {% if form.imagen_descriptiva.errors %}
+                    <ul class="list-unstyled">
+                        {% for error in form.imagen_descriptiva.errors %}
+                        <li><small class="text-danger">{{ error }}</small></li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+
+                    {% if form.imagen_descriptiva.help_text %}
+                    <div class="bg-light rounded px-2 my-2">
+                        <small class="text-info">{{ form.imagen_descriptiva.help_text }}</small>
+                    </div>
+                    {% endif %}
                 </div>
-                {% else %}
-                <label for="id_imagen_descriptiva" class="col-sm-2 col-form-label">Imagen Descriptiva:</label>
-                <div class="col-sm-10">
-                    <input type="file" class="dropify form-control-plaintext" id="id_imagen_descriptiva" name="{{ form.imagen_descriptiva.name }}" required>
-                </div>
-                {% endif %}
             </div>
+
+
             <div class="form-group row">
-                {% if form.errors%}
                 <label for="id_archivo" class="col-sm-2 col-form-label">Archivo:</label>
                 <div class="col-sm-10">
+                    {% if form.archivo.value != None %}
                     <small>Actualmente:  <a href="{{form.archivo.value.url}}"> {{form.archivo.value}}</a> </small>
-                    <input type="file" class="dropify form-control-plaintext" id="id_archivo" name="archivo" required>
+                    {% endif %}
+                    <input type="file" class="dropify form-control-plaintext" id="id_archivo" 
+                    name="{{ form.archivo.name }}" 
+                    {% if form.archivo.field.required %}required{% endif %}>
+                    {% if form.archivo.errors %}
+                    <ul class="list-unstyled">
+                        {% for error in form.archivo.errors %}
+                        <li><small class="text-danger">{{ error }}</small></li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+
+                    {% if form.archivo.help_text %}
+                    <div class="bg-light rounded px-2 my-2">
+                        <small class="text-info">{{ form.archivo.help_text }}</small>
+                    </div>
+                    {% endif %}
                 </div>
-                {% else %}
-                <label for="id_archivo" class="col-sm-2 col-form-label">Archivo:</label>
-                <div class="col-sm-10">
-                    <input type="file" class="dropify form-control-plaintext" id="id_archivo" name="archivo" required>
-                </div>
-                {% endif %}
             </div>
+
             <div>
                 <input class="btn btn-primary btn-block" type="submit" value="Crear Recurso">
             </div>
+
         </form>
 
         {% if form.errors %}
