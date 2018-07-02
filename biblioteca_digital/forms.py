@@ -14,8 +14,8 @@ class RecursoForm(forms.ModelForm):
     Formulario para la creacion y modificacion del recurso academico
     a traves de un usuario de formacion
     '''
-    titulo = forms.CharField()
-    descripcion = forms.CharField(widget=forms.Textarea)
+    titulo = forms.CharField(max_length=50,help_text='El título puede tener un máximo de 50 caracteres')
+    descripcion = forms.CharField(max_length=255, help_text='La descripción puede tener un máximo de 255 caracteres', widget=forms.Textarea)
     tema = forms.ChoiceField(choices=TEMA_ALTERNATIVAS) 
     imagen_descriptiva = forms.ImageField(validators=[file_size])
     archivo = forms.FileField(validators=[file_size,pdf_type])
