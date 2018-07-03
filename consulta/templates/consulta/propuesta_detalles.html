@@ -2,24 +2,26 @@
 <title>{{ object.titulo }}</title>
 {% endblock %} {% block content %}
 
+<div class="col-md-12 bg-white rounded mt-2 p-4">
+    <h1 class="text-uppercase p-0 m-0 pb-2">{{object.titulo}}</h1>
+    <p> <strong>Descripción:</strong> {{object.descripcion}}</p>
+    <p> <strong>Contenido:</strong> {{object.contenido}}</p>
+    <p> <strong>Cantidad de Votos:</strong> {{object.votos}}</p>
+    <p> <strong>Creado el:</strong> {{object.fecha_creacion}}</p>
 
-<p>{{object.titulo}}</p>
-<p>{{object.descripcion}}</p>
-<p>{{object.contenido}}</p>
-<p>{{object.votos}}</p>
-<p>{{object.fecha_creacion}}</p>
+    <hr>
 
 
 {% comment %} boton para modificar o eliminar propuesta solo para el autor de la consulta {% endcomment %}
 {% if object.autor == user %}
 
-<a class="recurso btn btn-primary" data-form="{% url 'editar_propuesta' object.pk %}" data-toggle="modal" data-target="#recursoModal">
-    <i class="mi mi-Edit mi-4x"></i> Editar propuesta
-</a>
-<a class="recurso btn btn-danger" data-form="{% url 'eliminar_propuesta' object.pk %}" data-toggle="modal" data-target="#recursoModal">
-    <i class="mi mi-Download mi-4x"></i> Eliminar propuesta
-</a>
-
+    <a class="recurso btn btn-primary text-white m-0" data-form="{% url 'editar_propuesta' object.pk %}" data-toggle="modal" data-target="#recursoModal">
+        <i class="mi mi-Edit mi-4x"></i> Editar propuesta
+    </a>
+    <a class="recurso btn btn-danger text-white m-0" data-form="{% url 'eliminar_propuesta' object.pk %}" data-toggle="modal" data-target="#recursoModal">
+        <i class="mi mi-Download mi-4x"></i> Eliminar propuesta
+    </a>
+</div>
 {% else %}
 {% endif %}
 

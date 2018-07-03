@@ -60,7 +60,7 @@
 {% comment %} boton para agregar propuesta solo para el autor de la consulta {% endcomment %}
 {% if request|is_autor_consulta:object.autor and request|is_finalizado_consulta:object.fecha_finalizacion %}
 <div class="pb-5">
-    <a class="btn btn-primary float-right btn-sm p-2 mt-3" href="{% url 'crear_propuesta' object.pk %}">
+    <a class="btn btn-md btn-primary float-right mt-3" href="{% url 'crear_propuesta' object.pk %}">
         <i class="mi mi-Add mi-4x"></i> AGREGAR PROPUESTA
     </a>
 </div>
@@ -77,19 +77,17 @@
             <h5 class="card-text pt-2 text-center">¿Te interesa alguna propuesta? Entonces, ¡Vota por alguna de ellas!</h5>
         </div>
         <div>
-            <a class="btn btn-primary btn-block btn-sm p-3 mt-2 pr-5 pl-5" href="{% url 'consulta_votar' object.pk %}">
+            <a class="btn btn-secondary btn-block btn-sm p-3 mt-2 pr-5 pl-5" href="{% url 'consulta_votar' object.pk %}">
                 VOTAR
             </a>
         </div>
     </div>
     {% else %}
     {% endif %}
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12 ml-auto mr-auto p-0">
-                <div class="grid-container" style="grid-template-columns: 1fr;">
+    <div class="bg-white rounded">
+                <div class="grid-container" style="grid-template-columns: repeat(2,1fr)">
                     {% if propuestas %} {% for propuesta in propuestas %}
-                    <div class="grid-item pt-2 pb-2 pr-2">
+                    <div class="grid-item py-2 pr-2">
                         <a href="{% url 'visualizar_propuesta' propuesta.pk %}">
                             <div class="row align-items-center">
                                 <div class="col-md-2 text-center bg-primary rounded-right">
@@ -113,6 +111,7 @@
                     </div>
                     {% endfor %} {% else %} <div class="bg-white rounded p-4 m-4 text-center">No existen <strong>propuestas</strong> en estos momentos.</div> {% endif %}
                 </div>
+            </div>
             </div>
         </div>
     </div>

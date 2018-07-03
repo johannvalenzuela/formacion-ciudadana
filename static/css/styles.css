@@ -300,7 +300,6 @@ h2, h3, h4, h5, h6 {
     grid-template-columns: repeat(auto-fill, minmax(350px,1fr));
     padding: 1rem;
     gap: 1rem;
-    min-width: 330px;
 }
 
 .grid-item {
@@ -337,6 +336,11 @@ h2, h3, h4, h5, h6 {
     height: 100%;
     width: 100%;
     content: "";
+}
+
+a.btn:hover {
+    color: rgb(221, 221, 221) !important;
+    font-weight: bold;
 }
 
 input:placeholder-shown {

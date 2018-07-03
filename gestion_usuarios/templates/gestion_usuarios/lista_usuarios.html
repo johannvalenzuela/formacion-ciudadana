@@ -48,7 +48,7 @@
             <td>{{ usuario.nombre }}</td>
             <td>{{ usuario.rut }}</td>
             <td>
-                <a class="recurso btn btn-danger btn-sm m-0" data-form="{% url 'remover_usuario_form' grupo.pk usuario.pk %}" data-toggle="modal" data-target="#recursoModal">
+                <a class="recurso btn btn-sm btn-danger m-0 py-2 text-white" data-form="{% url 'remover_usuario_form' grupo.pk usuario.pk %}" data-toggle="modal" data-target="#recursoModal">
                     <i class="mi mi-Delete mi-4x"></i> Borrar
                 </a>
             </td>

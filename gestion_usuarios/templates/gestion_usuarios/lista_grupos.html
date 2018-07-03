@@ -15,7 +15,7 @@
 </div>
 
 <div class="pb-5">
-    <a class="recurso btn btn-primary float-right" data-form="{% url 'agregar_grupo' %}" data-toggle="modal" data-target="#recursoModal">
+    <a class="recurso btn btn-md btn-primary float-right text-white" data-form="{% url 'agregar_grupo' %}" data-toggle="modal" data-target="#recursoModal">
         <i class="mi mi-Add mi-4x"></i> AGREGAR GRUPO
     </a>
 </div>
@@ -31,7 +31,7 @@
 <!-- <a href="{% url 'agregar_grupo' %}">CREAR</a> -->
 
 {% load static %}
-<div class="grid-container mt-2" style="grid-template-columns: repeat(4, 1fr);">
+<div class="grid-container mt-2" style="grid-template-columns: repeat(auto-fill, minmax(200px,1fr));">
     {% for grupo in lista_grupos %} {% if grupo.nombre in 'alumnos' or grupo.nombre in 'apoderados' %} {% else %}
     <div class="grid-item">
         <a href="{% url 'lista_usuarios' grupo.nombre %}">
@@ -45,13 +45,13 @@
             </div>
             <div>
                 <div>
-                    <a class="recurso btn btn-default btn-sm btn-block m-0 mw-100" data-form="{% url 'editar_grupo' grupo.pk %}" data-toggle="modal"
+                    <a class="recurso btn btn-md btn-default btn-block m-0 mw-100" data-form="{% url 'editar_grupo' grupo.pk %}" data-toggle="modal"
                         data-target="#recursoModal">
                         <i class="mi mi-Edit mi-4x"></i> Editar
                     </a>
                 </div>
                 <div>
-                    <a class="recurso btn btn-danger btn-sm btn-block m-0 mw-100" data-form="{% url 'eliminar_grupo' grupo.pk %}" data-toggle="modal"
+                    <a class="recurso btn btn-md btn-danger btn-block m-0 mw-100" data-form="{% url 'eliminar_grupo' grupo.pk %}" data-toggle="modal"
                         data-target="#recursoModal">
                         <i class="mi mi-Delete mi-4x"></i> Borrar
                     </a>
