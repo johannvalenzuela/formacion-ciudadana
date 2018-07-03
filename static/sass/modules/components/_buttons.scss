@@ -1,0 +1,112 @@
+.btn {
+  height: 2rem;
+  padding: .8125rem .75rem;
+  margin-top: .8rem;
+  overflow: hidden;
+  font-size: .869rem;
+  line-height: 0;
+  color: map-get($neutral-palette, "0");
+  vertical-align: bottom;
+  border-width: 2px;
+  border-radius: 2px;
+  transition: all 0.15s ease-in-out;
+
+  &:focus,
+  &.focus {
+    border-color: map-get($neutral-palette, "10");
+    box-shadow: none;
+  }
+
+  &:hover {
+    filter: brightness(125%);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  }
+
+  &:active,
+  &.active { filter: brightness(85%); }
+
+  &:active { transform: scale(.985); }
+
+  &:disabled {
+    cursor: not-allowed;
+    border: none;
+    filter: brightness(85%);
+  }
+
+  &:not(:disabled):not(.disabled):active,
+  &:not(:disabled):not(.disabled).active {
+    box-shadow: none;
+    &:focus { box-shadow: none; }
+  }
+
+  &.btn-block {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  &.btn-sm {
+    height: 1.5rem;
+    min-width: 0;
+    padding: .2rem 1rem;
+    font-size: .8rem;
+  }
+
+  &.btn-md { min-width: 7.5rem; }
+
+  &.btn-lg {
+    height: 3rem;
+    min-width: 9rem;
+    font-size: 1.05rem;
+  }
+  & > * { line-height: 0; }
+
+  &[class*='btn-outline-'] { background: transparent; }
+  &.btn-rounded { border-radius: 2em; }
+
+  .mi { font-size: .65rem; }
+
+}
+
+a.btn:hover,
+a.btn:focus { color: inherit; }
+
+@each $name, $value in $colors-palette {
+
+  .btn-#{$name} {
+    background-color: map-get($value, 'bg');
+    border-color: map-get($value, 'bg');
+    color: map-get($value, 'txt');
+
+    &:hover,
+    &:focus {
+      background-color: map-get($value, 'bg');
+      color: map-get($value, 'txt');
+    }
+
+    &:hover { border-color: map-get($value, 'bg'); }
+
+    &:not(:disabled):not(.disabled):active,
+    &:not(:disabled):not(.disabled).active,
+    .show > &.dropdown-toggle {
+      color: map-get($value, 'txt');
+      background-color: map-get($value, 'bg');
+      border-color: map-get($value, 'bg');
+
+      &:focus { box-shadow: none; }
+    }
+  }
+
+  .btn-outline-#{$name} {
+    color: map-get($value, 'bg');
+    border-color: map-get($value, 'bg');
+
+    &:hover {
+      color: map-get($value, 'txt');
+      background-color: map-get($value, 'bg');
+      border-color: map-get($value, 'bg');
+    }
+
+  }
+
+}
