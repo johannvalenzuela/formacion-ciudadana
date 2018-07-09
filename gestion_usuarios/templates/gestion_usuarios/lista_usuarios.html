@@ -15,9 +15,8 @@
 </div>
 
 <div class="pb-5">
-    <a href="{% url 'agregar_usuario_form' grupo.pk %}">
-        <button class="btn btn-primary float-right"> 
-            <i class="mi mi-Add mi-4x"></i> AGREGAR <span class="text-uppercase">{{ grupo.nombre }}</span></button>
+    <a class="btn btn-md btn-primary float-right mt-3 mb-3" href="{% url 'agregar_usuario_form' grupo.pk %}">
+        <i class="mi mi-Add mi-4x"></i> AGREGAR <span class="text-uppercase">{{ grupo.nombre }}</span>
     </a>
 </div>
 
