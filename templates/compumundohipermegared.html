@@ -17,6 +17,95 @@
 
 <body>
     <div class="wrapper">
+        <nav class="side-nav shadow position-fixed" id="side-nav">
+            <div class="sidebar-header mb-3">
+                <div class="w-100 mx-auto p-3">
+                    {% load static %}
+                    <a href="#">
+                        <img class="img-fluid" src="{% static 'assets/logo_mini.svg' %}" alt="">
+                    </a>
+                </div>
+            </div>
+            {% block navbar %}
+            <ul class="position-sticky list-unstyled">
+                <li class="{% if request.resolver_match.url_name == 'home' %}active{% endif %}">
+                    <a href="/">
+                        <i class="mi mi-Home mi-3x"></i>
+                        <span>Inicio</span>
+                    </a>
+                </li>
+
+                {% if request|supervisor_required %}
+                <li class="">
+                    <a href="{% url 'visualizar_actividades' %}">
+                        <i class="mi mi-Feedback mi-3x"></i>
+                        <span>Actividades Supervisores</span>
+                    </a>
+                </li>
+                {% endif %}
+
+                {% comment %} {% if request|funcionario_required %}
+                <li>
+                    <a href="#">
+                        <i class="mi mi-ChatBubbles mi-3x"></i> 
+                        <span>Mensajes</span>
+                    </a>
+                </li>
+                {% endif %} {% endcomment %}
+
+                {% if request|encargado_required %}
+                <li class="{% if request.path == '/gestion_usuarios/lista_usuarios/alumnos/' or request.path == '/gestion_usuarios/agregar_usuario_form/1' %}active{% endif %}">
+                    <a href="{% url 'lista_usuarios' 'alumnos' %}">
+                        <i class="mi mi-Education mi-3x"></i>
+                        <span>Alumnos</span>
+                    </a>
+                </li>
+
+                <li class="{% if request.path == '/gestion_usuarios/lista_usuarios/apoderados/' or request.path == '/gestion_usuarios/agregar_usuario_form/2' %}active{% endif %}">
+                    <a href="{% url 'lista_usuarios' 'apoderados' %}">
+                        <i class="mi mi-AllAppsMirrored mi-3x"></i>
+                        <span>Apoderados</span>
+                    </a>
+                </li>
+
+                <li class="{% if request.resolver_match.url_name == 'lista_grupos' %}active{% endif %}">
+                    <a href="{% url 'lista_grupos' %}">
+                        <i class="mi mi-People mi-3x"></i>
+                        <span>Grupos</span>
+                    </a>
+                </li>
+                {% endif %}
+
+                {% if request|funcionario_required %}
+                <li class="{% if request.resolver_match.url_name == 'biblioteca_digital' or request.resolver_match.view_name == 'recurso-detail'%}active{% endif %}">
+                    <a href="{% url 'biblioteca_digital' %}">
+                        <i class="mi mi-Library mi-3x"></i>
+                        <span>Recursos Académicos</span>
+                    </a>
+                </li>
+                {% endif %}
+
+                <li class="{% if request.resolver_match.url_name == 'visualizar_consultas' or request.resolver_match.view_name == 'crear_consulta' or request.resolver_match.view_name == 'detalles_consulta' %}active{% endif %}">
+                    <a href="{% url 'visualizar_consultas' %}">
+                        <i class="mi mi-Package mi-3x"></i>
+                        <span>Consultas Ciudadanas</span>
+                    </a>
+                </li>
+
+                {% comment %} {% if request|funcionario_required %}
+                <li class="">
+                    <a href="#">
+                        <i class="mi mi-Feedback mi-3x"></i>
+                        <span>Foro</span>
+                    </a>
+                </li>
+                {% endif %} {% endcomment %}
+            </ul>
+            {% endblock %}
+        </nav>
+
+<!-- 
+    <div class="wrapper">
         <nav id="sidebar" class="mCustomScrollbar _mCS_1 mCS-autoHide mCS_no_scrollbar shadow-sm" style="overflow: visible;">
             <div id="mCSB_1" class="mCustomScrollBox mCS-minimal mCSB_vertical mCSB_outside" tabindex="0">
                 <div id="mCSB_1_container" class="mCSB_container mCS_y_hidden mCS_no_scrollbar_y position-relative" style=" top:0; left:0;"
@@ -32,7 +121,7 @@
                             </div>
                         </div>
                     </div>
-                    {% block navbar %}
+                    
                     <ul class="list-unstyled components">
                         <li class="{% if request.resolver_match.url_name == 'home' %}active{% endif %}">
                             <a href="/">
@@ -87,7 +176,7 @@
 
                     </ul>
 
-                    {% endblock %}
+                    
                 </div>
             </div>
             <div id="mCSB_1_scrollbar_vertical" class="mCSB_scrollTools mCSB_1_scrollbar mCS-minimal mCSB_scrollTools_vertical" style="display: none;">
@@ -98,7 +187,7 @@
                     <div class="mCSB_draggerRail"></div>
                 </div>
             </div>
-        </nav>
+        </nav> -->
         <!-- END SIDEBAR -->
 
         <!-- Page Content Holder -->
@@ -109,20 +198,20 @@
                     <button type="button" id="sidebarCollapse" class="btn btn-primary navbar-btn">
                         <i class="mi mi-List mi-1x"></i>
                         <span id="hide-panel">
-                            Ocultar Panel
+                            OCULTAR MENÚ
                         </span>
                         <span id="show-panel" style="display:none;">
-                            Ver Panel
+                            VER MENÚ
                         </span>
                     </button>
                 </div>
 
                 <ul class="nav justify-content-end">
                     <li class="nav-item align-self-center">
-                        <a class="nav-link" href="#">Mensajes</a>
+                        <a class="nav-link" href="#"><i class="mi mi-ChatBubbles mi-2x"></i></a>
                     </li>
                     <li class="nav-item align-self-center">
-                        <a class="nav-link" href="#">Notificaciones</a>
+                        <a class="nav-link" href="#"><i class="mi mi-ActionCenter mi-2x"></i></a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
