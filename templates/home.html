@@ -75,7 +75,7 @@
       <li data-target="#carouselExampleIndicators" data-slide-to="2" class=""></li>
     </ol>
     <div class="carousel-inner">
-      <div class="carousel-item active carousel-item-left">
+      <div class="carousel-item carousel-item-left">
         <div class="page-header header-filter" style="background-image: url('assets/');">
           <div class="container">
             <div class="row">
@@ -134,7 +134,7 @@
           </div>
         </div>
       </div>
-      <div class="carousel-item">
+      <div class="carousel-item active">
         <div class="page-header header-filter" style="background-image: url('assets/');">
           <div class="container">
             <div class="row">
@@ -150,6 +150,12 @@
                     <i class="mi mi-Slideshow mi-4x"></i> Ver Mas
                   </a>
                 </div>
+              </div>
+              <div class="col-md-5 text-center align-self-center">
+                {% load static %}
+                  <a href="#">
+                      <img class="img-fluid" src="{% static 'assets/logo.svg' %}" width="512" height="512" alt="">
+                  </a>
               </div>
             </div>
           </div>
