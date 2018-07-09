@@ -85,34 +85,35 @@
     {% else %}
     {% endif %}
     <div class="bg-white rounded">
-                <div class="grid-container" style="grid-template-columns: repeat(2,1fr)">
-                    {% if propuestas %} {% for propuesta in propuestas %}
-                    <div class="grid-item py-2 pr-2">
-                        <a href="{% url 'visualizar_propuesta' propuesta.pk %}">
-                            <div class="row align-items-center">
-                                <div class="col-md-2 text-center bg-primary rounded-right">
-                                    <h2 class="font-weight-bold">#{{forloop.counter}}</h2>
-                                </div>
-                                <div class="col-md-10 text-left">
-                                    <div class="text-uppercase">
-                                        <h4>
-                                            <strong>{{ propuesta.titulo }}</strong>
-                                        </h4>
-                                    </div>
-                                    <div class="text-justify">
-                                        <p>{{ propuesta.descripcion }}</p>
-                                    </div>
-                                    <div class="text-justify">
-                                        <i class="mi mi-Package"></i><small> Cantidad de votos: {{ propuesta.votos }}</small>
-                                    </div>
-                                </div>
+        {% if propuestas %}
+        <div class="grid-container" style="grid-template-columns: repeat(2,1fr)">
+            {% for propuesta in propuestas %}
+            <div class="grid-item py-2 pr-2">
+                <a href="{% url 'visualizar_propuesta' propuesta.pk %}">
+                    <div class="row align-items-center">
+                        <div class="col-md-2 text-center bg-primary rounded-right">
+                            <h2 class="font-weight-bold">#{{forloop.counter}}</h2>
+                        </div>
+                        <div class="col-md-10 text-left">
+                            <div class="text-uppercase">
+                                <h4>
+                                    <strong>{{ propuesta.titulo }}</strong>
+                                </h4>
                             </div>
-                        </a>
+                            <div class="text-justify">
+                                <p>{{ propuesta.descripcion }}</p>
+                            </div>
+                            <div class="text-justify">
+                                <i class="mi mi-Package"></i><small> Cantidad de votos: {{ propuesta.votos }}</small>
+                            </div>
+                        </div>
                     </div>
-                    {% endfor %} {% else %} <div class="bg-white rounded p-4 m-4 text-center">No existen <strong>propuestas</strong> en estos momentos.</div> {% endif %}
-                </div>
+                </a>
             </div>
-            </div>
+            {% endfor %} 
+            {% else %} 
+                <div class="bg-white rounded p-4 m-4 text-center">No existen <strong>propuestas</strong> en estos momentos.</div> 
+            {% endif %}
         </div>
     </div>
 </div>
