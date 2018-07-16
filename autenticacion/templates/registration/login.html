@@ -1,50 +1,113 @@
 <!-- templates/autenticacion/login.html -->
 {% extends 'base.html' %} {% block title %}Inicio de Sesión{% endblock %} {% block content %}
 
-<div class="login-page">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-10 ml-auto mr-auto">
-        <div class="card card-login">
-          <div class="card-body">
-            <div class="row">
-              <div class="col-md-6 ml-auto login-section"></div>
-              <div class="col-md-6 ml-auto">
-                <h2 class="card-title text-center">logo</h2>
-                <form class="form" method="POST" action="">
-                  {% csrf_token %}
-                  <fieldset>
-                    <label for="username">Correo</label>
-                    <input type="email" id="username" name="username" required/>
-                  </fieldset>
-                  <fieldset>
-                    <label for="password">Contraseña</label>
-                    <input type="password" id="password" name="password" class="input-with-button" required/>
-                    <button class="mi mi-Light" data-toggle-password-visibility>
-                    </button>
-                  </fieldset>
-                  <span>
-                    <a href="#">¿Olvidaste tu contraseña?</a>
-                  </span>
-                  <fieldset>
+{% load static %}
+<style>
+  body {
+    background: url("{% static 'assets/bg-login.svg' %}") no-repeat center center fixed;
+    background-size: cover;
+  }
+</style>
+
+<div class="container py-5">
+  <!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light py-2 m-0 shadow">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#responsive" aria-controls="responsive"
+      aria-expanded="false" aria-label="Toggle navigation">
+      <i class="mi mi-List mi-1x"></i>
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <a class="navbar-brand" href="#">FCCE</a>
+  
+    <div class="collapse navbar-collapse" id="responsive">
+      <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" href="/">Inicio
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Contacto</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Equipo de trabajo</a>
+        </li>
+      </ul>
+  
+      <ul class="nav justify-content-end navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'signup' %}">Registrarse</a>
+        </li>
+        <!-- <li class="nav-item">
+          <a class="nav-link" href="{% url 'login' %}">Iniciar Sesión</a>
+        </li> -->
+      </ul>
+    </div>
+  </nav>
+  <!-- END NAVBAR -->
+
+  <div class="row" style="margin-top: 5vh;">
+    <div class="col-md-12">
+      <div class="row">
+        <div class="col-md-6 mx-auto">
+
+          <!-- form card login -->
+          <div class="card rounded-0" style="flex-direction: column; opacity: .9;">
+            <div class="card-header text-center p-3">
+              <h3 class="mb-0">Inicio de Sesión</h3>
+            </div>
+            <div class="card-body">
+              <img class="mx-auto d-block m-2" src="{% static 'assets/logo_mini.svg' %}" width="150" height="150" alt="">
+
+              <form class="form" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                  <label for="id_username">Correo Electrónico</label>
+                  <input type="email" class="form-control form-control-lg rounded-0" name="{{form.username.name}}" id="id_username" autocomplete="email"
+                    maxlength="{{ form.username.field.max_length }}" 
+                    {% if form.username.field.required %}required{% endif%}>
+                </div>
+                <div class="form-group">
+                  <label for="id_password">Contraseña</label>
+                  <input type="password" class="form-control form-control-lg rounded-0" name="{{form.password.name}}" id="id_password" autocomplete="current-password"
+                    maxlength="{{ form.password.field.max_length }}" 
+                    {% if form.password.field.required %}required{% endif%}>
+                </div>
+
+                <div class="form-group">
                     <input type="checkbox" id="remember-me" />
                     <label for="remember-me">Recordarme</label>
-                  </fieldset>
-                  <button type="submit" class="btn btn-default btn-block">
-                    <i class="mi mi- mi-1x"></i> Iniciar Sesión</button>
-                  <div class="text-center">
-                    <span>o</span>
+
+                    <div class="text-primary">
+                      <a class="text-primary" href="#">¿Olvidaste tu contraseña?</a>
+                    </div>
+                </div>
+
+                {% if form.non_field_errors %}
+                <div class="non-field-errors">
+                  {% for err in form.non_field_errors %}
+                  <div class="alert alert-danger p-2">
+                    <p class="form-error text-justify m-0">{{ err }}</p>
                   </div>
-                </form>
-                <a href="{% url 'social:begin' 'facebook' %}">
-                  <button class="btn btn-primary btn-block">
+                  {% endfor %}
+                </div>
+                {% endif %}
+
+                <button type="submit" class="btn btn-default btn-lg btn-block font-weight-light">
+                  <i class="mi mi- mi-1x"></i> Iniciar Sesión con FCCE
+                </button>
+                <div class="p-2 text-center text-white">
+                  <small class="d-block text-muted">o</small>
+                </div>
+              </form>
+              <a href="{% url 'social:begin' 'facebook' %}">
+                <button class="btn btn-primary btn-lg btn-block">
                   <i class="mi mi-facebook-official mi-1x"></i> Iniciar Sesión con Facebook</button>
-                </a>
-                <a href="{% url 'social:begin' 'google-oauth2' %}">
-                  <button class="btn btn-warning btn-block">
-                    <i class="mi mi-google-plus mi-1x"></i> Iniciar Sesión con Google+</button>
-                </a>
-              </div>
+              </a>
+              <a href="{% url 'social:begin' 'google-oauth2' %}">
+                <button class="btn btn-warning btn-lg btn-block">
+                  <i class="mi mi-google-plus mi-1x"></i> Iniciar Sesión con Google+</button>
+              </a>
             </div>
           </div>
         </div>
@@ -52,5 +115,6 @@
     </div>
   </div>
 </div>
+<!--/container-->
 
 {% endblock %}
