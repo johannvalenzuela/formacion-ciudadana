@@ -11,7 +11,7 @@
 
 <div class="container py-5">
   <!-- NAVBAR -->
-<nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light py-2 m-0 shadow">
+  <nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light py-2 m-0 shadow-sm">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#responsive" aria-controls="responsive"
       aria-expanded="false" aria-label="Toggle navigation">
       <i class="mi mi-List mi-1x"></i>
@@ -57,7 +57,7 @@
               <h3 class="mb-0">Inicio de Sesión</h3>
             </div>
             <div class="card-body">
-              <img class="mx-auto d-block m-2" src="{% static 'assets/logo_mini.svg' %}" width="150" height="150" alt="">
+              <img class="mx-auto d-block m-2 mb-4" src="{% static 'assets/logo_mini.svg' %}" width="150" height="150" alt="">
 
               <form class="form" method="POST">
                 {% csrf_token %}
@@ -105,8 +105,8 @@
                   <i class="mi mi-facebook-official mi-1x"></i> Iniciar Sesión con Facebook</button>
               </a>
               <a href="{% url 'social:begin' 'google-oauth2' %}">
-                <button class="btn btn-warning btn-lg btn-block">
-                  <i class="mi mi-google-plus mi-1x"></i> Iniciar Sesión con Google+</button>
+                <button class="btn btn-warning btn-lg btn-block text-white">
+                  <i class="mi mi-google mi-1x"></i> Iniciar Sesión con Google</button>
               </a>
             </div>
           </div>
