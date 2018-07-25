@@ -14,6 +14,8 @@ def is_autor_consulta(request, autor):
     '''
     Función para saber si el usuario es el autor de la consulta
     '''
+    if request.user.is_anonymous:
+        return False
     try:
         encargado= Encargado.objects.get(usuario=request.user)
     except ObjectDoesNotExist:
