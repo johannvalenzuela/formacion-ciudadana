@@ -125,10 +125,15 @@ class ResponderConsultaView(generic.TemplateView):
             #primero se obtienen la consulta, el votante y la alternativa que marco
             consulta = get_object_or_404(Consulta, pk=pk)
             
-                #se valida de que exista rut y numero de documento
-            if request.user.rut or request.user.num_documento:
+            #se valida de que exista rut y numero de documento
+            if request.user.is_anonymous:
+                rut_votante= request.POST.get('rut')
+                #num_documento = request.POST.get['num_documento']
+            
+            elif request.user.rut or request.user.num_documento:
                 try:
                     votante = Usuario.objects.get(rut=request.user.rut, num_documento=request.user.num_documento)
+                    rut_votante =votante.rut
                 except ObjectDoesNotExist:
                     return redirect('datos_faltantes', pk_consulta=pk)
             else:
@@ -139,7 +144,7 @@ class ResponderConsultaView(generic.TemplateView):
 
             #antes de seguir se verifica si ya voto anteriormente
             try:
-                ConsultaRespuesta.objects.get(consulta=consulta ,rut=votante.rut)
+                ConsultaRespuesta.objects.get(consulta=consulta ,rut=rut_votante)
             except ObjectDoesNotExist:
                 #segundo se verifica si es una elección libre(ciudadana) o tiene restricciones
                 grupos = consulta.grupo.all()
@@ -147,7 +152,7 @@ class ResponderConsultaView(generic.TemplateView):
                     autorizados = RutAutorizados.objects.filter(grupo__in=grupos)
                         
                     for autorizado in autorizados:
-                        if autorizado.rut == votante.rut:
+                        if autorizado.rut == rut_votante:
                             puedeVotar=True
                             break
                 else:
@@ -161,7 +166,7 @@ class ResponderConsultaView(generic.TemplateView):
                         #por último el usuario realiza la votación
                         try:
                             ConsultaRespuesta.objects.create(
-                            rut = votante.rut,
+                            rut = rut_votante,
                             consulta = consulta,
                             consulta_propuesta = propuesta,
                             )
