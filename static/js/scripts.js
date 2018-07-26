@@ -63,8 +63,9 @@ function valorEstrella(estrella, token){
                 'csrfmiddlewaretoken': token
             },
             success:function(m){
-            alert('Gracias por tu valoración');
-            valorado=true;
+                alert('Gracias por tu valoración');
+                valorado=true;
+                window.location.reload();
             },
         });
     }
