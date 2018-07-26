@@ -108,8 +108,6 @@ class CrearConsultaView(generic.CreateView):
         return super().form_valid(form)
 
 
-@method_decorator(login_required, name='get' )
-@method_decorator(login_required, name='post' )
 class ResponderConsultaView(generic.TemplateView):
     '''
     Muestra la vista para responder una consulta
