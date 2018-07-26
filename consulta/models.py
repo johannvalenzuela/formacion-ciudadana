@@ -14,7 +14,7 @@ class Consulta(models.Model):
     titulo = models.CharField(max_length = 100) 
     fecha_creacion = models.DateField("%d-%m-%Y", default= datetime.now) 
     fecha_finalizacion = models.DateField("%d-%m-%Y", null=False) 
-    fecha_inicio = models.DateField("%d-%m-%Y", default=datetime.now) 
+    fecha_inicio = models.DateField("%d-%m-%Y", null=False) 
     descripcion = models.CharField(max_length = 255) 
     grupo = models.ManyToManyField(Grupo, blank=True, default=None)
 
