@@ -26,6 +26,15 @@ def is_autor_consulta(request, autor):
     return False
 
 @register.filter
+def is_anonimo(request):
+    '''
+    Función para saber si el usuario no tiene cuenta
+    '''
+    if request.user.is_anonymous:
+        return True
+    return False
+
+@register.filter
 def is_finalizado_consulta(request, fecha_finalizacion):
     '''
     Función para saber si la consulta ya finalizó

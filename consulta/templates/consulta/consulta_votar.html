@@ -1,4 +1,6 @@
-{% extends 'compumundohipermegared.html' %} {% block titulo %}
+{% extends 'compumundohipermegared.html' %}
+{% load consulta_tags %}
+{% block titulo %}
 <title>Votación de {{consulta.titulo}} </title>
 {% endblock %} {% block content %}
 
@@ -25,6 +27,13 @@
     </div>
 
     {% endfor %}  
+    {% if request|is_anonimo %}
+    <div class="bg-light shadow-sm m-2 mt-2 p-2">
+        <label for="rut">Rut:</label><br/>
+        <input type="text" name="rut" id="rut" required/>
+        
+    </div>
+    {% endif %}
     <div class="p-2">
         <button type="submit" class="btn btn-primary m-0 p-2">VOTAR</button>
     </div>
