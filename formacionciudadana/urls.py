@@ -8,6 +8,7 @@ from django.conf import settings
 urlpatterns = [
     path('admin_iipj/', admin.site.urls),
     path('', TemplateView.as_view(template_name='home.html'), name='home'),
+    path('equipotrabajo', TemplateView.as_view(template_name='equipodetrabajo.html'), name='equipo-trabajo'),
     path('autenticacion/', include('autenticacion.urls')),
     path('biblioteca_digital/', include('biblioteca_digital.urls')),
     path('gestion_usuarios/', include('gestion_usuarios.urls')),
