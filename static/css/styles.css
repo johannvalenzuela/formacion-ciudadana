@@ -76,6 +76,10 @@ body{
     color: #fff;
 }
 
+.title strong {
+    letter-spacing: 1px;
+}
+
 .page-footer {
     border-radius: 0 0 6px 6px;
 }
@@ -281,7 +285,9 @@ ul ul a {
 .card-img-top {
     width: 10rem;
     height: 10rem;
-    padding: 1rem;
+    padding: .2rem;
+    border: 2px solid rgba(250, 250, 250,.5);
+    object-fit: cover;
 }
 
 .card-body {
@@ -569,4 +575,22 @@ input:placeholder-shown {
 .img-box a:hover li{
 	border-color: #005292;
 	color: #2699FB;
+}
+
+.embed-container {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+}
+.embed-container iframe {
+    position: absolute;
+    top:0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.resource-button {
+    width: 120px;
 }

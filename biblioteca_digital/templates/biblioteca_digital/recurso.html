@@ -3,48 +3,55 @@
 {% endblock %}
 {% block content %}
 <div class="container-fluid" style="padding: .5rem 1.5rem;">
-    <div class="section-things" style="border-radius: .25rem .25rem 0 0; padding-bottom: 2rem;">
-        <div class="container-fluid">
+    <div class="section-things " style="border-radius: .25rem .25rem 0 0; padding-bottom: 1em;">
+        <div class="container-fluid pt-2">
             <div class="row">
                 <div class="col-md-12 ml-auto mr-auto text-center">
                     {% if object %}
                     <div class="section-description mt-2">
-                        <img class="card-img-top " src="../media/{{ object.imagen_descriptiva }}" alt="{{ object.titulo }}" style="border-radius: 10rem">
-                        <p>Valoración: {{object.valoracionTotal}}/5.0</p>
-                        <div class="star-rating">
-                            <span class="mi mi-FavoriteStar" data-rating="1" onclick="valorEstrella(this,'{{csrf_token}}')"></span>
-                            <span class="mi mi-FavoriteStar" data-rating="2" onclick="valorEstrella(this,'{{csrf_token}}')"></span>
-                            <span class="mi mi-FavoriteStar" data-rating="3" onclick="valorEstrella(this,'{{csrf_token}}')"></span>
-                            <span class="mi mi-FavoriteStar" data-rating="4" onclick="valorEstrella(this,'{{csrf_token}}')"></span>
-                            <span class="mi mi-FavoriteStar" data-rating="5" onclick="valorEstrella(this,'{{csrf_token}}')"></span>
-                            <input type="hidden" class="rating-value">
-                        </div>
+                        <img class="card-img-top " src="../media/{{ object.imagen_descriptiva }}" alt="{{ object.titulo }}">
 
-                        <small>Creado el {{ object.fecha_creacion }}</small>
                         <h3 class="title m-0">
                             <strong>{{ object.titulo }}</strong>
                         </h3>
-                        <h6 class="description m-2">
+                        <h6 class="description m-1">
                             {% if object.tema == 1 %}
-                            <span class="badge badge-pill badge-primary">Formación Ciudadana</span>
+                            <span class="badge badge-pill badge-primary shadow-sm">Formación Ciudadana</span>
                             {% elif object.tema == 2 %}
-                            <span class="badge badge-pill badge-primary">Convivencia Escolar</span>
+                            <span class="badge badge-pill badge-primary shadow-sm">Convivencia Escolar</span>
                             {% else %}
-                            <span class="badge badge-pill badge-primary">Otros</span>
+                            <span class="badge badge-pill badge-primary shadow-sm">Otros</span>
                             {% endif %}
                         </h6>
+                        <small>Creado el {{ object.fecha_creacion }}</small>
+
                         <h4 class="description">{{ object.descripcion }}</h4>
+                        
+                        <p class="m-0 my-2">Valoración: {{object.valoracionTotal}}/5.0</p>
+
+                        <div class="w-75 mx-auto bg-primary rounded shadow-sm p-2 mb-2">
+                            <span>¿Qué puntuación le darías a este recurso subido por <strong>{{object.autor}}</strong>?</span>
+                            <div class="star-rating pt-1">
+                                <span class="mi mi-FavoriteStar" data-rating="1" onclick="valorEstrella(this,'{{csrf_token}}')"></span>
+                                <span class="mi mi-FavoriteStar" data-rating="2" onclick="valorEstrella(this,'{{csrf_token}}')"></span>
+                                <span class="mi mi-FavoriteStar" data-rating="3" onclick="valorEstrella(this,'{{csrf_token}}')"></span>
+                                <span class="mi mi-FavoriteStar" data-rating="4" onclick="valorEstrella(this,'{{csrf_token}}')"></span>
+                                <span class="mi mi-FavoriteStar" data-rating="5" onclick="valorEstrella(this,'{{csrf_token}}')"></span>
+                                <input type="hidden" class="rating-value">
+                            </div>
+                        </div>
+
                     </div>
                     {% if object.autor == user %}
-                    <a class="recurso btn btn-primary" data-form="{% url 'recurso-update' recurso.pk %}" data-toggle="modal" data-target="#recursoModal">
+                    <a class="recurso btn btn-primary resource-button" data-form="{% url 'recurso-update' recurso.pk %}" data-toggle="modal" data-target="#recursoModal">
                         <i class="mi mi-Edit mi-4x"></i> Editar
                     </a>
-                    <a class="recurso btn btn-danger" data-form="{% url 'recurso-delete' recurso.pk %}" data-toggle="modal" data-target="#recursoModal">
+                    <a class="recurso btn btn-danger resource-button" data-form="{% url 'recurso-delete' recurso.pk %}" data-toggle="modal" data-target="#recursoModal">
                         <i class="mi mi-Download mi-4x"></i> Eliminar
                     </a>
 
                     {% else %} {% endif %} {% endif %}
-                    <a href="descargar/" class="btn btn-default">
+                    <a href="descargar/" class="btn btn-default resource-button">
                         <i class="mi mi-Download mi-4x"></i> Descargar
                     </a>
                 </div>
@@ -54,12 +61,10 @@
 
     <div class="row">
         <div class="col-md-12 ml-auto mr-auto text-center">
-
-            <h5>Ejemplo con GView</h5>
-
-            <div class="card col-md-12">
-                <!-- <img class="rounded mx-auto d-block m-4" src="../media/{{ object.archivo }}" alt="{{ object.titulo }}"> -->
-                <iframe class="mx-auto m-4" width="100%" height="800" frameborder="0" src="http://docs.google.com/gview?url=https://dl.dropbox.com/s/tpxqmv0o39fd858/Proceso%20Administrativo.ppt&embedded=true"></iframe>
+            {% load staticfiles %}
+            <div class="embed-container card col-md-12">
+                <!-- <iframe class="mx-auto m-4" width="100%" height="800" frameborder="0" src="http://docs.google.com/gview?url=https://dl.dropbox.com/s/tpxqmv0o39fd858/Proceso%20Administrativo.ppt&embedded=true"></iframe> -->
+                <iframe width="900" height="800" src="../media/{{object.archivo}}" allowfullscreen webkitallowfullscreen></iframe>
             </div>
             <!-- <iframe width="600" height="800" frameborder="0" src="http://docs.google.com/gview?url=https://dl.dropbox.com/s/tpxqmv0o39fd858/Proceso%20Administrativo.ppt&embedded=true"></iframe> -->
         </div>
