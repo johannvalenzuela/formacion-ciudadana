@@ -18,11 +18,11 @@
                     {% if form.titulo.field.required %}required{% endif %}>
                     <!-- data-toggle="tooltip" title="{{ form.titulo.help_text }}" -->
                     {% if form.titulo.errors %}
-                    <ul class="list-unstyled">
                         {% for error in form.titulo.errors %}
-                        <li><small class="text-danger">{{ error }}</small></li>
+                        <div class="alert alert-danger">
+                            <strong>{{ error|escape }}</strong>
+                        </div>
                         {% endfor %}
-                    </ul>
                     {% endif %}
 
                     {% if form.titulo.help_text %}
@@ -69,9 +69,12 @@
         </div>
 
         {% if form.errors %}
-            <div class="bg-light rounded px-2 my-2">
-                <small class="text-danger">Por favor, vuelva a ingresar la imagen descriptiva y archivo</small>
-            </div>
+        <div class="alert alert-info">
+            <strong>Por favor, vuelva a ingresar la imagen descriptiva y archivo</strong>
+        </div>
+        <!-- <div class="bg-light rounded px-2 my-2">
+            <small class="text-danger">Por favor, vuelva a ingresar la imagen descriptiva y archivo</small>
+        </div> -->
         {% endif %}
 
         <div class="form-group row">
@@ -85,9 +88,11 @@
                 {% if form.imagen_descriptiva.field.required %}required{% endif %}>
                 {% if form.imagen_descriptiva.errors %}
                 <ul class="list-unstyled">
-                    {% for error in form.imagen_descriptiva.errors %}
-                    <li><small class="text-danger">{{ error }}</small></li>
-                    {% endfor %}
+                    <div class="alert alert-danger">
+                        {% for error in form.imagen_descriptiva.errors %}      
+                            <strong>{{ error }}</strong>
+                        {% endfor %}
+                    </div>
                 </ul>
                 {% endif %}
 
@@ -110,11 +115,11 @@
                 name="{{ form.archivo.name }}" 
                 {% if form.archivo.field.required %}required{% endif %}>
                 {% if form.archivo.errors %}
-                <ul class="list-unstyled">
-                    {% for error in form.archivo.errors %}
-                    <li><small class="text-danger">{{ error }}</small></li>
+                    <div class="alert alert-danger">
+                    {% for error in form.archivo.errors %}      
+                        <strong>{{ error }}</strong>
                     {% endfor %}
-                </ul>
+                    </div>
                 {% endif %}
 
                 {% if form.archivo.help_text %}

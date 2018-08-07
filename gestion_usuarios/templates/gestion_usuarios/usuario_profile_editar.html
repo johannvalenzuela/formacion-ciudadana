@@ -17,64 +17,77 @@
         <div class="form-group row">
             <label for="id_nombre" class="col-sm-2 col-form-label">Nombre:</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control-plaintext" maxlength="50" id="id_nombre" name="nombre" value="{{form.nombre.value}}" autocomplete='given-name' required> 
+                <input type="text" class="form-control-plaintext" maxlength="{{ form.nombre.field.max_length }}" id="id_nombre" name="{{form.nombre.name}}" value="{{form.nombre.value}}" autocomplete='given-name' {% if form.nombre.field.required %}required{% endif %}> 
             </div>
         </div>
         <div class="form-group row">
             <label for="id_apellido_paterno" class="col-sm-2 col-form-label">Apellido Paterno:</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control-plaintext" maxlength="50" id="id_apellido_paterno" name="apellido_paterno" value="{{form.apellido_paterno.value}}" autocomplete='family-name' required> 
+                <input type="text" class="form-control-plaintext" maxlength="{{ form.apellido_paterno.field.max_length }}" id="id_apellido_paterno" name="{{form.apellido_paterno.name}}" value="{{form.apellido_paterno.value}}" autocomplete='family-name' {% if form.apellido_paterno.field.required %}required{% endif %}> 
             </div>
         </div>
         <div class="form-group row">
             <label for="id_apellido_materno" class="col-sm-2 col-form-label">Apellido Materno:</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control-plaintext" maxlength="50" id="id_apellido_materno" name="apellido_materno" value="{{form.apellido_materno.value}}" autocomplete='additional-name' required> 
+                <input type="text" class="form-control-plaintext" maxlength="{{ form.apellido_materno.field.max_length }}" id="id_apellido_materno" name="{{form.apellido_materno.name}}" value="{{form.apellido_materno.value}}" autocomplete='additional-name' {% if form.apellido_materno.field.required %}required{% endif %}> 
             </div>
         </div>
         <div class="form-group row">
             <label for="id_email" class="col-sm-2 col-form-label">Correo Electrónico:</label>
             <div class="col-sm-10">
-                <input type="email" class="form-control-plaintext" maxlength="50" id="id_email" name="email" value="{{form.email.value}}" autocomplete='email' required> 
+                <input type="email" class="form-control-plaintext" maxlength="{{ form.email.field.max_length }}" id="id_email" name="{{form.email.name}}" value="{{form.email.value}}" autocomplete='email' {% if form.email.field.required %}required{% endif %}> 
             </div>
         </div>
         <div class="form-group row">
             <label for="id_rut" class="col-sm-2 col-form-label">RUT:</label>
             <div class="col-sm-10">
-                {% if form.rut.value %}
-                <input type="text" class="form-control" maxlength="12" id="id_rut" name="rut" pattern="\d{3,8}-[\d|kK]{1}" value="{{form.rut.value}}" title="Debe ingresar el rut 'sin puntos'"
-                    placeholder="Ej: 12345678-9 (sin puntos)" required>
-                    {% if form.rut.errors %}
-                    <small class="text-danger"> Ya existe un usuario con este rut. Por favor ingrese otro.</small>
-                    {% endif %}
-                {% else %}
-                    <input type="text" class="form-control" maxlength="12" id="id_rut" name="rut" pattern="\d{3,8}-[\d|kK]{1}" title="Debe ingresar el rut 'sin puntos'"
-                placeholder="Ej: 12345678-9 (sin puntos)" required>
+                <input type="text" class="form-control" maxlength="{{ form.rut.field.max_length }}" id="id_rut" name="{{form.rut.name}}" {% if form.rut.value != None %} value="{{ form.rut.value|stringformat:'s' }}"{% endif %}  pattern="\d{3,8}-[\d|kK]{1}" title="Debe ingresar el RUT 'sin puntos'"
+                    placeholder="Ej: 12345678-9 (sin puntos)" {% if form.rut.field.required %}required{% endif %}>
+                {% if form.rut.errors %}
+                    {% for error in form.rut.errors %}
+                    <div class="alert alert-danger">
+                        <strong>{{ error|escape }}</strong>
+                    </div>
+                    {% endfor %}
                 {% endif %}
             </div>
         </div>
         <div class="form-group row">
             <label for="id_num_documento" class="col-sm-2 col-form-label">N° de Documento:</label>
             <div class="col-sm-10">
-                {% if form.num_documento.value %}
-                <input type="text" class="form-control-plaintext" maxlength="15" id="id_num_documento" name="num_documento" value="{{form.num_documento.value}}" required> 
-                    {% if form.num_documento.errors %}
-                    <small class="text-danger"> Ya existe un usuario con este n° de documento. Por favor ingrese otro.</small>
-                    {% endif %}
-                {% else %}
-                <input type="text" class="form-control-plaintext" maxlength="15" id="id_num_documento" name="num_documento" required> 
+                <input type="text" class="form-control" maxlength="{{ form.num_documento.field.max_length }}" id="id_num_documento" name="{{form.num_documento.name}}" {% if form.num_documento.value != None %} value="{{ form.num_documento.value|stringformat:'s' }}"{% endif %}
+                placeholder="Este número se encuentra en parte de atrás de la Célula de Identidad" {% if form.num_documento.field.required %}required{% endif %}>
+                {% if form.num_documento.errors %}
+                    {% for error in form.num_documento.errors %}
+                    <div class="alert alert-danger">
+                        <strong>{{ error|escape }}</strong>
+                    </div>
+                    {% endfor %}
                 {% endif %}
             </div>
         </div>
         <div class="form-group row">
             <label for="id_fecha_nacimiento" class="col-sm-2 col-form-label">Fecha de Nacimiento:</label>
             <div class="col-sm-10">
+                <!-- <input type="text" class="form-control" maxlength="{{ form.fecha_nacimiento.field.max_length }}" id="id_fecha_nacimiento" name="{{form.fecha_nacimiento.name}}" {% if form.fecha_nacimiento.value != None %} value="{{form.fecha_nacimiento.value|date:'d/m/Y'}}"{% endif %}
+                pattern="\d{1,2}/\d{1,2}/\d{4}" title="Debe escribirlo en el formato DD/MM/AAAA"
+                placeholder="Ej: 13/06/1995"  {% if form.fecha_nacimiento.field.required %}required{% endif %}> -->
+
+
                 {% if form.errors %}
-                <input type="text" class="form-control" maxlength="10" id="id_fecha_nacimiento" name="fecha_nacimiento" pattern="\d{1,2}/\d{1,2}/\d{4}"  value="{{form.fecha_nacimiento.value}}" title="Debe escribirlo en el formato DD/MM/AAAA"
-                    placeholder="Ej: 13/06/1995" required>
+                <input type="text" class="form-control" maxlength="{{ form.fecha_nacimiento.field.max_length }}" id="id_fecha_nacimiento" name="{{form.fecha_nacimiento.name}}" pattern="\d{1,2}/\d{1,2}/\d{4}"  value="{{form.fecha_nacimiento.value}}" title="Debe escribirlo en el formato DD/MM/AAAA"
+                    placeholder="Ej: 13/06/1995" {% if form.fecha_nacimiento.field.required %}required{% endif %}>
                 {% else %}
-                    <input type="text" class="form-control" maxlength="10" id="id_fecha_nacimiento" name="fecha_nacimiento" pattern="\d{1,2}/\d{1,2}/\d{4}" value="{{form.fecha_nacimiento.value|date:'d/m/Y'}}" title="Debe escribirlo en el formato DD/MM/AAAA"
-                placeholder="Ej: 13/06/1995" required>
+                    <input type="text" class="form-control" maxlength="{{ form.fecha_nacimiento.field.max_length }}" id="id_fecha_nacimiento" name="{{form.fecha_nacimiento.name}}" pattern="\d{1,2}/\d{1,2}/\d{4}" value="{{form.fecha_nacimiento.value|date:'d/m/Y'}}" title="Debe escribirlo en el formato DD/MM/AAAA"
+                placeholder="Ej: 13/06/1995" {% if form.fecha_nacimiento.field.required %}required{% endif %}>
+                {% endif %}
+
+                {% if form.fecha_nacimiento.errors %}
+                    {% for error in form.fecha_nacimiento.errors %}
+                    <div class="alert alert-danger">
+                        <strong>{{ error|escape }}</strong>
+                    </div>
+                    {% endfor %}
                 {% endif %}
             </div>
         </div>
@@ -84,22 +97,21 @@
                 <input type="date" class="form-control-plaintext" id="id_fecha_nacimiento" name="fecha_nacimiento" value="{{form.fecha_nacimiento.value|date:'d/m/Y'}}" required>
             </div>
         </div> -->
+        {% if form.errors %}
+        <div class="alert alert-info">
+            <strong>Por favor, vuelva a ingresar la Foto de Perfil</strong>
+        </div>
+        {% endif %}
+
         <div class="form-group row">
             <label for="id_foto" class="col-sm-2 col-form-label">Foto de Perfil: </label>
             <div class="col-sm-10">
-                {% if form.foto.value %}
+                {% if form.archivo.value != None %}
                 <small>Actualmente:  <a href="{{form.foto.value.url}}"> {{form.foto.value}}</a> </small>
-                <input type="file" class="dropify form-control-plaintext" id="id_foto" name="foto">
-                {% else %}
-                <input type="file" class="dropify form-control-plaintext" id="id_foto" name="foto">
                 {% endif %}
+                <input type="file" class="dropify form-control-plaintext" id="id_foto" name="{{form.foto.name}}" {% if form.foto.field.required %}required{% endif %}>
             </div>
         </div>
-
-        <!-- {{form.as_p}} -->
-        {% if form.errors %}
-        <p>{{form.errors}}</p>
-        {% endif %}
         
         <button class="btn btn-primary btn-block" type="submit">GUARDAR CAMBIOS</button>
     </form>

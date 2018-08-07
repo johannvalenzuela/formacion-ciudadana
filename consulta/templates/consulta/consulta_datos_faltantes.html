@@ -16,17 +16,33 @@
         <div class="form-group row">
             <label for="id_rut" class="col-sm-2 col-form-label">RUT:</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" maxlength="12" id="id_rut" name="rut" pattern="\d{3,8}-[\d|kK]{1}" title="Debe ingresar el RUT 'sin puntos'"
-                    placeholder="Ej: 12345678-9 (sin puntos)" required>
+                <input type="text" class="form-control" maxlength="{{ form.rut.field.max_length }}" id="id_rut" name="{{form.rut.name}}" {% if form.rut.value != None %} value="{{ form.rut.value|stringformat:'s' }}"{% endif %}  pattern="\d{3,8}-[\d|kK]{1}" title="Debe ingresar el RUT 'sin puntos'"
+                    placeholder="Ej: 12345678-9 (sin puntos)" {% if form.rut.field.required %}required{% endif %}>
             </div>
         </div>
         <div class="form-group row">
             <label for="id_num_documento" class="col-sm-2 col-form-label">N° de Documento:</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" maxlength="12" id="id_num_documento" name="num_documento"
-                    placeholder="Este número se encuentra en parte de atrás de la Célula de Identidad" required>
+                <input type="text" class="form-control" maxlength="{{ form.num_documento.field.max_length }}" id="id_num_documento" name="{{form.num_documento.name}}" {% if form.num_documento.value != None %} value="{{ form.num_documento.value|stringformat:'s' }}"{% endif %}
+                    placeholder="Este número se encuentra en parte de atrás de la Célula de Identidad" {% if form.num_documento.field.required %}required{% endif %}>
             </div>
         </div>
+
+        {% if form.errors %}
+            {% for field in form %}
+                {% for error in field.errors %}
+                    <div class="alert alert-danger">
+                        <strong>{{ error|escape }}</strong>
+                    </div>
+                {% endfor %}
+            {% endfor %}
+            {% for error in form.non_field_errors %}
+                <div class="alert alert-danger">
+                    <strong>{{ error|escape }}</strong>
+                </div>
+            {% endfor %}
+        {% endif %}
+        
         <button type="submit" class="btn btn-primary m-0">GUARDAR</button>
     </form>
 </div>

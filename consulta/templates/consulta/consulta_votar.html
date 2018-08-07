@@ -22,8 +22,8 @@
     {% csrf_token %}
     {% for propuesta in propuestas %}
     <div class="bg-light shadow-sm m-2 mt-2 p-2">
-        <input type="radio" name="eleccion" id="eleccion{{ forloop.counter }}" value="{{ propuesta.pk }}" required/>
-        <label for="eleccion{{ forloop.counter }}">{{propuesta.titulo}}</label><br />
+        <input type="radio" name="eleccion" id="eleccion{{ forloop.counter }}" value="{{ propuesta.pk }}"/>
+        <label for="eleccion{{ forloop.counter }}">{{propuesta.titulo}}</label>
     </div>
 
     {% endfor %}  
