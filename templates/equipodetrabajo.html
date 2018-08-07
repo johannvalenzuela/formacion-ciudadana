@@ -10,7 +10,7 @@
         <span class="navbar-toggler-icon"></span>
     </button>
 
-    <a class="navbar-brand" href="#">FCCE</a>
+    <a class="navbar-brand" href="/">FCCE</a>
 
     <div class="collapse navbar-collapse" id="responsive">
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
@@ -18,11 +18,11 @@
                 <a class="nav-link" href="/">Inicio
                 </a>
             </li>
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a class="nav-link" href="#">Contacto</a>
-            </li>
+            </li> -->
             <li class="nav-item">
-                <a class="nav-link" href="#">Equipo de trabajo</a>
+                <a class="nav-link" href="{% url 'equipo-trabajo' %}">Equipo de trabajo</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'visualizar_consultas' %}">Votaciones Ciudadanas</a>
