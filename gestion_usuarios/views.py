@@ -95,9 +95,31 @@ class AgregarUsuarioGrupoView(generic.CreateView):
                     pass
                 else:
                     messages.error(self.request, 'El usuario ingresado ya existe')
+
+                #Verifica que no exista el usuario en apoderado y alunmo
+                encargado_aux = Encargado.objects.get(usuario=self.request.user)
+                if grupo.nombre == "apoderados":
+                    grupo2= Grupo.objects.get(nombre="alumnos",autor=encargado_aux)
+                    try:
+                        RutAutorizados.objects.get(rut=form.instance.rut, grupo=grupo2)
+                    except ObjectDoesNotExist:
+                        pass
+                    else:
+                        messages.error(self.request, 'El usuario no puede ser apoderado y alumno')
+                        return self.get_success_url()
+                elif grupo.nombre == "alumnos":
+                    grupo2= Grupo.objects.get(nombre="apoderados",autor=encargado_aux)
+                    try:
+                        RutAutorizados.objects.get(rut=form.instance.rut, grupo=grupo2)
+                    except ObjectDoesNotExist:
+                        pass
+                    else:
+                        messages.error(self.request, 'El usuario no puede ser apoderado y alumno')
+                        return self.get_success_url()
+                #Se agrega el usuario existente al grupo
                 self.object = usuarioExiste
                 self.object.grupo.add(grupo)
-                
+        
 
         return self.get_success_url()
 
