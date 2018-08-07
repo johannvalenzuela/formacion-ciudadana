@@ -138,8 +138,14 @@ class ResponderConsultaView(generic.TemplateView):
                     return redirect('datos_faltantes', pk_consulta=pk)
             else:
                 return redirect('datos_faltantes', pk_consulta=pk)
-           
-            propuesta = get_object_or_404(ConsultaPropuesta, pk=request.POST.get('eleccion'))
+            
+            #se valida que se seleccionó una propuesta
+            try:
+                propuesta = ConsultaPropuesta.objects.get(pk=request.POST.get('eleccion'))
+            except ObjectDoesNotExist:
+                messages.error(request, 'Debe seleccionar al menos una propuesta')
+                return redirect('consulta_votar', pk=pk)
+            #propuesta = get_object_or_404(ConsultaPropuesta, pk=request.POST.get('eleccion'))
             
 
             #antes de seguir se verifica si ya voto anteriormente
@@ -184,7 +190,7 @@ class ResponderConsultaView(generic.TemplateView):
             if not finalizado:
                 messages.success(request, 'Votación realizada con éxito!')
             else:
-                messages.success(request, 'La votacion no pudo ser realizada porque ya terminó')
+                messages.error(request, 'La votacion no pudo ser realizada porque ya terminó')
         else:
             messages.error(request, 'La votación no pudo ser realizada')
 
