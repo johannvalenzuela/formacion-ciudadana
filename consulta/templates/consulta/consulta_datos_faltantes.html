@@ -1,6 +1,12 @@
 {% extends 'compumundohipermegared.html' %} {% block titulo %}
 <title>Formulario datos faltantes </title>
 {% endblock %} {% block content %}
+<!-- MENSAJE DE ERROR ACA -->
+{% if messages %} {% for message in messages %}
+<script>
+    alert('{{ message }}')
+</script>
+{% endfor %} {% endif %}
 
 <h4 class="mt-4 mb-2">Para realizar la votación debe ingresar su rut y numero de documento</h4>
 <div class="bg-white rounded p-3 shadow-sm">

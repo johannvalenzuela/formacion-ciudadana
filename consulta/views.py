@@ -261,11 +261,33 @@ class DatosFaltantesView(generic.UpdateView):
         return usuario
     
     def form_valid(self, form):
+        if not self.validarRut(form.instance.rut):
+            messages.error(self.request, 'Rut invalido')
+            return redirect('datos_faltantes', pk_consulta=self.kwargs['pk_consulta'])
         form.save()
         return self.get_success_url()
 
     def get_success_url(self):
         return redirect('consulta_votar', pk=self.kwargs['pk_consulta'])
+
+    def validarRut(self,rut):
+        rut = rut.upper()
+        rut = rut.replace("-","")
+        rut = rut.replace(".","")
+        aux = rut[:-1]
+        dv = rut[-1:]
+    
+        revertido = map(int, reversed(str(aux)))
+        factors = cycle(range(2,8))
+        s = sum(d * f for d, f in zip(revertido,factors))
+        res = (-s)%11
+    
+        if str(res) == dv:
+            return True
+        elif dv=="K" and res==10:
+            return True
+        else:
+            return False 
 #-----------------------------------------PROPUESTAS-----------------------------------
 
 class PropuestaConsultaVisualizarView(generic.DetailView):
