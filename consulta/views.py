@@ -7,6 +7,7 @@ from django.shortcuts import get_object_or_404
 from django.contrib import messages
 from django.db.models import Q
 from datetime import datetime
+from itertools import cycle
 
 #modelos
 from .models import Consulta, ConsultaPropuesta, ConsultaRespuesta
@@ -145,8 +146,11 @@ class ResponderConsultaView(generic.TemplateView):
             except ObjectDoesNotExist:
                 messages.error(request, 'Debe seleccionar al menos una propuesta')
                 return redirect('consulta_votar', pk=pk)
-            #propuesta = get_object_or_404(ConsultaPropuesta, pk=request.POST.get('eleccion'))
-            
+
+            #se valida el rut
+            if not self.validarRut(rut_votante):
+                messages.error(request, 'Rut invalido')
+                return redirect('consulta_votar', pk=pk)
 
             #antes de seguir se verifica si ya voto anteriormente
             try:
@@ -183,9 +187,7 @@ class ResponderConsultaView(generic.TemplateView):
             else:
                 messages.error(request, 'usuario ya realizó la votación anteriormente')
                 return self.get_success_url()
-            
-            
-
+        
         if puedeVotar:
             if not finalizado:
                 messages.success(request, 'Votación realizada con éxito!')
@@ -195,7 +197,26 @@ class ResponderConsultaView(generic.TemplateView):
             messages.error(request, 'La votación no pudo ser realizada')
 
         return self.get_success_url()
-                
+
+    def validarRut(self,rut):
+        rut = rut.upper()
+        rut = rut.replace("-","")
+        rut = rut.replace(".","")
+        aux = rut[:-1]
+        dv = rut[-1:]
+    
+        revertido = map(int, reversed(str(aux)))
+        factors = cycle(range(2,8))
+        s = sum(d * f for d, f in zip(revertido,factors))
+        res = (-s)%11
+    
+        if str(res) == dv:
+            return True
+        elif dv=="K" and res==10:
+            return True
+        else:
+            return False  
+
     def get_success_url(self):
         return redirect('detalles_consulta', pk=self.kwargs['pk'])
  
