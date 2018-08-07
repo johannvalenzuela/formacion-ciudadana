@@ -70,19 +70,31 @@
 
 <div class="section-resources mt-2">
     {% comment %} boton para VOTAR {% endcomment %}
-    {% if request|is_finalizado_consulta:object.fecha_finalizacion and request|puede_votar_consulta:object %}
-    
-    <div class="card col-md-12 mt-4 mb-1 pb-2 rounded-0 shadow-sm">
-        <div class="card-body">
-            <h5 class="card-text pt-2 text-center">¿Te interesa alguna propuesta? Entonces, ¡Vota por alguna de ellas!</h5>
-        </div>
-        <div>
-            <a class="btn btn-secondary btn-block btn-sm p-3 mt-2 pr-5 pl-5" href="{% url 'consulta_votar' object.pk %}">
-                VOTAR
-            </a>
-        </div>
-    </div>
+    {% if request|is_finalizado_consulta:object.fecha_finalizacion %}
+        {% if request|puede_votar_consulta:object %}
+            <div class="card col-md-12 mt-4 mb-1 pb-2 rounded-0 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-text pt-2 text-center">¿Te interesa alguna propuesta? Entonces, ¡Vota por alguna de ellas!</h5>
+                </div>
+                <div>
+                    <a class="btn btn-secondary btn-block btn-sm p-3 mt-2 pr-5 pl-5" href="{% url 'consulta_votar' object.pk %}">
+                        VOTAR
+                    </a>
+                </div>
+            </div>
+        {% else %}
+            <div class="card col-md-12 mt-4 mb-1 pb-2 rounded-0 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-text pt-2 text-center">Lo siento, usted no puede participar de esta votación.</h5>
+                </div>
+            </div>
+        {% endif %}
     {% else %}
+        <div class="card col-md-12 mt-4 mb-1 pb-2 rounded-0 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-text pt-2 text-center">Votación Finalizada</h5>
+            </div>
+        </div>
     {% endif %}
     <div class="bg-white rounded">
         {% if propuestas %}
