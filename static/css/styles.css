@@ -565,7 +565,7 @@ input:placeholder-shown {
 }
 
 .border-gray {
-    border:1px solid rgba(80, 80, 80, .5);
+    border:1px solid rgba(80, 80, 80, .7);
 }
 
 ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
@@ -580,3 +580,20 @@ input:placeholder-shown {
   :-moz-placeholder { /* Firefox 18- */
     color: rgba(80, 80, 80, .4);
   }
+
+
+.side-lines small {
+    width: 100%;
+    display: flex !important;
+    line-height: 1;
+    align-items: center;
+    text-align: center;
+
+}
+.side-lines small::before, small::after {
+    content: "";
+    background:rgba(38,50,56 ,.2);
+    height: .06em;
+    margin: .2em;
+    flex: 1;
+}
