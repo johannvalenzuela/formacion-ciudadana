@@ -1,7 +1,12 @@
 {% extends 'compumundohipermegared.html' %}{% block titulo %}
 <title>Agregar usuarios a {{grupo.nombre}}</title>
 {% endblock %} {% block content %}
-
+<!-- MENSAJE DE ERROR ACA -->
+{% if messages %} {% for message in messages %}
+<script>
+    alert('{{ message }}')
+</script>
+{% endfor %} {% endif %}
 <div class="bg-white rounded p-3 mt-4 shadow-sm">
     <div class="text-center mb-3">
         <h4 class="font-weight-bold pb-2">Crear nuevo usuario</h4>

@@ -7,6 +7,7 @@ from django.http import HttpResponseRedirect
 from django.contrib import messages
 from django.shortcuts import get_object_or_404
 from .forms import ProfileForm
+from itertools import cycle
 
 #decorators
 from django.contrib.auth.decorators import login_required
@@ -70,6 +71,9 @@ class AgregarUsuarioGrupoView(generic.CreateView):
         '''
         Esta funcion se tira si el formulario es valido
         '''
+        if not validarRut(self,form.instance.rut):
+            messages.error(self.request, 'Rut invalido')
+            return redirect("agregar_usuario_form",pk_grupo=self.kwargs['pk_grupo'])
         try:
             grupo = Grupo.objects.get(pk=self.kwargs['pk_grupo'])
         except ObjectDoesNotExist:
@@ -89,6 +93,7 @@ class AgregarUsuarioGrupoView(generic.CreateView):
                 self.object.grupo.add(grupo)
 
         return self.get_success_url()
+
         
     def get_success_url(self):
         grupo = Grupo.objects.get(pk=self.kwargs['pk_grupo'])
@@ -208,7 +213,7 @@ class ProfileView(generic.DetailView):
 @method_decorator(login_required, name='get' )
 class ProfileUpdateView(generic.UpdateView):
     '''
-    Muesta la vista para eliminar valores del profile del usuario 
+    Muesta la vista para modificar valores del profile del usuario 
     '''
     model = Usuario
     context_object_name = 'usuario'
@@ -219,6 +224,32 @@ class ProfileUpdateView(generic.UpdateView):
     def get_object(self):
         return self.request.user
 
+    def form_valid(self, form):
+        '''
+        Esta funcion se tira si el formulario es valido
+        '''
+        if not validarRut(self,form.instance.rut):
+            messages.error(self.request, 'Rut invalido')
+            return redirect("profile_editar")
+        return super().form_valid(form)
     
 
 
+def validarRut(self,rut):
+    rut = rut.upper()
+    rut = rut.replace("-","")
+    rut = rut.replace(".","")
+    aux = rut[:-1]
+    dv = rut[-1:]
+
+    revertido = map(int, reversed(str(aux)))
+    factors = cycle(range(2,8))
+    s = sum(d * f for d, f in zip(revertido,factors))
+    res = (-s)%11
+
+    if str(res) == dv:
+        return True
+    elif dv=="K" and res==10:
+        return True
+    else:
+        return False 
