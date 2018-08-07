@@ -124,6 +124,8 @@ class EliminarUsuarioGrupoView(generic.DeleteView):
         self.object = self.get_object()
         grupo = Grupo.objects.get(pk=self.kwargs['pk_grupo'])
         self.object.grupo.remove(grupo)
+        if self.object.grupo.count() == 0:
+            self.object.delete()
         return self.get_success_url()
 
     def get(self, request, pk_grupo, pk_usuario):
