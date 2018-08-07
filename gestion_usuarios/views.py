@@ -89,8 +89,15 @@ class AgregarUsuarioGrupoView(generic.CreateView):
                 form.instance.grupo.add(grupo)
             else:
                 #sino se ocupa el ya existente
+                try:
+                    RutAutorizados.objects.get(rut=form.instance.rut, grupo=grupo)
+                except ObjectDoesNotExist:
+                    pass
+                else:
+                    messages.error(self.request, 'El usuario ingresado ya existe')
                 self.object = usuarioExiste
                 self.object.grupo.add(grupo)
+                
 
         return self.get_success_url()
 

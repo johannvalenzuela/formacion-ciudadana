@@ -3,6 +3,12 @@
 {% endblock %}
 {% block content %}
 {% load static %}
+<!-- MENSAJE DE ERROR ACA -->
+{% if messages %} {% for message in messages %}
+<script>
+    alert('{{ message }}')
+</script>
+{% endfor %} {% endif %}
 <div class="card col-md-12 mt-4 mb-2 pb-4">
     <div class="card-body">
         <h3 class="card-title">Lista de <span class="text-capitalize">{{grupo.nombre}}</span></h3>
