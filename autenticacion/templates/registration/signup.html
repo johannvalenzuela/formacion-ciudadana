@@ -1,81 +1,111 @@
 <!-- templates/signup.html -->
 {% extends 'base.html' %} {% block title %}Registrarse {% endblock %} {% block content %}
 
-<!-- 
-<h2>Registrarse</h2>
-<table>
-  <form method="post">
-    {% csrf_token %}
-    <tr>
-      <th>{{ form.as_table }}</th>
-    </tr>
-    <tr>
-      <th>
-        <button type="submit">Sign up</button>
-      </th>
-    </tr>
-  </form>
-</table> -->
+{% load static %}
+<style>
+  body {
+    background: url("{% static 'assets/bg-login.svg' %}") no-repeat center center fixed;
+    background-size: cover;
+  }
+</style>
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light py-2 m-0 shadow-sm">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#responsive" aria-controls="responsive"
+    aria-expanded="false" aria-label="Toggle navigation">
+    <i class="mi mi-List mi-1x"></i>
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <a class="navbar-brand" href="/">FCCE</a>
+
+  <div class="collapse navbar-collapse" id="responsive">
+    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+      <li class="nav-item">
+        <a class="nav-link" href="/">Inicio
+        </a>
+      </li>
+      <!-- <li class="nav-item">
+        <a class="nav-link" href="#">Contacto</a>
+      </li> -->
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'equipo-trabajo' %}">Equipo de trabajo</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'visualizar_consultas' %}">Votaciones Ciudadanas</a>
+      </li>
+    </ul>
+
+    <ul class="nav justify-content-end navbar-nav">
+      <!-- <li class="nav-item">
+        <a class="nav-link" href="{% url 'signup' %}">Registrarse</a>
+      </li> -->
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'login' %}">Iniciar Sesión</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+<!-- END NAVBAR -->
 
 <div class="wrapper">
   <section class="module-cover parallax fullscreen">
     <div class="container">
-      <div class="row">
-        <div class="col-md-6 m-auto card-signup">
-          <div class="m-b-20 text-center">
-            <h6>Crear una nueva cuenta</h6>
+      <div class="row" style="height: 100vh; align-items: center;">
+        <div class="bg-white rounded col-md-6 mx-auto mt-4">
+          <div class="text-center p-2">
+            <h3 class="py-3">Crear una nueva cuenta</h3>
           </div>
-          <br>
-          <div class="m-b-20">
+          <div>
             <form class="form" method="POST" action="">
               {% csrf_token %} 
-              {{ form.non_field_errors }}
+              <!-- {{ form.non_field_errors }} -->
               <fieldset>
                 <label for="id_nombre">Nombre</label>
-                <input type="text" id="id_nombre" maxlength="50" name="nombre" autocomplete="given-name" required/>
+                <input class="form-control-plaintext rounded border border-gray" type="text" id="id_nombre" maxlength="{{form.nombre.field.max_length}}" name="{{form.nombre.name}}" {% if form.nombre.value != None %} value="{{ form.nombre.value|stringformat:'s' }}"{% endif %} placeholder="Ej: Juan" autocomplete="given-name" required/>
               </fieldset>
               <fieldset>
                 <label for="id_apellido_paterno">Apellido Paterno</label>
-                <input type="text" id="id_apellido_paterno" maxlength="50" name="apellido_paterno" autocomplete="family-name" required/>
+                <input class="form-control-plaintext rounded border border-gray" type="text" id="id_apellido_paterno" maxlength="{{form.apellido_paterno.field.max_length}}" name="{{form.apellido_paterno.name}}" {% if form.apellido_paterno.value != None %} value="{{ form.apellido_paterno.value|stringformat:'s' }}"{% endif %} placeholder="Ej: Pérez" autocomplete="family-name" required/>
               </fieldset>
               <fieldset>
                 <label for="id_apellido_materno">Apellido Materno</label>
-                <input type="text" id="id_apellido_materno" maxlength="50" name="apellido_materno" autocomplete="additional-name" required/>
+                <input class="form-control-plaintext rounded border border-gray" type="text" id="id_apellido_materno" maxlength="{{form.apellido_materno.field.max_length}}" name="{{form.apellido_materno.name}}" {% if form.apellido_materno.value != None %} value="{{ form.apellido_materno.value|stringformat:'s' }}"{% endif %} placeholder="Ej: Sáez" autocomplete="additional-name" required/>
               </fieldset>
               <fieldset>
                 <label for="id_email">Correo</label>
-                <input type="email" id="email" maxlength="254" name="email" autocomplete="email" required/>
+                <input class="form-control-plaintext rounded border border-gray" type="email" id="email" maxlength="{{form.email.field.max_length}}" name="{{form.email.name}}" {% if form.email.value != None %} value="{{ form.email.value|stringformat:'s' }}"{% endif %} placeholder="Ej: example@domain.com" autocomplete="email" required/>
                 {% if form.email.errors %}
-                <div class="alert alert-danger pt-0" role="alert">
-                  <span>{{ form.email.errors }}</span>
+                <div class="alert alert-danger rounded p-0 px-2 pt-1 mt-1" role="alert">
+                  <strong>Ya existe un ususario con este correo electrónico. Por favor ingrese otro.</strong>
                 </div>
                 {% endif %}
               </fieldset>
               <fieldset>
                 <label for="id_password1">Contraseña</label>
-                <input type="password" id="id_password1" name="password1" autocomplete="new-password" required/>
-                <div class="alert alert-default pt-0" role="alert">
-                  <span>{{ form.password1.help_text | safe}}</span>
+                <input class="form-control-plaintext rounded border border-gray" type="password" id="id_password1" name="{{form.password1.name}}" autocomplete="new-password"  {% if form.password1.value != None %} value="{{ form.password1.value|stringformat:'s' }}"{% endif %} required/>
+                <div class="bg-light rounded px-2 my-1 text-info">
+                  <span>{{ form.password1.help_text|safe}}</span>
                 </div>
+
                 {% if form.password1.errors %}
-                <div class="alert alert-danger pt-0" role="alert">
-                  <span>{{ form.password1.errors }}</span>
+                <div class="alert alert-danger rounded p-0 px-2 pt-1 mt-1" role="alert">
+                  <strong>{{ form.password1.errors }}</strong>
                 </div>
                 {% endif %}
               </fieldset>
               <fieldset>
                 <label for="id_password2">Confirmar Contraseña</label>
-                <input type="password" id="id_password2" name="password2" autocomplete="new-password" required/>
-                <div class="alert alert-default pt-0" role="alert">
-                  <span>{{ form.password2.help_text | safe}}</span>
-                  {% if form.password2.errors %}
-                  <div class="alert alert-danger pt-0" role="alert">
-                    <span>{{ form.password2.errors }}</span>
-                  </div>
-                  {% endif %}
+                <input class="form-control-plaintext rounded border border-gray" type="password" id="id_password2" name="{{form.password2.name}}" {% if form.password2.value != None %} value="{{ form.password2.value|stringformat:'s' }}"{% endif %} autocomplete="new-password" required/>
+                <div class="bg-light rounded px-2 my-1 text-info">
+                  <span>{{ form.password2.help_text|safe}}</span>
                 </div>
+                {% if form.password2.errors %}
+                <div class="alert alert-danger rounded p-0 px-2 pt-1 mt-1" role="alert">
+                  <strong>{{ form.password2.errors }}</strong>
+                </div>
+                {% endif %}
               </fieldset>
-              <button class="btn btn-primary btn-block" type="submit">Registrar</button>
+              <button class="btn btn-primary btn-block" type="submit">Registrarse</button>
             </form>
           </div>
           <div class="m-b-20 text-center">
