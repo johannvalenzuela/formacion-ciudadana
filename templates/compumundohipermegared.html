@@ -223,10 +223,15 @@
                             {{ user.get_short_name }}
                         </a>
                         <div class="dropdown-menu">
+                            {% if user.is_anonymous %}
+                            <a class="dropdown-item" href="{% url 'login' %}">Iniciar Sesión</a>
+                            {% else %}
                             <a class="dropdown-item" href="{% url 'profile' %}">Ver Perfil</a>
                             <a class="dropdown-item" href="#">Cambiar Contraseña</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="{% url 'logout' %}">Cerrar Sesión</a>
+                            {% endif %}
+
                         </div>
                     </li>
                 </ul>
